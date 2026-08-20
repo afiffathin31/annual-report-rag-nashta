@@ -52,7 +52,7 @@ class TestNashtaTrueRAGSystem(unittest.TestCase):
     def test_proposal_generation(self):
         proposal_res = rag_engine.generate_proposal("BRIS")
         self.assertIn("proposal_markdown", proposal_res)
-        self.assertIn("Halaman", proposal_res["proposal_markdown"])
+        self.assertTrue("Hal." in proposal_res["proposal_markdown"] or "Halaman" in proposal_res["proposal_markdown"])
 
 
 if __name__ == "__main__":

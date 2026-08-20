@@ -31,6 +31,7 @@ class ScoringEngine:
             return {"error": f"Issuer with code {c_code} not found"}
 
         sector_id = issuer.get("sector_id", "")
+        strategic_recommendations = evidence_engine.discover_recommendations(c_code)
         verified_weaknesses = evidence_engine.discover_weaknesses(c_code)
         tech_stack = issuer.get("technology_stack", "").lower()
         summary = issuer.get("summary", "").lower()
@@ -128,6 +129,7 @@ class ScoringEngine:
             "overall_opportunity_score": overall_score,
             "top_priority_pillars": sorted(pillar_scores, key=lambda x: x["score"], reverse=True)[:3],
             "pillar_scores": pillar_scores,
+            "strategic_recommendations": strategic_recommendations,
             "verified_weaknesses": verified_weaknesses,
             "five_year_trend": five_year_trend,
         }

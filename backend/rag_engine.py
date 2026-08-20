@@ -6,6 +6,7 @@ import json
 import re
 from typing import Any, Dict, List, Optional
 from backend.catalog import catalog_manager
+from backend.evidence_engine import evidence_engine
 from backend.rag_indexer import rag_indexer
 from backend.scoring_engine import scoring_engine
 
@@ -67,7 +68,8 @@ class AIAssistantRAGEngine:
         return [item[1] for item in scored_chunks[:top_k]] or chunks[:top_k]
 
     def _answer_weaknesses_rag(self, code: str, issuer: Dict[str, Any], weaknesses: List[Dict[str, Any]], retrieved_chunks: List[Dict[str, Any]]) -> Dict[str, Any]:
-        if not weaknesses:
+        recs = evidence_engine.discover_recommendations(code)
+        if not recs:
             return {
                 "emiten_code": code,
                 "title": f"Hasil Analisis Dokumen - {code}",
@@ -76,41 +78,49 @@ class AIAssistantRAGEngine:
             }
 
         reply_lines = [
-            f"### 🔍 Temuan Kelemahan Terverifikasi dari Laporan Tahunan {issuer.get('name')} ({code}):\n"
+            f"### 🎯 Rekomendasi Solusi Strategis & Klaster Bukti Laporan Tahunan: {issuer.get('name')} ({code})\n"
         ]
-        citations = []
+        all_citations = []
 
-        for idx, w in enumerate(weaknesses, 1):
-            severity_badge = "🔴 [HIGH SEVERITY]" if w.get("severity") == "High" else "🟡 [MEDIUM SEVERITY]"
-            page_str = w.get("page_display") or f"Hal. {w.get('page_number')}"
+        for idx, rec in enumerate(recs, 1):
+            severity_badge = "🔴 [HIGH PRIORITY]" if rec.get("severity") == "High" else "🟡 [MEDIUM PRIORITY]"
             reply_lines.append(
-                f"**{idx}. {w.get('title')}** {severity_badge}\n"
-                f"- **Dokumen & Halaman:** `{w.get('doc_name')}` — **{page_str}** (*{w.get('chapter_title')}*)\n"
-                f"- **Kutipan Kalimat Eksak:** *\"{w.get('evidence_quote')}\"*\n"
-                f"- **Konteks Paragraf Asli Dokumen:**\n"
-                f"  > *\"{w.get('context_window')}\"*\n"
-                f"- **Peluang Solusi Nashta:** `{w.get('nashta_opportunity')}`\n"
+                f"#### **{idx}. {rec.get('title')}** {severity_badge}\n"
+                f"* **Pilar Layanan Nashta:** `{rec.get('pillar_name')}`\n"
+                f"* **📋 Diagnosa Masalah Emiten:**\n"
+                f"  > *\"{rec.get('problem_synthesis')}\"*\n"
+                f"* **💼 Peluang Solusi Nashta:** **{rec.get('nashta_opportunity')}**\n"
+                f"  *{rec.get('value_proposition')}*\n"
+                f"* **📑 Klaster Sitasi Bukti Dokumen Asli ({len(rec.get('supporting_citations', []))} Bukti Terverifikasi):**"
             )
-            citations.append({
-                "title": w.get("title"),
-                "doc_name": w.get("doc_name"),
-                "page_number": w.get("page_number"),
-                "page_display": page_str,
-                "printed_page": w.get("printed_page"),
-                "physical_page": w.get("physical_page"),
-                "quote": w.get("evidence_quote"),
-                "context": w.get("context_window"),
-                "chapter": w.get("chapter_title"),
-                "solution": w.get("nashta_opportunity"),
-            })
 
-        reply_lines.append("\n💡 *Kutipan di atas diekstrak langsung dari chunk dokumen asli Laporan Tahunan terindeks.*")
+            for c_idx, cit in enumerate(rec.get("supporting_citations", []), 1):
+                reply_lines.append(
+                    f"  {c_idx}. **{cit.get('page_display')}** (*{cit.get('chapter_title')}* — `{cit.get('doc_name')}`)\n"
+                    f"     - *Kutipan:* \"{cit.get('evidence_quote')}\""
+                )
+                all_citations.append({
+                    "title": rec.get("title"),
+                    "doc_name": cit.get("doc_name"),
+                    "page_number": cit.get("printed_page"),
+                    "page_display": cit.get("page_display"),
+                    "printed_page": cit.get("printed_page"),
+                    "physical_page": cit.get("physical_page"),
+                    "quote": cit.get("evidence_quote"),
+                    "context": cit.get("context_window"),
+                    "chapter": cit.get("chapter_title"),
+                    "solution": rec.get("nashta_opportunity"),
+                })
+            reply_lines.append("")
+
+        reply_lines.append("💡 *Seluruh kutipan di atas diekstrak dan disintesis langsung dari chunk dokumen asli Laporan Tahunan.*")
 
         return {
             "emiten_code": code,
-            "title": f"Matriks Kelemahan & Bukti RAG - {code}",
+            "title": f"Rekomendasi Strategis & Multi-Sitasi RAG - {code}",
             "reply": "\n".join(reply_lines),
-            "citations": citations,
+            "citations": all_citations,
+            "recommendations": recs,
         }
 
     def _answer_scoring_rag(self, code: str, issuer: Dict[str, Any], analysis: Dict[str, Any]) -> Dict[str, Any]:
@@ -202,13 +212,29 @@ Proposal ini disusun berbasis audit langsung terhadap Laporan Tahunan resmi {iss
             proposal_md += f"- **Paket Solusi Nashta:** `{p['proposed_solution']}`\n"
             proposal_md += f"- **Estimasi Nilai Investasi:** `{p['estimated_deal_range']}`\n"
 
-        proposal_md += "\n---\n\n## 2. Validasi Konteks & Bukti Empiris dari Dokumen Laporan Tahunan\n"
-        if weaknesses:
+        recs = analysis.get("strategic_recommendations", [])
+        proposal_md += "\n---\n\n## 2. Diagnosa Kebutuhan Strategis & Klaster Bukti Laporan Tahunan\n"
+        if recs:
+            for r_idx, r in enumerate(recs, 1):
+                proposal_md += f"""
+### 🎯 Rekomendasi {r_idx}: {r.get('title')} ({r.get('severity')} Priority)
+* **Pilar Terkait:** `{r.get('pillar_name')}` (Tingkat Keyakinan: {r.get('confidence')}%)
+* **📋 Diagnosa Masalah Emiten:**
+  > "{r.get('problem_synthesis')}"
+* **💼 Rekomendasi Solusi Nashta:** **{r.get('nashta_opportunity')}**  
+  *{r.get('value_proposition')}*
+* **📑 Klaster Sitasi Bukti Dokumen Terverifikasi:**
+"""
+                for c_idx, cit in enumerate(r.get("supporting_citations", []), 1):
+                    proposal_md += f"""  {c_idx}. **{cit.get('page_display')}** (*{cit.get('chapter_title')}* — `{cit.get('doc_name')}`)
+     - *Kutipan Persis:* "{cit.get('evidence_quote')}"
+"""
+        elif weaknesses:
             for w in weaknesses:
                 proposal_md += f"""
 ### 📌 {w.get('title')}
 - **Dokumen Sumber:** `{w.get('doc_name')}`
-- **Nomor Halaman:** Halaman {w.get('page_number')} ({w.get('chapter_title')})
+- **Nomor Halaman:** {w.get('page_display', 'Halaman ' + str(w.get('page_number')))} ({w.get('chapter_title')})
 - **Kutipan Persis Kalimat Laporan:** *"{w.get('evidence_quote')}"*
 - **Konteks Paragraf Asli Dokumen:**
 > "{w.get('context_window')}"

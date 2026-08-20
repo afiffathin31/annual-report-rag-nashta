@@ -369,6 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderIssuerDetails(data) {
       const issuer = data.issuer;
       const scores = data.pillar_scores || [];
+      const recommendations = data.strategic_recommendations || [];
       const weaknesses = data.verified_weaknesses || [];
       const trend = data.five_year_trend || [];
       const reports = issuer.reports || [];
@@ -394,7 +395,7 @@ document.addEventListener('DOMContentLoaded', () => {
         this.heroScoreStatus.style.color = 'var(--nashta-blue-light)';
       }
 
-      this.weaknessTabCount.innerText = weaknesses.length;
+      this.weaknessTabCount.innerText = recommendations.length || weaknesses.length;
       this.reportsTabCount.innerText = reports.length;
 
       if (typeof initRadarChart === 'function') {
@@ -406,7 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       this.renderPillarsGrid(scores);
-      this.renderWeaknessMatrix(weaknesses, issuer.name);
+      this.renderWeaknessMatrix(recommendations, issuer.name, weaknesses);
       this.renderReportsVault(reports, issuer.code);
     }
 
@@ -444,10 +445,12 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    renderWeaknessMatrix(weaknesses, companyName) {
+    renderWeaknessMatrix(recommendations, companyName, rawWeaknesses = []) {
       this.weaknessListContainer.innerHTML = '';
 
-      if (weaknesses.length === 0) {
+      const recs = (recommendations && recommendations.length > 0) ? recommendations : null;
+
+      if (!recs && (!rawWeaknesses || rawWeaknesses.length === 0)) {
         this.weaknessListContainer.innerHTML = `
           <div style="background-color:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:2.5rem;text-align:center;color:var(--text-secondary);">
             <div style="font-size:1.8rem;margin-bottom:0.5rem;">📋</div>
@@ -460,7 +463,121 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      weaknesses.forEach((w, idx) => {
+      if (recs) {
+        recs.forEach((rec, idx) => {
+          const card = document.createElement('div');
+          card.className = 'weakness-card';
+          card.style.border = '1px solid var(--border-default)';
+          card.style.background = 'var(--bg-surface)';
+          card.style.marginBottom = '1.25rem';
+          card.style.padding = '1.25rem';
+          card.style.borderRadius = 'var(--radius-lg)';
+
+          const severityClass = rec.severity === 'High' ? 'severity-high' : 'severity-med';
+          const recId = rec.id || `rec_${idx}`;
+          const citations = rec.supporting_citations || [];
+
+          let citationsHTML = '';
+          citations.forEach(cit => {
+            citationsHTML += `
+              <div style="background:#090d16;border:1px solid var(--border-subtle);border-radius:6px;padding:0.75rem;margin-bottom:0.5rem;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.35rem;flex-wrap:wrap;gap:0.3rem;">
+                  <div style="font-size:0.75rem;font-weight:600;color:var(--nashta-cyan);">
+                    📄 Bukti ${cit.citation_index || ''}: ${cit.page_display || ('Hal. ' + cit.printed_page)} • <em>${cit.chapter_title || 'Tata Kelola TI'}</em>
+                  </div>
+                  <a href="/api/documents/${this.activeEmitenCode}/${cit.report_year || 2024}" target="_blank" style="font-size:0.7rem;color:#38bdf8;text-decoration:underline;">
+                    Buka Dokumen PDF (${cit.doc_name}) ↗
+                  </a>
+                </div>
+                <div style="font-size:0.8rem;color:#e2e8f0;font-style:italic;background:rgba(0,0,0,0.35);padding:0.5rem 0.75rem;border-left:2px solid #38bdf8;border-radius:4px;line-height:1.5;">
+                  “${cit.evidence_quote}”
+                </div>
+              </div>
+            `;
+          });
+
+          card.innerHTML = `
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;margin-bottom:0.75rem;">
+              <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+                <span class="severity-pill ${severityClass}">${rec.severity} Priority</span>
+                <span style="font-size:0.75rem;background:rgba(16,185,129,0.12);color:#34d399;border:1px solid rgba(16,185,129,0.25);padding:3px 10px;border-radius:12px;font-weight:600;">
+                  ⚡ ${rec.confidence}% Match Confidence
+                </span>
+                <span style="font-size:0.75rem;background:rgba(56,189,248,0.12);color:#38bdf8;border:1px solid rgba(56,189,248,0.25);padding:3px 10px;border-radius:12px;font-weight:600;">
+                  🏛️ ${rec.pillar_name}
+                </span>
+              </div>
+              <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;">
+                📑 ${citations.length} Bukti Dokumen Terverifikasi
+              </span>
+            </div>
+
+            <div style="font-size:1.05rem;font-weight:700;color:#f8fafc;margin-bottom:0.75rem;line-height:1.4;">
+              ${rec.title}
+            </div>
+
+            <div style="background:rgba(15,23,42,0.7);border-left:3px solid var(--nashta-cyan);border-radius:6px;padding:0.85rem 1rem;margin-bottom:0.9rem;">
+              <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--nashta-cyan);margin-bottom:0.35rem;display:flex;align-items:center;gap:0.4rem;">
+                <span>📋</span> Diagnosa & Sintesis Masalah Emiten
+              </div>
+              <div style="font-size:0.84rem;color:#cbd5e1;line-height:1.55;">
+                ${rec.problem_synthesis}
+              </div>
+            </div>
+
+            <div style="margin-bottom:0.9rem;">
+              <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);margin-bottom:0.5rem;display:flex;align-items:center;justify-content:space-between;">
+                <span>📑 Klaster Sitasi Bukti Dokumen Asli:</span>
+                <button class="btn btn-secondary btn-sm" id="btnToggle_${recId}" style="font-size:0.7rem;padding:2px 8px;border-style:dashed;">
+                  👁️ Sembunyikan/Tampilkan Bukti (${citations.length})
+                </button>
+              </div>
+
+              <div id="cluster_${recId}" style="display:block;">
+                ${citationsHTML}
+              </div>
+            </div>
+
+            <div style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.22);border-radius:8px;padding:0.85rem 1rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;">
+              <div style="flex:1;min-width:250px;">
+                <div style="font-size:0.75rem;font-weight:700;color:var(--nashta-cyan);text-transform:uppercase;">💼 Rekomendasi Solusi Nashta:</div>
+                <div style="font-size:0.86rem;font-weight:700;color:#f1f5f9;margin-top:0.15rem;">${rec.nashta_opportunity}</div>
+                <div style="font-size:0.76rem;color:#94a3b8;margin-top:0.2rem;">${rec.value_proposition || ''}</div>
+              </div>
+              <div>
+                <button class="btn btn-primary btn-sm" id="btnChat_${recId}" style="font-size:0.75rem;">
+                  🤖 Analisis dengan AI Copilot
+                </button>
+              </div>
+            </div>
+          `;
+
+          this.weaknessListContainer.appendChild(card);
+
+          const toggleBtn = card.querySelector(`#btnToggle_${recId}`);
+          const clusterBox = card.querySelector(`#cluster_${recId}`);
+          if (toggleBtn && clusterBox) {
+            toggleBtn.addEventListener('click', () => {
+              const isHidden = clusterBox.style.display === 'none';
+              clusterBox.style.display = isHidden ? 'block' : 'none';
+              toggleBtn.innerHTML = isHidden 
+                ? `👁️ Sembunyikan Bukti (${citations.length})` 
+                : `👁️ Tampilkan Bukti (${citations.length})`;
+            });
+          }
+
+          const chatBtn = card.querySelector(`#btnChat_${recId}`);
+          if (chatBtn && window.aiAssistantUI) {
+            chatBtn.addEventListener('click', () => {
+              window.aiAssistantUI.toggleDrawer(true);
+              window.aiAssistantUI.input.value = `Bagaimana Nashta dapat menawarkan solusi "${rec.nashta_opportunity}" untuk mengatasi diagnosa masalah: "${rec.problem_synthesis.slice(0, 150)}..."?`;
+            });
+          }
+        });
+        return;
+      }
+
+      rawWeaknesses.forEach((w, idx) => {
         const card = document.createElement('div');
         card.className = 'weakness-card';
 
