@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import os
+import re
 import shutil
 import threading
 from pathlib import Path
@@ -207,9 +208,61 @@ async def upload_annual_report(
         raise HTTPException(status_code=500, detail=str(e))
 
 
+DOCS_DIR = Path(__file__).resolve().parent.parent / "data" / "documents"
+
+
+@app.get("/api/documents/{code}/{year}")
+def view_document_pdf(code: str, year: int) -> FileResponse:
+    """Streams the authentic local PDF document directly with inline PDF disposition."""
+    c_code = code.upper().strip()
+    target_dir = DOCS_DIR / c_code
+    if target_dir.exists():
+        for pdf_file in sorted(target_dir.glob("*.pdf")):
+            if str(year) in pdf_file.name:
+                return FileResponse(
+                    str(pdf_file),
+                    media_type="application/pdf",
+                    filename=pdf_file.name,
+                    headers={"Content-Disposition": f"inline; filename=\"{pdf_file.name}\""}
+                )
+
+    # Check uploads directory fallback
+    for upl in UPLOADS_DIR.glob("*.pdf"):
+        if c_code in upl.name and str(year) in upl.name:
+            return FileResponse(
+                str(upl),
+                media_type="application/pdf",
+                filename=upl.name,
+                headers={"Content-Disposition": f"inline; filename=\"{upl.name}\""}
+            )
+
+    raise HTTPException(status_code=404, detail=f"Laporan Tahunan {c_code} tahun {year} tidak ditemukan di Document Vault lokal.")
+
+
+@app.get("/api/documents/{code}")
+def list_local_documents(code: str) -> Dict[str, Any]:
+    """Lists all authentic local PDF documents available in Document Vault for an emiten."""
+    c_code = code.upper().strip()
+    target_dir = DOCS_DIR / c_code
+    items = []
+    if target_dir.exists():
+        for pdf_file in sorted(target_dir.glob("*.pdf")):
+            year_matches = re.findall(r"(20(?:1[89]|2[0-6]))", pdf_file.name)
+            year = int(year_matches[-1]) if year_matches else 2024
+            items.append({
+                "filename": pdf_file.name,
+                "year": year,
+                "size_mb": round(pdf_file.stat().st_size / (1024 * 1024), 2),
+                "view_url": f"/api/documents/{c_code}/{year}",
+                "download_url": f"/api/documents/{c_code}/{year}",
+            })
+    return {"code": c_code, "count": len(items), "documents": items}
+
+
 if FRONTEND_DIR.exists():
     app.mount("/static", StaticFiles(directory=str(FRONTEND_DIR)), name="static")
 
     @app.get("/")
     def serve_frontend_index() -> FileResponse:
         return FileResponse(str(FRONTEND_DIR / "index.html"))
+

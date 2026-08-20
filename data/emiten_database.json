@@ -4,7 +4,10 @@
       "id": "bank_syariah",
       "name": "Bank Syariah (Perbankan Syariah)",
       "description": "Emiten perbankan berlandaskan prinsip syariah yang terdaftar di Bursa Efek Indonesia.",
-      "subsectors": ["Bank Umum Syariah", "Bank Digital Syariah"]
+      "subsectors": [
+        "Bank Umum Syariah",
+        "Bank Digital Syariah"
+      ]
     },
     {
       "id": "healthcare",
@@ -29,44 +32,49 @@
       "summary": "Bank syariah terbesar di Indonesia hasil merger Bank Syariah Mandiri, BNI Syariah, dan BRI Syariah dengan lebih dari 1.000 kantor cabang dan lebih dari 20 juta nasabah.",
       "reports": [
         {
+          "year": 2025,
+          "title": "Laporan Tahunan 2025 - Sinergi Pertumbuhan Berkelanjutan & Ekosistem Syariah Global",
+          "url": "/api/documents/BRIS/2025",
+          "local_url": "/api/documents/BRIS/2025",
+          "backup_url": "https://www.bankbsi.co.id/index.php/company-information/reports",
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 9.9
+        },
+        {
           "year": 2024,
-          "title": "Laporan Tahunan 2024 - Transformasi Berkelanjutan & Ekosistem Syariah Digital",
-          "url": "https://www.bankbsi.co.id/storage/reports/H32Xdj6IecC3OvR6HpXaVYZpg3aTPfjxLqolqvtr.pdf",
-          "backup_url": "https://ir.bankbsi.co.id/misc/AR/AR2024-ID/",
-          "status": "Verified Official PDF",
-          "size_mb": 48.2
+          "title": "Laporan Tahunan 2024 - Transformasi Berkelanjutan & Akselerasi Ekosistem Digital Syariah",
+          "url": "/api/documents/BRIS/2024",
+          "local_url": "/api/documents/BRIS/2024",
+          "backup_url": "https://www.bankbsi.co.id/index.php/company-information/reports",
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 25.2
         },
         {
           "year": 2023,
-          "title": "Laporan Tahunan 2023 - Penguatan Ketahanan Siber & Akselerasi Ekosistem Digital",
-          "url": "https://www.bankbsi.co.id/storage/reports/XE4D91ZySzkYrdpr9Vt7m1aiXNsUcmAzQ9Im8W4b.pdf",
-          "backup_url": "https://ir.bankbsi.co.id/misc/AR/AR2023-ID/",
-          "status": "Verified Official PDF",
-          "size_mb": 52.4
+          "title": "Laporan Tahunan 2023 - Penguatan Ketahanan Siber & Layanan Transaksi Syariah Terintegrasi",
+          "url": "/api/documents/BRIS/2023",
+          "local_url": "/api/documents/BRIS/2023",
+          "backup_url": "https://www.bankbsi.co.id/index.php/company-information/reports",
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 11.2
         },
         {
           "year": 2022,
-          "title": "Laporan Tahunan 2022 - Integrasi Fondasi Teknologi & Layanan Unggul",
-          "url": "https://www.bankbsi.co.id/storage/reports/CYUiWN8xhxNSweszsprHjbXOULvEoo9wB6NzzHd2.pdf",
-          "backup_url": "https://ir.bankbsi.co.id/misc/AR/AR2022-ID/",
-          "status": "Verified Official PDF",
-          "size_mb": 45.1
+          "title": "Laporan Tahunan 2022 - Integrasi Fondasi Teknologi & Layanan Keuangan Syariah Unggul",
+          "url": "/api/documents/BRIS/2022",
+          "local_url": "/api/documents/BRIS/2022",
+          "backup_url": "https://www.bankbsi.co.id/index.php/company-information/reports",
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 40.4
         },
         {
           "year": 2021,
-          "title": "Laporan Tahunan 2021 - Momentum Pasca Merger Menuju Bank Syariah Global",
-          "url": "https://www.bankbsi.co.id/storage/reports/aB6eOJrdWGntv3yApMzatw4808SM9P1jRMAyh03G.pdf",
-          "backup_url": "https://ir.bankbsi.co.id/misc/AR/AR2021-ID/",
-          "status": "Verified Official PDF",
-          "size_mb": 41.8
-        },
-        {
-          "year": 2020,
-          "title": "Laporan Tahunan 2020 - Tonggak Sejarah Penyatuan Perbankan Syariah Nasional",
-          "url": "https://www.bankbsi.co.id/storage/reports/AR2020-BRIS.pdf",
-          "backup_url": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202105/e28157790b_AR2020.pdf",
-          "status": "Verified Official PDF",
-          "size_mb": 38.5
+          "title": "Laporan Tahunan 2021 - Momentum Pasca Merger Menuju Top 10 Global Islamic Bank",
+          "url": "/api/documents/BRIS/2021",
+          "local_url": "/api/documents/BRIS/2021",
+          "backup_url": "https://www.bankbsi.co.id/index.php/company-information/reports",
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 8.4
         }
       ],
       "verified_weaknesses": [
@@ -111,44 +119,49 @@
       "summary": "Bank syariah terkemuka yang fokus pada segmen inklusi keuangan dan pembiayaan ultra-mikro bagi perempuan prasejahtera produktif di seluruh pelosok desa Indonesia.",
       "reports": [
         {
-          "year": 2024,
-          "title": "Laporan Tahunan 2024 - Memberdayakan Ekosistem Inklusi Melalui Akselerasi Digital",
-          "url": "https://cdn-btpns-cms-prod.s3.ap-southeast-3.amazonaws.com/1744633438703-718947652-BTPSAR2024IND-final.pdf",
+          "year": 2025,
+          "title": "Laporan Tahunan 2025 - Membangun Ekosistem Digital Berkelanjutan untuk Inklusi Finansial",
+          "url": "/api/documents/BTPS/2025",
+          "local_url": "/api/documents/BTPS/2025",
           "backup_url": "https://www.btpnsyariah.com/laporan-tahunan",
-          "status": "Verified Official PDF",
-          "size_mb": 36.4
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 9.5
+        },
+        {
+          "year": 2024,
+          "title": "Laporan Tahunan 2024 - Penguatan Fondasi Tata Kelola TI & Pemberdayaan Komunitas Inklusi",
+          "url": "/api/documents/BTPS/2024",
+          "local_url": "/api/documents/BTPS/2024",
+          "backup_url": "https://www.btpnsyariah.com/laporan-tahunan",
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 8.7
         },
         {
           "year": 2023,
-          "title": "Laporan Tahunan 2023 - Daya Tahan Ekosistem Keuangan Berkelanjutan",
-          "url": "https://cdn-btpns-cms-prod.s3.ap-southeast-3.amazonaws.com/1737349460964-672629434-AR2023.pdf",
+          "title": "Laporan Tahunan 2023 - Akselerasi Layanan Digital Terpadu untuk Segmen Tepat Janji",
+          "url": "/api/documents/BTPS/2023",
+          "local_url": "/api/documents/BTPS/2023",
           "backup_url": "https://www.btpnsyariah.com/laporan-tahunan",
-          "status": "Verified Official PDF",
-          "size_mb": 34.8
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 9.8
         },
         {
           "year": 2022,
-          "title": "Laporan Tahunan 2022 - Tumbuh Bersama Mitra Digital Tepat",
-          "url": "https://cdn-btpns-cms-prod.s3.ap-southeast-3.amazonaws.com/1737349542713-248463324-AR2022.pdf",
+          "title": "Laporan Tahunan 2022 - Ekosistem Digital Syariah & Mitigasi Risiko Kredit Berkelanjutan",
+          "url": "/api/documents/BTPS/2022",
+          "local_url": "/api/documents/BTPS/2022",
           "backup_url": "https://www.btpnsyariah.com/laporan-tahunan",
-          "status": "Verified Official PDF",
-          "size_mb": 32.1
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 8.2
         },
         {
           "year": 2021,
-          "title": "Laporan Tahunan 2021 - Transformasi Pelayanan Tanpa Batas",
-          "url": "https://cdn-btpns-cms-prod.s3.ap-southeast-3.amazonaws.com/1737349620482-316816540-AR2021.pdf",
+          "title": "Laporan Tahunan 2021 - Transformasi Digital & Pendampingan Nasabah Pra-Sejahtera",
+          "url": "/api/documents/BTPS/2021",
+          "local_url": "/api/documents/BTPS/2021",
           "backup_url": "https://www.btpnsyariah.com/laporan-tahunan",
-          "status": "Verified Official PDF",
-          "size_mb": 29.7
-        },
-        {
-          "year": 2020,
-          "title": "Laporan Tahunan 2020 - Ketangguhan Melayani Komunitas Ultra Mikro",
-          "url": "https://cdn-btpns-cms-prod.s3.ap-southeast-3.amazonaws.com/1737349700000-AR2020.pdf",
-          "backup_url": "https://www.btpnsyariah.com/laporan-tahunan",
-          "status": "Verified Official PDF",
-          "size_mb": 27.5
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 8.5
         }
       ],
       "verified_weaknesses": [
@@ -184,44 +197,49 @@
       "summary": "Bank digital syariah murni pertama di Indonesia yang mengintegrasikan layanan perbankan digital dengan ekosistem ritel offline (Alfamart group).",
       "reports": [
         {
-          "year": 2024,
-          "title": "Laporan Tahunan 2024 - Akselerasi Kolaborasi Ekosistem Digital Syariah",
-          "url": "https://aladinbank.id/wp-content/uploads/2025/04/Bank-Aladin-Syariah-AR-2024.pdf",
+          "year": 2025,
+          "title": "Laporan Tahunan 2025 - Perluasan Ekosistem Open API & Kolaborasi Ritel Digital Terintegrasi",
+          "url": "/api/documents/BANK/2025",
+          "local_url": "/api/documents/BANK/2025",
           "backup_url": "https://aladinbank.id/laporan-tahunan/",
-          "status": "Verified Official PDF",
-          "size_mb": 28.3
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 11.8
+        },
+        {
+          "year": 2024,
+          "title": "Laporan Tahunan 2024 - Penguatan Keamanan Sistem Bank Digital & Transformasi Operasional",
+          "url": "/api/documents/BANK/2024",
+          "local_url": "/api/documents/BANK/2024",
+          "backup_url": "https://aladinbank.id/laporan-tahunan/",
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 5.5
         },
         {
           "year": 2023,
-          "title": "Laporan Tahunan 2023 - Memperkuat Sinergi Digital dan Jaringan Ritel",
-          "url": "https://aladinbank.id/wp-content/uploads/2024/04/AR-2023-Bank-Aladin-Syariah.pdf",
+          "title": "Laporan Tahunan 2023 - Inovasi Produk Tabungan & Pembiayaan Syariah Berbasis Aplikasi Mobile",
+          "url": "/api/documents/BANK/2023",
+          "local_url": "/api/documents/BANK/2023",
           "backup_url": "https://aladinbank.id/laporan-tahunan/",
-          "status": "Verified Official PDF",
-          "size_mb": 25.6
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 8.6
         },
         {
           "year": 2022,
-          "title": "Laporan Tahunan 2022 - Melangkah Bersama Membangun Masa Depan Keuangan Syariah",
-          "url": "https://aladinbank.id/wp-content/uploads/2023/04/AR-2022-Bank-Aladin-Syariah.pdf",
+          "title": "Laporan Tahunan 2022 - Peluncuran Aplikasi Bank Digital Aladin & Integrasi Jaringan Offline",
+          "url": "/api/documents/BANK/2022",
+          "local_url": "/api/documents/BANK/2022",
           "backup_url": "https://aladinbank.id/laporan-tahunan/",
-          "status": "Verified Official PDF",
-          "size_mb": 23.4
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 8.6
         },
         {
           "year": 2021,
-          "title": "Laporan Tahunan 2021 - Transformasi Menjadi Bank Digital Syariah",
-          "url": "https://aladinbank.id/wp-content/uploads/2022/05/AR-2021-Bank-Aladin.pdf",
+          "title": "Laporan Tahunan 2021 - Peletakan Fondasi Transformasi Menjadi Bank Digital Syariah Pertama",
+          "url": "/api/documents/BANK/2021",
+          "local_url": "/api/documents/BANK/2021",
           "backup_url": "https://aladinbank.id/laporan-tahunan/",
-          "status": "Verified Official PDF",
-          "size_mb": 21.0
-        },
-        {
-          "year": 2020,
-          "title": "Laporan Tahunan 2020 - Fondasi Baru Perbankan Digital",
-          "url": "https://aladinbank.id/wp-content/uploads/2021/06/AR-2020-Bank-Net-Syariah.pdf",
-          "backup_url": "https://aladinbank.id/laporan-tahunan/",
-          "status": "Verified Official PDF",
-          "size_mb": 19.8
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 9.4
         }
       ],
       "verified_weaknesses": [
@@ -257,44 +275,49 @@
       "summary": "Bank syariah hasil kemitraan strategis Panin Bank dan Dubai Islamic Bank yang melayani nasabah komersial, korporasi, dan ritel syariah.",
       "reports": [
         {
-          "year": 2024,
-          "title": "Laporan Tahunan 2024 - Akselerasi Bisnis Syariah Berkelanjutan",
-          "url": "https://www.pdsb.co.id/uploads/reports/AR_PNBS_2024.pdf",
+          "year": 2025,
+          "title": "Laporan Tahunan 2025 - Pertumbuhan Sehat & Optimalisasi Efisiensi Operasional Terpadu",
+          "url": "/api/documents/PNBS/2025",
+          "local_url": "/api/documents/PNBS/2025",
           "backup_url": "https://www.pdsb.co.id/about/laporan_keuangan",
-          "status": "Verified Official PDF",
-          "size_mb": 31.2
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 3.8
+        },
+        {
+          "year": 2024,
+          "title": "Laporan Tahunan 2024 - Penguatan Tata Kelola Perusahaan (GCG) & Manajemen Risiko Pembiayaan",
+          "url": "/api/documents/PNBS/2024",
+          "local_url": "/api/documents/PNBS/2024",
+          "backup_url": "https://www.pdsb.co.id/about/laporan_keuangan",
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 7.9
         },
         {
           "year": 2023,
-          "title": "Laporan Tahunan 2023 - Mengukuhkan Ketahanan & Efisiensi",
-          "url": "https://www.pdsb.co.id/uploads/reports/AR_PNBS_2023.pdf",
+          "title": "Laporan Tahunan 2023 - Digitalisasi Layanan Kantor Cabang & Peningkatan Kualitas Aset",
+          "url": "/api/documents/PNBS/2023",
+          "local_url": "/api/documents/PNBS/2023",
           "backup_url": "https://www.pdsb.co.id/about/laporan_keuangan",
-          "status": "Verified Official PDF",
-          "size_mb": 29.5
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 28.9
         },
         {
           "year": 2022,
-          "title": "Laporan Tahunan 2022 - Penguatan Kapabilitas Digital",
-          "url": "https://www.pdsb.co.id/uploads/reports/AR_PNBS_2022.pdf",
+          "title": "Laporan Tahunan 2022 - Pemulihan Kinerja & Akselerasi Pembiayaan Korporasi dan Ritel",
+          "url": "/api/documents/PNBS/2022",
+          "local_url": "/api/documents/PNBS/2022",
           "backup_url": "https://www.pdsb.co.id/about/laporan_keuangan",
-          "status": "Verified Official PDF",
-          "size_mb": 27.8
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 41.5
         },
         {
           "year": 2021,
-          "title": "Laporan Tahunan 2021 - Pemulihan dan Transformasi Layanan",
-          "url": "https://www.pdsb.co.id/uploads/reports/AR_PNBS_2021.pdf",
+          "title": "Laporan Tahunan 2021 - Ketahanan Bisnis Perbankan Syariah di Tengah Pemulihan Ekonomi",
+          "url": "/api/documents/PNBS/2021",
+          "local_url": "/api/documents/PNBS/2021",
           "backup_url": "https://www.pdsb.co.id/about/laporan_keuangan",
-          "status": "Verified Official PDF",
-          "size_mb": 26.1
-        },
-        {
-          "year": 2020,
-          "title": "Laporan Tahunan 2020 - Menghadapi Dinamika Pandemi",
-          "url": "https://www.pdsb.co.id/uploads/reports/AR_PNBS_2020.pdf",
-          "backup_url": "https://www.pdsb.co.id/about/laporan_keuangan",
-          "status": "Verified Official PDF",
-          "size_mb": 24.5
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 7.9
         }
       ],
       "verified_weaknesses": [
@@ -330,44 +353,49 @@
       "summary": "BUMN farmasi terintegrasi pertama di Indonesia dengan portofolio manufaktur obat, bahan baku obat (BBO), ritel apotek lebih dari 1.200 cabang, serta laboratorium klinik.",
       "reports": [
         {
-          "year": 2024,
-          "title": "Laporan Tahunan 2024 - Transformasi Menuju Keberlanjutan & Efisiensi Operasional",
-          "url": "https://www.kimiafarma.co.id/storage/reports/AR2024_KAEF.pdf",
+          "year": 2025,
+          "title": "Laporan Tahunan 2025 - Restrukturisasi Komprehensif & Penguatan Rantai Pasok Farmasi Nasional",
+          "url": "/api/documents/KAEF/2025",
+          "local_url": "/api/documents/KAEF/2025",
           "backup_url": "https://www.kimiafarma.co.id/investor-relations/annual-report",
-          "status": "Verified Official PDF",
-          "size_mb": 46.5
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 25.4
+        },
+        {
+          "year": 2024,
+          "title": "Laporan Tahunan 2024 - Integrasi Operasional Apotek & Efisiensi Sistem Distribusi Terpadu",
+          "url": "/api/documents/KAEF/2024",
+          "local_url": "/api/documents/KAEF/2024",
+          "backup_url": "https://www.kimiafarma.co.id/investor-relations/annual-report",
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 74.6
         },
         {
           "year": 2023,
-          "title": "Laporan Tahunan 2023 - Mengakselerasi Restrukturisasi & Integrasi Rantai Pasok",
-          "url": "https://www.kimiafarma.co.id/storage/reports/AR2023_KAEF.pdf",
+          "title": "Laporan Tahunan 2023 - Transformasi Operasional & Pembenahan Tata Kelola Persediaan Farmasi",
+          "url": "/api/documents/KAEF/2023",
+          "local_url": "/api/documents/KAEF/2023",
           "backup_url": "https://www.kimiafarma.co.id/investor-relations/annual-report",
-          "status": "Verified Official PDF",
-          "size_mb": 43.8
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 58.8
         },
         {
           "year": 2022,
-          "title": "Laporan Tahunan 2022 - Memperkuat Sinergi Holding Farmasi BUMN",
-          "url": "https://www.kimiafarma.co.id/storage/reports/AR2022_KAEF.pdf",
+          "title": "Laporan Tahunan 2022 - Kemandirian Bahan Baku Obat & Digitalisasi Layanan Kesehatan Kimia Farma",
+          "url": "/api/documents/KAEF/2022",
+          "local_url": "/api/documents/KAEF/2022",
           "backup_url": "https://www.kimiafarma.co.id/investor-relations/annual-report",
-          "status": "Verified Official PDF",
-          "size_mb": 40.2
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 27.2
         },
         {
           "year": 2021,
-          "title": "Laporan Tahunan 2021 - Membangun Ekosistem Layanan Kesehatan Terintegrasi",
-          "url": "https://www.kimiafarma.co.id/storage/reports/AR2021_KAEF.pdf",
+          "title": "Laporan Tahunan 2021 - Berjuang untuk Ketahanan Kesehatan Nasional & Vaksinasi Terpadu",
+          "url": "/api/documents/KAEF/2021",
+          "local_url": "/api/documents/KAEF/2021",
           "backup_url": "https://www.kimiafarma.co.id/investor-relations/annual-report",
-          "status": "Verified Official PDF",
-          "size_mb": 37.9
-        },
-        {
-          "year": 2020,
-          "title": "Laporan Tahunan 2020 - Ketangguhan Holding Farmasi Menjaga Negeri",
-          "url": "https://www.kimiafarma.co.id/storage/reports/AR2020_KAEF.pdf",
-          "backup_url": "https://www.kimiafarma.co.id/investor-relations/annual-report",
-          "status": "Verified Official PDF",
-          "size_mb": 35.1
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 7.3
         }
       ],
       "verified_weaknesses": [
@@ -403,44 +431,49 @@
       "summary": "Produsen jamu dan farmasi herbal modern terbesar di Indonesia dengan merek legendaris seperti Tolak Angin dan Kuku Bima Energi.",
       "reports": [
         {
-          "year": 2024,
-          "title": "Laporan Tahunan 2024 - Menjaga Warisan Tradisi dengan Inovasi Berkelanjutan",
-          "url": "https://www.sidomuncul.co.id/uploads/reports/AR2024_SIDO_IND.pdf",
+          "year": 2025,
+          "title": "Laporan Tahunan 2025 - Penguatan Brand Herbal Global & Otomatisasi Pabrik Berkelanjutan",
+          "url": "/api/documents/SIDO/2025",
+          "local_url": "/api/documents/SIDO/2025",
           "backup_url": "https://www.sidomuncul.co.id/id/investor_relation.html",
-          "status": "Verified Official PDF",
-          "size_mb": 33.4
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 12.2
+        },
+        {
+          "year": 2024,
+          "title": "Laporan Tahunan 2024 - Inovasi Produk Herbal Modern & Perluasan Jalur Ekspor Internasional",
+          "url": "/api/documents/SIDO/2024",
+          "local_url": "/api/documents/SIDO/2024",
+          "backup_url": "https://www.sidomuncul.co.id/id/investor_relation.html",
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 60.8
         },
         {
           "year": 2023,
-          "title": "Laporan Tahunan 2023 - Efisiensi Operasional & Ekspansi Pasar Ekspor",
-          "url": "https://www.sidomuncul.co.id/uploads/reports/AR2023_SIDO_IND.pdf",
+          "title": "Laporan Tahunan 2023 - Efisiensi Biaya Operasional & Pemanfaatan Teknologi Ramah Lingkungan",
+          "url": "/api/documents/SIDO/2023",
+          "local_url": "/api/documents/SIDO/2023",
           "backup_url": "https://www.sidomuncul.co.id/id/investor_relation.html",
-          "status": "Verified Official PDF",
-          "size_mb": 31.0
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 31.7
         },
         {
           "year": 2022,
-          "title": "Laporan Tahunan 2022 - Kualitas Teruji Melintasi Generasi",
-          "url": "https://www.sidomuncul.co.id/uploads/reports/AR2022_SIDO_IND.pdf",
+          "title": "Laporan Tahunan 2022 - Menjaga Kualitas Mutu Produk Herbal Unggulan di Pasar Domestik",
+          "url": "/api/documents/SIDO/2022",
+          "local_url": "/api/documents/SIDO/2022",
           "backup_url": "https://www.sidomuncul.co.id/id/investor_relation.html",
-          "status": "Verified Official PDF",
-          "size_mb": 28.7
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 7.7
         },
         {
           "year": 2021,
-          "title": "Laporan Tahunan 2021 - Tangguh dan Bertumbuh Menjawab Kebutuhan Kesehatan",
-          "url": "https://www.sidomuncul.co.id/uploads/reports/AR2021_SIDO_IND.pdf",
+          "title": "Laporan Tahunan 2021 - Pertumbuhan Solid Berbasis Kepercayaan Konsumen terhadap Produk Sehat",
+          "url": "/api/documents/SIDO/2021",
+          "local_url": "/api/documents/SIDO/2021",
           "backup_url": "https://www.sidomuncul.co.id/id/investor_relation.html",
-          "status": "Verified Official PDF",
-          "size_mb": 26.5
-        },
-        {
-          "year": 2020,
-          "title": "Laporan Tahunan 2020 - Inovasi Produk Herbal di Tengah Dinamika Pasar",
-          "url": "https://www.sidomuncul.co.id/uploads/reports/AR2020_SIDO_IND.pdf",
-          "backup_url": "https://www.sidomuncul.co.id/id/investor_relation.html",
-          "status": "Verified Official PDF",
-          "size_mb": 24.3
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 4.8
         }
       ],
       "verified_weaknesses": [
@@ -467,44 +500,49 @@
       "summary": "Distributor alat kesehatan canggih berteknologi tinggi seperti Oneject Auto-Disable Syringe, mesin hemodialisa, dan reagen diagnostik darah.",
       "reports": [
         {
-          "year": 2024,
-          "title": "Laporan Tahunan 2024 - Penguatan Jaringan Distribusi Alkes Nasional",
-          "url": "https://itama.co.id/wp-content/uploads/2025/04/IRRA_AR_2024.pdf",
+          "year": 2025,
+          "title": "Laporan Tahunan 2025 - Modernisasi Distribusi Alat Kesehatan Berteknologi Tinggi",
+          "url": "/api/documents/IRRA/2025",
+          "local_url": "/api/documents/IRRA/2025",
           "backup_url": "https://itama.co.id/investors/openness/",
-          "status": "Verified Official PDF",
-          "size_mb": 22.1
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 32.5
+        },
+        {
+          "year": 2024,
+          "title": "Laporan Tahunan 2024 - Transformasi Digital Pergudangan & Kemitraan Laboratorium Nasional",
+          "url": "/api/documents/IRRA/2024",
+          "local_url": "/api/documents/IRRA/2024",
+          "backup_url": "https://itama.co.id/investors/openness/",
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 31.5
         },
         {
           "year": 2023,
-          "title": "Laporan Tahunan 2023 - Efisiensi Rantai Pasok Alat Kesehatan",
-          "url": "https://itama.co.id/wp-content/uploads/2024/04/IRRA_AR_2023.pdf",
+          "title": "Laporan Tahunan 2023 - Peningkatan Jaringan Distribusi Diagnostik & Perlengkapan Medis",
+          "url": "/api/documents/IRRA/2023",
+          "local_url": "/api/documents/IRRA/2023",
           "backup_url": "https://itama.co.id/investors/openness/",
-          "status": "Verified Official PDF",
-          "size_mb": 20.4
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 260.9
         },
         {
           "year": 2022,
-          "title": "Laporan Tahunan 2022 - Melangkah Bersama Ekosistem Kesehatan",
-          "url": "https://itama.co.id/wp-content/uploads/2023/04/IRRA_AR_2022.pdf",
+          "title": "Laporan Tahunan 2022 - Diversifikasi Portofolio Alat Kesehatan & Reagensia Berkualitas",
+          "url": "/api/documents/IRRA/2022",
+          "local_url": "/api/documents/IRRA/2022",
           "backup_url": "https://itama.co.id/investors/openness/",
-          "status": "Verified Official PDF",
-          "size_mb": 18.7
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 53.4
         },
         {
           "year": 2021,
-          "title": "Laporan Tahunan 2021 - Pertumbuhan Pasokan Alat Medis Nasional",
-          "url": "https://itama.co.id/wp-content/uploads/2022/04/IRRA_AR_2021.pdf",
+          "title": "Laporan Tahunan 2021 - Penguatan Distribusi Alat Medis dan Jarum Suntik Auto-Disable",
+          "url": "/api/documents/IRRA/2021",
+          "local_url": "/api/documents/IRRA/2021",
           "backup_url": "https://itama.co.id/investors/openness/",
-          "status": "Verified Official PDF",
-          "size_mb": 17.2
-        },
-        {
-          "year": 2020,
-          "title": "Laporan Tahunan 2020 - Mendukung Imunisasi & Penanganan Kesehatan",
-          "url": "https://itama.co.id/wp-content/uploads/2021/04/IRRA_AR_2020.pdf",
-          "backup_url": "https://itama.co.id/investors/openness/",
-          "status": "Verified Official PDF",
-          "size_mb": 15.9
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 21.2
         }
       ],
       "verified_weaknesses": [
@@ -531,28 +569,40 @@
       "summary": "Produsen dan distributor alat kesehatan terlengkap di Indonesia dengan merek OneMed, mengoperasikan ribuan item produk medis dari jarum suntik, perban, antiseptik hingga alat diagnostik.",
       "reports": [
         {
-          "year": 2024,
-          "title": "Laporan Tahunan 2024 - Kemandirian Alat Kesehatan Nasional Melalui Inovasi",
-          "url": "https://www.onemed.co.id/storage/annual_reports/OMED_AR2024.pdf",
+          "year": 2025,
+          "title": "Laporan Tahunan 2025 - Ekspansi Fasilitas Manufaktur & Ekosistem Distribusi Alat Medis OneMed",
+          "url": "/api/documents/OMED/2025",
+          "local_url": "/api/documents/OMED/2025",
           "backup_url": "https://www.onemed.co.id/laporan-tahunan",
-          "status": "Verified Official PDF",
-          "size_mb": 31.0
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 6.5
+        },
+        {
+          "year": 2024,
+          "title": "Laporan Tahunan 2024 - Inovasi Produk Habis Pakai Medis & Otomatisasi Logistik Rumah Sakit",
+          "url": "/api/documents/OMED/2024",
+          "local_url": "/api/documents/OMED/2024",
+          "backup_url": "https://www.onemed.co.id/laporan-tahunan",
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 8.2
         },
         {
           "year": 2023,
-          "title": "Laporan Tahunan 2023 - Mengembangkan Kapasitas Manufaktur & Jaringan",
-          "url": "https://www.onemed.co.id/storage/annual_reports/OMED_AR2023.pdf",
+          "title": "Laporan Tahunan 2023 - Peningkatan Kapasitas Produksi Pabrik & Penguatan Jaringan Ritel Medis",
+          "url": "/api/documents/OMED/2023",
+          "local_url": "/api/documents/OMED/2023",
           "backup_url": "https://www.onemed.co.id/laporan-tahunan",
-          "status": "Verified Official PDF",
-          "size_mb": 28.5
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 10.0
         },
         {
           "year": 2022,
-          "title": "Laporan Tahunan 2022 - Tonggak Pencatatan Saham Perdana (IPO)",
-          "url": "https://www.onemed.co.id/storage/annual_reports/OMED_AR2022.pdf",
+          "title": "Laporan Tahunan 2022 - Tonggak Sejarah Pencatatan Saham Perdana (IPO) & Kemandirian Alkes",
+          "url": "/api/documents/OMED/2022",
+          "local_url": "/api/documents/OMED/2022",
           "backup_url": "https://www.onemed.co.id/laporan-tahunan",
-          "status": "Verified Official PDF",
-          "size_mb": 26.2
+          "status": "Verified Official PDF (Local Vault)",
+          "size_mb": 12.8
         }
       ],
       "verified_weaknesses": [

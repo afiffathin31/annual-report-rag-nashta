@@ -485,9 +485,9 @@ document.addEventListener('DOMContentLoaded', () => {
               </span>
               <span class="weakness-title">${w.title}</span>
             </div>
-            <span class="weakness-source-badge">
-              📄 Hal. ${w.page_number || 'N/A'} • ${w.doc_name || 'Laporan_Tahunan.pdf'}
-            </span>
+            <a href="/api/documents/${this.activeEmitenCode}/${w.report_year || 2024}" target="_blank" class="weakness-source-badge" style="text-decoration:none;" title="Klik untuk membuka file PDF dokumen asli">
+              📄 ${w.page_display || ('Hal. ' + w.page_number)} • ${w.doc_name || 'Laporan_Tahunan.pdf'} ↗️
+            </a>
           </div>
 
           <div style="font-size:0.78rem;color:var(--text-muted);margin-top:-0.3rem;">
@@ -500,15 +500,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div style="margin-top:0.25rem;">
             <button class="btn btn-secondary btn-sm" id="btnToggle_${contextId}" style="border-style:dashed;color:var(--nashta-cyan);font-size:0.75rem;">
-              🔍 Buka Konteks Paragraf Asli Dokumen (Halaman ${w.page_number || ''})
+              🔍 Buka Konteks Paragraf Asli Dokumen (${w.page_display || ('Halaman ' + w.page_number)})
             </button>
             
             <div id="${contextId}" style="display:none;margin-top:0.6rem;background:#090d16;border:1px solid var(--border-default);border-radius:var(--radius-md);padding:0.9rem;font-size:0.8rem;line-height:1.6;color:#94a3b8;">
-              <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem;border-bottom:1px solid var(--border-subtle);padding-bottom:0.3rem;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem;border-bottom:1px solid var(--border-subtle);padding-bottom:0.3rem;align-items:center;">
                 <strong style="color:var(--text-primary);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;">
-                  📑 Cuplikan Paragraf Asli dari Halaman ${w.page_number} (${w.doc_name})
+                  📑 Cuplikan Paragraf Asli • ${w.page_display || ('Hal. ' + w.page_number)} (${w.doc_name})
                 </strong>
-                <span style="font-size:0.7rem;color:var(--nashta-emerald);">Teks Terverifikasi RAG Index</span>
+                <a href="/api/documents/${this.activeEmitenCode}/${w.report_year || 2024}" target="_blank" style="font-size:0.7rem;color:var(--nashta-cyan);text-decoration:underline;">
+                  Buka Full PDF ↗
+                </a>
               </div>
               <div style="font-style:italic;">${highlightedContext}</div>
             </div>
@@ -553,19 +555,30 @@ document.addEventListener('DOMContentLoaded', () => {
       reports.forEach(r => {
         const card = document.createElement('div');
         card.className = 'report-row-card';
+        const localDocUrl = `/api/documents/${code}/${r.year}`;
+        const isExternalBackup = r.backup_url && r.backup_url.startsWith('http');
+        
         card.innerHTML = `
           <div class="report-info">
-            <div style="display:flex;align-items:center;gap:0.5rem;">
+            <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
               <span class="report-year-tag">${r.year}</span>
               <span class="report-title">${r.title}</span>
             </div>
-            <div style="font-size:0.75rem;color:var(--text-muted);">
-              Ukuran: ~${r.size_mb || 30} MB • Status: <span class="report-status-tag">✅ ${r.status || 'Verified PDF'}</span>
+            <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.25rem;">
+              Ukuran: ~${r.size_mb || 30} MB • Status: <span class="report-status-tag" style="background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);">✅ ${r.status || 'Verified Local PDF'}</span>
             </div>
           </div>
-          <div style="display:flex;gap:0.5rem;">
-            <a href="${r.url}" target="_blank" class="btn btn-secondary btn-sm">🔗 Buka PDF Resmi</a>
-            <a href="${r.backup_url || r.url}" target="_blank" class="btn btn-secondary btn-sm" style="color:var(--text-muted);">Cadangan</a>
+          <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+            <a href="${localDocUrl}" target="_blank" class="btn btn-primary btn-sm" style="font-size:0.75rem;">
+              📄 Buka PDF Asli
+            </a>
+            <a href="${localDocUrl}" download class="btn btn-secondary btn-sm" style="font-size:0.75rem;" title="Unduh file PDF ke komputer">
+              ⬇️ Unduh
+            </a>
+            ${isExternalBackup ? `
+            <a href="${r.backup_url}" target="_blank" class="btn btn-secondary btn-sm" style="color:var(--text-muted);font-size:0.75rem;" title="Buka Portal Hubungan Investor (IR) / Web Resmi">
+              🌐 Portal IR
+            </a>` : ''}
           </div>
         `;
         this.reportsListContainer.appendChild(card);
