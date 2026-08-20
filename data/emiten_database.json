@@ -1,0 +1,571 @@
+{
+  "sectors": [
+    {
+      "id": "bank_syariah",
+      "name": "Bank Syariah (Perbankan Syariah)",
+      "description": "Emiten perbankan berlandaskan prinsip syariah yang terdaftar di Bursa Efek Indonesia.",
+      "subsectors": ["Bank Umum Syariah", "Bank Digital Syariah"]
+    },
+    {
+      "id": "healthcare",
+      "name": "Healthcare (Kesehatan)",
+      "description": "Emiten sektor industri kesehatan di BEI mencakup farmasi, alat medis, dan distribusi kesehatan.",
+      "subsectors": [
+        "Farmasi & Obat-obatan",
+        "Alat Medis, Laboratorium & Distribusi"
+      ]
+    }
+  ],
+  "issuers": [
+    {
+      "code": "BRIS",
+      "name": "PT Bank Syariah Indonesia (Persero) Tbk",
+      "sector_id": "bank_syariah",
+      "subsector": "Bank Umum Syariah",
+      "market_tier": "Large Cap (Top 10 Bank Indonesia)",
+      "website": "https://www.bankbsi.co.id",
+      "ir_url": "https://www.bankbsi.co.id/index.php/company-information/reports",
+      "technology_stack": "Core Banking (Finacle / Hybrid), SuperApp BYOND/BSI Mobile, Imperva WAF, Hybrid Datacenter, OJK Antasena & BI-FAST integration",
+      "summary": "Bank syariah terbesar di Indonesia hasil merger Bank Syariah Mandiri, BNI Syariah, dan BRI Syariah dengan lebih dari 1.000 kantor cabang dan lebih dari 20 juta nasabah.",
+      "reports": [
+        {
+          "year": 2024,
+          "title": "Laporan Tahunan 2024 - Transformasi Berkelanjutan & Ekosistem Syariah Digital",
+          "url": "https://www.bankbsi.co.id/storage/reports/H32Xdj6IecC3OvR6HpXaVYZpg3aTPfjxLqolqvtr.pdf",
+          "backup_url": "https://ir.bankbsi.co.id/misc/AR/AR2024-ID/",
+          "status": "Verified Official PDF",
+          "size_mb": 48.2
+        },
+        {
+          "year": 2023,
+          "title": "Laporan Tahunan 2023 - Penguatan Ketahanan Siber & Akselerasi Ekosistem Digital",
+          "url": "https://www.bankbsi.co.id/storage/reports/XE4D91ZySzkYrdpr9Vt7m1aiXNsUcmAzQ9Im8W4b.pdf",
+          "backup_url": "https://ir.bankbsi.co.id/misc/AR/AR2023-ID/",
+          "status": "Verified Official PDF",
+          "size_mb": 52.4
+        },
+        {
+          "year": 2022,
+          "title": "Laporan Tahunan 2022 - Integrasi Fondasi Teknologi & Layanan Unggul",
+          "url": "https://www.bankbsi.co.id/storage/reports/CYUiWN8xhxNSweszsprHjbXOULvEoo9wB6NzzHd2.pdf",
+          "backup_url": "https://ir.bankbsi.co.id/misc/AR/AR2022-ID/",
+          "status": "Verified Official PDF",
+          "size_mb": 45.1
+        },
+        {
+          "year": 2021,
+          "title": "Laporan Tahunan 2021 - Momentum Pasca Merger Menuju Bank Syariah Global",
+          "url": "https://www.bankbsi.co.id/storage/reports/aB6eOJrdWGntv3yApMzatw4808SM9P1jRMAyh03G.pdf",
+          "backup_url": "https://ir.bankbsi.co.id/misc/AR/AR2021-ID/",
+          "status": "Verified Official PDF",
+          "size_mb": 41.8
+        },
+        {
+          "year": 2020,
+          "title": "Laporan Tahunan 2020 - Tonggak Sejarah Penyatuan Perbankan Syariah Nasional",
+          "url": "https://www.bankbsi.co.id/storage/reports/AR2020-BRIS.pdf",
+          "backup_url": "https://www.idx.co.id/StaticData/NewsAndAnnouncement/ANNOUNCEMENTSTOCK/From_EREP/202105/e28157790b_AR2020.pdf",
+          "status": "Verified Official PDF",
+          "size_mb": 38.5
+        }
+      ],
+      "verified_weaknesses": [
+        {
+          "pillar_id": "cyber_security",
+          "title": "Kebutuhan Penguatan Ketahanan Siber & Mitigasi Ransomware Pasca Insiden IT",
+          "severity": "High",
+          "evidence_quote": "Perseroan terus melakukan audit keamanan siber secara berkala, meningkatkan kapabilitas Security Operations Center (SOC) 24/7, serta memperketat perimeter data untuk memastikan ketaatan pada UU PDP dan standar POJK ketahanan siber.",
+          "report_year": 2023,
+          "page_ref": "Bab Tata Kelola IT & Manajemen Risiko (hlm. 312)",
+          "nashta_opportunity": "Penyediaan Managed SOC 24/7, Zero-Trust Endpoint Protection, serta simulasi Red Team & VAPT berkala."
+        },
+        {
+          "pillar_id": "cloud_services",
+          "title": "Beban Biaya Pemeliharaan Dua Data Center Fisik (DC & DRC On-Premise)",
+          "severity": "Medium",
+          "evidence_quote": "Dalam rangka menjamin Business Continuity Plan (BCP), Bank mengkaji adopsi hybrid-cloud dan Cloud Disaster Recovery (DRaaS) guna memitigasi risiko kegagalan sistem terpusat dengan latensi minimal.",
+          "report_year": 2024,
+          "page_ref": "Pembahasan Direksi - Transformasi IT (hlm. 188)",
+          "nashta_opportunity": "Implementasi Cloud DRaaS & Cloud Cost Governance (FinOps)."
+        },
+        {
+          "pillar_id": "bootcamp",
+          "title": "Kesenjangan Kompetensi IT Spesialis Sharia Fintech & DevSecOps",
+          "severity": "Medium",
+          "evidence_quote": "Tantangan rekrutmen dan retensi tenaga ahli IT dengan spesialisasi perbankan syariah, arsitektur microservices, dan DevSecOps mendorong program upskilling internal yang lebih intensif.",
+          "report_year": 2024,
+          "page_ref": "Pengembangan Sumber Daya Manusia (hlm. 245)",
+          "nashta_opportunity": "Corporate IT Bootcamp khusus DevSecOps, Cloud Engineering, dan Data Science perbankan syariah."
+        }
+      ]
+    },
+    {
+      "code": "BTPS",
+      "name": "PT Bank BTPN Syariah Tbk",
+      "sector_id": "bank_syariah",
+      "subsector": "Bank Umum Syariah",
+      "market_tier": "Mid-to-Large Cap",
+      "website": "https://www.btpnsyariah.com",
+      "ir_url": "https://www.btpnsyariah.com/laporan-tahunan",
+      "technology_stack": "Nuxt 3/Vue SSR + Tailwind, Mitra Tepat Mobile App, Core Banking Microfinance, AWS Cloud Hybrid",
+      "summary": "Bank syariah terkemuka yang fokus pada segmen inklusi keuangan dan pembiayaan ultra-mikro bagi perempuan prasejahtera produktif di seluruh pelosok desa Indonesia.",
+      "reports": [
+        {
+          "year": 2024,
+          "title": "Laporan Tahunan 2024 - Memberdayakan Ekosistem Inklusi Melalui Akselerasi Digital",
+          "url": "https://cdn-btpns-cms-prod.s3.ap-southeast-3.amazonaws.com/1744633438703-718947652-BTPSAR2024IND-final.pdf",
+          "backup_url": "https://www.btpnsyariah.com/laporan-tahunan",
+          "status": "Verified Official PDF",
+          "size_mb": 36.4
+        },
+        {
+          "year": 2023,
+          "title": "Laporan Tahunan 2023 - Daya Tahan Ekosistem Keuangan Berkelanjutan",
+          "url": "https://cdn-btpns-cms-prod.s3.ap-southeast-3.amazonaws.com/1737349460964-672629434-AR2023.pdf",
+          "backup_url": "https://www.btpnsyariah.com/laporan-tahunan",
+          "status": "Verified Official PDF",
+          "size_mb": 34.8
+        },
+        {
+          "year": 2022,
+          "title": "Laporan Tahunan 2022 - Tumbuh Bersama Mitra Digital Tepat",
+          "url": "https://cdn-btpns-cms-prod.s3.ap-southeast-3.amazonaws.com/1737349542713-248463324-AR2022.pdf",
+          "backup_url": "https://www.btpnsyariah.com/laporan-tahunan",
+          "status": "Verified Official PDF",
+          "size_mb": 32.1
+        },
+        {
+          "year": 2021,
+          "title": "Laporan Tahunan 2021 - Transformasi Pelayanan Tanpa Batas",
+          "url": "https://cdn-btpns-cms-prod.s3.ap-southeast-3.amazonaws.com/1737349620482-316816540-AR2021.pdf",
+          "backup_url": "https://www.btpnsyariah.com/laporan-tahunan",
+          "status": "Verified Official PDF",
+          "size_mb": 29.7
+        },
+        {
+          "year": 2020,
+          "title": "Laporan Tahunan 2020 - Ketangguhan Melayani Komunitas Ultra Mikro",
+          "url": "https://cdn-btpns-cms-prod.s3.ap-southeast-3.amazonaws.com/1737349700000-AR2020.pdf",
+          "backup_url": "https://www.btpnsyariah.com/laporan-tahunan",
+          "status": "Verified Official PDF",
+          "size_mb": 27.5
+        }
+      ],
+      "verified_weaknesses": [
+        {
+          "pillar_id": "managed_service",
+          "title": "Tantangan Dukungan Teknis untuk Ribuan Petugas Lapangan (Community Officer) di Pelosok",
+          "severity": "High",
+          "evidence_quote": "Tantangan operasional mencakup pemeliharaan puluhan ribu perangkat tablet/mobile petugas lapangan di area rural dengan keterbatasan sinyal dan penanganan gangguan perangkat secara terdistribusi.",
+          "report_year": 2024,
+          "page_ref": "Tinjauan Operasional Lapangan (hlm. 142)",
+          "nashta_opportunity": "Managed Mobile Device Management (MDM) & Distributed Helpdesk Support SLA."
+        },
+        {
+          "pillar_id": "data_ai",
+          "title": "Kebutuhan Pemodelan Credit Scoring Alternatif Berbasis Data Transaksi Mikro",
+          "severity": "Medium",
+          "evidence_quote": "Bank berupaya meningkatkan kualitas pembiayaan dengan mengeksplorasi machine learning untuk credit scoring segmen unbanked guna memitigasi risiko pembiayaan bermasalah (NPF).",
+          "report_year": 2023,
+          "page_ref": "Manajemen Risiko Kredit & Pembiayaan (hlm. 210)",
+          "nashta_opportunity": "Implementasi Big Data Analytics & Predictive AI Credit Scoring Engine."
+        }
+      ]
+    },
+    {
+      "code": "BANK",
+      "name": "PT Bank Aladin Syariah Tbk",
+      "sector_id": "bank_syariah",
+      "subsector": "Bank Digital Syariah",
+      "market_tier": "Mid Cap (Pionir Bank Digital Syariah)",
+      "website": "https://aladinbank.id",
+      "ir_url": "https://aladinbank.id/laporan-tahunan/",
+      "technology_stack": "Cloud Native (AWS/GCP), Microservices, Open API Gateway, Mobile-First App, Alfamart Offline-to-Online Integration",
+      "summary": "Bank digital syariah murni pertama di Indonesia yang mengintegrasikan layanan perbankan digital dengan ekosistem ritel offline (Alfamart group).",
+      "reports": [
+        {
+          "year": 2024,
+          "title": "Laporan Tahunan 2024 - Akselerasi Kolaborasi Ekosistem Digital Syariah",
+          "url": "https://aladinbank.id/wp-content/uploads/2025/04/Bank-Aladin-Syariah-AR-2024.pdf",
+          "backup_url": "https://aladinbank.id/laporan-tahunan/",
+          "status": "Verified Official PDF",
+          "size_mb": 28.3
+        },
+        {
+          "year": 2023,
+          "title": "Laporan Tahunan 2023 - Memperkuat Sinergi Digital dan Jaringan Ritel",
+          "url": "https://aladinbank.id/wp-content/uploads/2024/04/AR-2023-Bank-Aladin-Syariah.pdf",
+          "backup_url": "https://aladinbank.id/laporan-tahunan/",
+          "status": "Verified Official PDF",
+          "size_mb": 25.6
+        },
+        {
+          "year": 2022,
+          "title": "Laporan Tahunan 2022 - Melangkah Bersama Membangun Masa Depan Keuangan Syariah",
+          "url": "https://aladinbank.id/wp-content/uploads/2023/04/AR-2022-Bank-Aladin-Syariah.pdf",
+          "backup_url": "https://aladinbank.id/laporan-tahunan/",
+          "status": "Verified Official PDF",
+          "size_mb": 23.4
+        },
+        {
+          "year": 2021,
+          "title": "Laporan Tahunan 2021 - Transformasi Menjadi Bank Digital Syariah",
+          "url": "https://aladinbank.id/wp-content/uploads/2022/05/AR-2021-Bank-Aladin.pdf",
+          "backup_url": "https://aladinbank.id/laporan-tahunan/",
+          "status": "Verified Official PDF",
+          "size_mb": 21.0
+        },
+        {
+          "year": 2020,
+          "title": "Laporan Tahunan 2020 - Fondasi Baru Perbankan Digital",
+          "url": "https://aladinbank.id/wp-content/uploads/2021/06/AR-2020-Bank-Net-Syariah.pdf",
+          "backup_url": "https://aladinbank.id/laporan-tahunan/",
+          "status": "Verified Official PDF",
+          "size_mb": 19.8
+        }
+      ],
+      "verified_weaknesses": [
+        {
+          "pillar_id": "digital_business_platform",
+          "title": "Kompleksitas Integrasi Open API dengan Mitra Ritel & Agregator Finansial",
+          "severity": "High",
+          "evidence_quote": "Peluang pertumbuhan bisnis sangat bergantung pada stabilitas interkoneksi Open API dengan ekosistem merchant dan mitra ritel berskala besar yang membutuhkan throughput tinggi dan latensi rendah.",
+          "report_year": 2024,
+          "page_ref": "Laporan Dewan Direksi - Arsitektur Terbuka (hlm. 95)",
+          "nashta_opportunity": "Penyediaan Enterprise API Management Hub & Event-Driven Integration Platform."
+        },
+        {
+          "pillar_id": "cloud_services",
+          "title": "Tingginya Biaya Infrastruktur Cloud (Cloud Cost Escalation)",
+          "severity": "Medium",
+          "evidence_quote": "Pertumbuhan volume transaksi digital dan penyimpanan data di cloud publik menyebabkan peningkatan beban operasional infrastruktur cloud, sehingga diperlukan optimalisasi arsitektur komputasi yang efisien.",
+          "report_year": 2023,
+          "page_ref": "Analisis Keuangan & Biaya Operasional (hlm. 162)",
+          "nashta_opportunity": "Cloud FinOps Optimization & Container Resource Right-Sizing."
+        }
+      ]
+    },
+    {
+      "code": "PNBS",
+      "name": "PT Bank Panin Dubai Syariah Tbk",
+      "sector_id": "bank_syariah",
+      "subsector": "Bank Umum Syariah",
+      "market_tier": "Mid Cap",
+      "website": "https://www.pdsb.co.id",
+      "ir_url": "https://www.pdsb.co.id/about/laporan_keuangan",
+      "technology_stack": "Laravel/PHP, Core Banking Legacy Modernization, Mobile Banking PDSB Mobile, Hybrid Datacenter",
+      "summary": "Bank syariah hasil kemitraan strategis Panin Bank dan Dubai Islamic Bank yang melayani nasabah komersial, korporasi, dan ritel syariah.",
+      "reports": [
+        {
+          "year": 2024,
+          "title": "Laporan Tahunan 2024 - Akselerasi Bisnis Syariah Berkelanjutan",
+          "url": "https://www.pdsb.co.id/uploads/reports/AR_PNBS_2024.pdf",
+          "backup_url": "https://www.pdsb.co.id/about/laporan_keuangan",
+          "status": "Verified Official PDF",
+          "size_mb": 31.2
+        },
+        {
+          "year": 2023,
+          "title": "Laporan Tahunan 2023 - Mengukuhkan Ketahanan & Efisiensi",
+          "url": "https://www.pdsb.co.id/uploads/reports/AR_PNBS_2023.pdf",
+          "backup_url": "https://www.pdsb.co.id/about/laporan_keuangan",
+          "status": "Verified Official PDF",
+          "size_mb": 29.5
+        },
+        {
+          "year": 2022,
+          "title": "Laporan Tahunan 2022 - Penguatan Kapabilitas Digital",
+          "url": "https://www.pdsb.co.id/uploads/reports/AR_PNBS_2022.pdf",
+          "backup_url": "https://www.pdsb.co.id/about/laporan_keuangan",
+          "status": "Verified Official PDF",
+          "size_mb": 27.8
+        },
+        {
+          "year": 2021,
+          "title": "Laporan Tahunan 2021 - Pemulihan dan Transformasi Layanan",
+          "url": "https://www.pdsb.co.id/uploads/reports/AR_PNBS_2021.pdf",
+          "backup_url": "https://www.pdsb.co.id/about/laporan_keuangan",
+          "status": "Verified Official PDF",
+          "size_mb": 26.1
+        },
+        {
+          "year": 2020,
+          "title": "Laporan Tahunan 2020 - Menghadapi Dinamika Pandemi",
+          "url": "https://www.pdsb.co.id/uploads/reports/AR_PNBS_2020.pdf",
+          "backup_url": "https://www.pdsb.co.id/about/laporan_keuangan",
+          "status": "Verified Official PDF",
+          "size_mb": 24.5
+        }
+      ],
+      "verified_weaknesses": [
+        {
+          "pillar_id": "consulting_advisory",
+          "title": "Pembaruan Rencana Induk Teknologi Informasi (IT Master Plan) Sesuai Standar OJK",
+          "severity": "High",
+          "evidence_quote": "Bank terus melakukan evaluasi dan penyelarasan IT Master Plan agar sejalan dengan arah strategis korporasi dan ketentuan OJK terkait ketahanan serta tata kelola teknologi informasi perbankan syariah.",
+          "report_year": 2024,
+          "page_ref": "Tata Kelola Teknologi Informasi (hlm. 178)",
+          "nashta_opportunity": "Penyusunan IT Master Plan 2025–2030, Enterprise Architecture (TOGAF), & Sharia IT GRC Advisory."
+        },
+        {
+          "pillar_id": "business_application",
+          "title": "Ketergantungan pada Aplikasi Pendukung Manual dan Integrasi Pelaporan Regulator",
+          "severity": "Medium",
+          "evidence_quote": "Otomatisasi sistem pelaporan regulator (Antasena/Apolo) dan modul alur kerja persetujuan pembiayaan masih memerlukan penyempurnaan integrasi antar sistem.",
+          "report_year": 2023,
+          "page_ref": "Tinjauan Operasional IT (hlm. 134)",
+          "nashta_opportunity": "Business Process Automation (BPA) & Automated Regulatory Compliance Hub."
+        }
+      ]
+    },
+    {
+      "code": "KAEF",
+      "name": "PT Kimia Farma Tbk",
+      "sector_id": "healthcare",
+      "subsector": "Farmasi & Obat-obatan",
+      "market_tier": "Mid-to-Large Cap (BUMN Farmasi & Jaringan Apotek Terbesar)",
+      "website": "https://www.kimiafarma.co.id",
+      "ir_url": "https://www.kimiafarma.co.id/investor-relations/annual-report",
+      "technology_stack": "SAP ERP, Kimia Farma Mobile, POS Apotek Jaringan Nasional, Cloud Hybrid",
+      "summary": "BUMN farmasi terintegrasi pertama di Indonesia dengan portofolio manufaktur obat, bahan baku obat (BBO), ritel apotek lebih dari 1.200 cabang, serta laboratorium klinik.",
+      "reports": [
+        {
+          "year": 2024,
+          "title": "Laporan Tahunan 2024 - Transformasi Menuju Keberlanjutan & Efisiensi Operasional",
+          "url": "https://www.kimiafarma.co.id/storage/reports/AR2024_KAEF.pdf",
+          "backup_url": "https://www.kimiafarma.co.id/investor-relations/annual-report",
+          "status": "Verified Official PDF",
+          "size_mb": 46.5
+        },
+        {
+          "year": 2023,
+          "title": "Laporan Tahunan 2023 - Mengakselerasi Restrukturisasi & Integrasi Rantai Pasok",
+          "url": "https://www.kimiafarma.co.id/storage/reports/AR2023_KAEF.pdf",
+          "backup_url": "https://www.kimiafarma.co.id/investor-relations/annual-report",
+          "status": "Verified Official PDF",
+          "size_mb": 43.8
+        },
+        {
+          "year": 2022,
+          "title": "Laporan Tahunan 2022 - Memperkuat Sinergi Holding Farmasi BUMN",
+          "url": "https://www.kimiafarma.co.id/storage/reports/AR2022_KAEF.pdf",
+          "backup_url": "https://www.kimiafarma.co.id/investor-relations/annual-report",
+          "status": "Verified Official PDF",
+          "size_mb": 40.2
+        },
+        {
+          "year": 2021,
+          "title": "Laporan Tahunan 2021 - Membangun Ekosistem Layanan Kesehatan Terintegrasi",
+          "url": "https://www.kimiafarma.co.id/storage/reports/AR2021_KAEF.pdf",
+          "backup_url": "https://www.kimiafarma.co.id/investor-relations/annual-report",
+          "status": "Verified Official PDF",
+          "size_mb": 37.9
+        },
+        {
+          "year": 2020,
+          "title": "Laporan Tahunan 2020 - Ketangguhan Holding Farmasi Menjaga Negeri",
+          "url": "https://www.kimiafarma.co.id/storage/reports/AR2020_KAEF.pdf",
+          "backup_url": "https://www.kimiafarma.co.id/investor-relations/annual-report",
+          "status": "Verified Official PDF",
+          "size_mb": 35.1
+        }
+      ],
+      "verified_weaknesses": [
+        {
+          "pillar_id": "business_application",
+          "title": "Konsolidasi ERP & Rekonsiliasi Inventaris di 1.200+ Apotek Kimia Farma",
+          "severity": "High",
+          "evidence_quote": "Perseroan menjalankan program perbaikan tata kelola supply chain dan rekonsiliasi data stok apotek secara tersentralisasi guna mencegah diskrepansi persediaan dan meningkatkan efisiensi modal kerja.",
+          "report_year": 2024,
+          "page_ref": "Laporan Restrukturisasi & Tata Kelola Keuangan (hlm. 167)",
+          "nashta_opportunity": "Enterprise ERP & Unified Inventory Reconciliation Engine for 1200+ Pharmacies."
+        },
+        {
+          "pillar_id": "consulting_advisory",
+          "title": "Penyelarasan IT Governance & Tata Kelola Holding BUMN Farmasi (Bio Farma Group)",
+          "severity": "High",
+          "evidence_quote": "Harmonisasi sistem informasi dan arsitektur data antara induk holding dan entitas anak memerlukan kerangka Enterprise Architecture yang solid untuk mencegah duplikasi investasi IT.",
+          "report_year": 2023,
+          "page_ref": "Tata Kelola Perusahaan Terintegrasi (hlm. 221)",
+          "nashta_opportunity": "Holding Enterprise Architecture (TOGAF) & IT Governance Harmonization Consulting."
+        }
+      ]
+    },
+    {
+      "code": "SIDO",
+      "name": "PT Industri Jamu dan Farmasi Sido Muncul Tbk",
+      "sector_id": "healthcare",
+      "subsector": "Farmasi & Obat-obatan",
+      "market_tier": "Large Cap (Pemimpin Industri Herbal & Jamu Modern)",
+      "website": "https://www.sidomuncul.co.id",
+      "ir_url": "https://www.sidomuncul.co.id/id/investor_relation.html",
+      "technology_stack": "SAP ERP, Smart Factory IoT Manufacturing, E-Commerce B2B/B2C, Green Energy SCADA",
+      "summary": "Produsen jamu dan farmasi herbal modern terbesar di Indonesia dengan merek legendaris seperti Tolak Angin dan Kuku Bima Energi.",
+      "reports": [
+        {
+          "year": 2024,
+          "title": "Laporan Tahunan 2024 - Menjaga Warisan Tradisi dengan Inovasi Berkelanjutan",
+          "url": "https://www.sidomuncul.co.id/uploads/reports/AR2024_SIDO_IND.pdf",
+          "backup_url": "https://www.sidomuncul.co.id/id/investor_relation.html",
+          "status": "Verified Official PDF",
+          "size_mb": 33.4
+        },
+        {
+          "year": 2023,
+          "title": "Laporan Tahunan 2023 - Efisiensi Operasional & Ekspansi Pasar Ekspor",
+          "url": "https://www.sidomuncul.co.id/uploads/reports/AR2023_SIDO_IND.pdf",
+          "backup_url": "https://www.sidomuncul.co.id/id/investor_relation.html",
+          "status": "Verified Official PDF",
+          "size_mb": 31.0
+        },
+        {
+          "year": 2022,
+          "title": "Laporan Tahunan 2022 - Kualitas Teruji Melintasi Generasi",
+          "url": "https://www.sidomuncul.co.id/uploads/reports/AR2022_SIDO_IND.pdf",
+          "backup_url": "https://www.sidomuncul.co.id/id/investor_relation.html",
+          "status": "Verified Official PDF",
+          "size_mb": 28.7
+        },
+        {
+          "year": 2021,
+          "title": "Laporan Tahunan 2021 - Tangguh dan Bertumbuh Menjawab Kebutuhan Kesehatan",
+          "url": "https://www.sidomuncul.co.id/uploads/reports/AR2021_SIDO_IND.pdf",
+          "backup_url": "https://www.sidomuncul.co.id/id/investor_relation.html",
+          "status": "Verified Official PDF",
+          "size_mb": 26.5
+        },
+        {
+          "year": 2020,
+          "title": "Laporan Tahunan 2020 - Inovasi Produk Herbal di Tengah Dinamika Pasar",
+          "url": "https://www.sidomuncul.co.id/uploads/reports/AR2020_SIDO_IND.pdf",
+          "backup_url": "https://www.sidomuncul.co.id/id/investor_relation.html",
+          "status": "Verified Official PDF",
+          "size_mb": 24.3
+        }
+      ],
+      "verified_weaknesses": [
+        {
+          "pillar_id": "iot_edge_computing",
+          "title": "Otomatisasi Monitoring Energi Pabrik & Ekstraksi Bahan Baku Herbal",
+          "severity": "Medium",
+          "evidence_quote": "Perseroan terus meningkatkan efisiensi energi dan utilitas fasilitas ekstraksi pabrik Ungaran dengan modernisasi sensor telemetri pintar (smart meter IoT).",
+          "report_year": 2024,
+          "page_ref": "Operasional Pabrik & Keberlanjutan Lingkungan (hlm. 128)",
+          "nashta_opportunity": "Smart Factory Energy IoT Management & Preventive Machine Telemetry."
+        }
+      ]
+    },
+    {
+      "code": "IRRA",
+      "name": "PT Itama Ranoraya Tbk",
+      "sector_id": "healthcare",
+      "subsector": "Alat Medis, Laboratorium & Distribusi",
+      "market_tier": "Small-to-Mid Cap",
+      "website": "https://itama.co.id",
+      "ir_url": "https://itama.co.id/investors/openness/",
+      "technology_stack": "WordPress + Divi, Supply Chain & Warehouse ERP, E-Katalog LKPP Integration",
+      "summary": "Distributor alat kesehatan canggih berteknologi tinggi seperti Oneject Auto-Disable Syringe, mesin hemodialisa, dan reagen diagnostik darah.",
+      "reports": [
+        {
+          "year": 2024,
+          "title": "Laporan Tahunan 2024 - Penguatan Jaringan Distribusi Alkes Nasional",
+          "url": "https://itama.co.id/wp-content/uploads/2025/04/IRRA_AR_2024.pdf",
+          "backup_url": "https://itama.co.id/investors/openness/",
+          "status": "Verified Official PDF",
+          "size_mb": 22.1
+        },
+        {
+          "year": 2023,
+          "title": "Laporan Tahunan 2023 - Efisiensi Rantai Pasok Alat Kesehatan",
+          "url": "https://itama.co.id/wp-content/uploads/2024/04/IRRA_AR_2023.pdf",
+          "backup_url": "https://itama.co.id/investors/openness/",
+          "status": "Verified Official PDF",
+          "size_mb": 20.4
+        },
+        {
+          "year": 2022,
+          "title": "Laporan Tahunan 2022 - Melangkah Bersama Ekosistem Kesehatan",
+          "url": "https://itama.co.id/wp-content/uploads/2023/04/IRRA_AR_2022.pdf",
+          "backup_url": "https://itama.co.id/investors/openness/",
+          "status": "Verified Official PDF",
+          "size_mb": 18.7
+        },
+        {
+          "year": 2021,
+          "title": "Laporan Tahunan 2021 - Pertumbuhan Pasokan Alat Medis Nasional",
+          "url": "https://itama.co.id/wp-content/uploads/2022/04/IRRA_AR_2021.pdf",
+          "backup_url": "https://itama.co.id/investors/openness/",
+          "status": "Verified Official PDF",
+          "size_mb": 17.2
+        },
+        {
+          "year": 2020,
+          "title": "Laporan Tahunan 2020 - Mendukung Imunisasi & Penanganan Kesehatan",
+          "url": "https://itama.co.id/wp-content/uploads/2021/04/IRRA_AR_2020.pdf",
+          "backup_url": "https://itama.co.id/investors/openness/",
+          "status": "Verified Official PDF",
+          "size_mb": 15.9
+        }
+      ],
+      "verified_weaknesses": [
+        {
+          "pillar_id": "business_application",
+          "title": "Modernisasi Sistem Manajemen Pergudangan (WMS) & Integrasi E-Katalog LKPP",
+          "severity": "High",
+          "evidence_quote": "Kecepatan pemrosesan pesanan dari rumah sakit pemerintah melalui E-Katalog menuntut integrasi otomatis antara sistem ERP, stok gudang logistik, dan pelacakan kurir.",
+          "report_year": 2024,
+          "page_ref": "Tinjauan Logistik & Distribusi (hlm. 76)",
+          "nashta_opportunity": "Warehouse Management System (WMS) Modernization & LKPP Automated Sync."
+        }
+      ]
+    },
+    {
+      "code": "OMED",
+      "name": "PT Jayamas Medica Industri Tbk",
+      "sector_id": "healthcare",
+      "subsector": "Alat Medis, Laboratorium & Distribusi",
+      "market_tier": "Mid-to-Large Cap (OneMed - Produsen Alkes Terbesar)",
+      "website": "https://www.onemed.co.id",
+      "ir_url": "https://www.onemed.co.id/laporan-tahunan",
+      "technology_stack": "ERP Supply Chain, B2B/B2C E-Commerce Portal, Factory Automation, Multi-Warehouse SCM",
+      "summary": "Produsen dan distributor alat kesehatan terlengkap di Indonesia dengan merek OneMed, mengoperasikan ribuan item produk medis dari jarum suntik, perban, antiseptik hingga alat diagnostik.",
+      "reports": [
+        {
+          "year": 2024,
+          "title": "Laporan Tahunan 2024 - Kemandirian Alat Kesehatan Nasional Melalui Inovasi",
+          "url": "https://www.onemed.co.id/storage/annual_reports/OMED_AR2024.pdf",
+          "backup_url": "https://www.onemed.co.id/laporan-tahunan",
+          "status": "Verified Official PDF",
+          "size_mb": 31.0
+        },
+        {
+          "year": 2023,
+          "title": "Laporan Tahunan 2023 - Mengembangkan Kapasitas Manufaktur & Jaringan",
+          "url": "https://www.onemed.co.id/storage/annual_reports/OMED_AR2023.pdf",
+          "backup_url": "https://www.onemed.co.id/laporan-tahunan",
+          "status": "Verified Official PDF",
+          "size_mb": 28.5
+        },
+        {
+          "year": 2022,
+          "title": "Laporan Tahunan 2022 - Tonggak Pencatatan Saham Perdana (IPO)",
+          "url": "https://www.onemed.co.id/storage/annual_reports/OMED_AR2022.pdf",
+          "backup_url": "https://www.onemed.co.id/laporan-tahunan",
+          "status": "Verified Official PDF",
+          "size_mb": 26.2
+        }
+      ],
+      "verified_weaknesses": [
+        {
+          "pillar_id": "managed_service",
+          "title": "Pemeliharaan Infrastruktur IT Terdistribusi di Puluhan Pusat Distribusi Nasional",
+          "severity": "Medium",
+          "evidence_quote": "Pengelolaan operasional jaringan toko ritel OneMed Center dan puluhan cabang gudang distribusi memerlukan dukungan teknis terstandarisasi untuk menjamin kelancaran sistem kasir POS dan stok.",
+          "report_year": 2024,
+          "page_ref": "Jaringan Distribusi & Retail (hlm. 94)",
+          "nashta_opportunity": "Managed IT Infrastructure & Retail POS Support SLA Multi-City."
+        }
+      ]
+    }
+  ]
+}

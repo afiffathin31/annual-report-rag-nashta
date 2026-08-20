@@ -1,0 +1,51 @@
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Secrets & OAuth Tokens
+credentials.json
+token.json
+.env
+.env.local
+
+# Temp and Upload Logs
+upload_summary.json
+*.log
+
+# Large Binary Documents & PDF Vault (>100MB files)
+data/documents/
+data/gdrive_temp/
+*.pdf
+*.part
+
+# RAG Index Local Cache (Rebuilt automatically via backend/rebuild_dual_rag.py)
+data/rag_index/*.json
+!data/rag_index/.gitkeep
+
+# IDE / Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store

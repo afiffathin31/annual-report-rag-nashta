@@ -1,0 +1,204 @@
+{
+  "pillars": [
+    {
+      "id": "managed_service",
+      "number": 1,
+      "name": "Managed Service",
+      "category": "Operations & Infrastructure",
+      "summary": "Pengelolaan, pemeliharaan, dan monitoring operasional IT end-to-end dengan jaminan SLA 24/7.",
+      "keywords": ["managed service", "sla", "pemeliharaan it", "outsourcing it", "helpdesk", "noc", "network operations center", "incident management", "downtime", "biaya operasional it", "it operational cost", "rekrutmen it"],
+      "pain_points": [
+        "Biaya OPEX tim IT internal tinggi dan overhead rekrutmen/turnover talenta IT spesialis.",
+        "Keterbatasan pemantauan SLA operasional 24/7 untuk sistem kritikal rumah sakit/cabang perbankan.",
+        "Kompleksitas pemeliharaan perangkat keras, jaringan multi-cabang, dan workstation staf.",
+        "Insiden downtime yang mengganggu pelayanan nasabah/pasien karena penanganan tiket lambat."
+      ],
+      "solutions": [
+        "24/7 SLA-based Network & Infrastructure Operations Center (NOC as a Service)",
+        "End-User Computing & Managed Service Desk untuk Jaringan Cabang & Rumah Sakit",
+        "Managed Application Support & Incident Resolution untuk Sistem Core",
+        "Preventive & Corrective Maintenance SLA Multi-Site"
+      ]
+    },
+    {
+      "id": "it_hybrid_infrastructure",
+      "number": 2,
+      "name": "IT Hybrid Infrastructure",
+      "category": "Operations & Infrastructure",
+      "summary": "Modernisasi infrastruktur komputasi hibrida, data center, virtualisasi server, dan jaringan SD-WAN multi-site.",
+      "keywords": ["hybrid infrastructure", "data center", "sd-wan", "server", "virtualisasi", "hyper-converged", "jaringan", "bandwidth", "peremajaan server", "latency", "konektivitas cabang", "disaster recovery center"],
+      "pain_points": [
+        "Infrastruktur server on-premise yang mulai mencapai masa akhir pakai (end-of-life) dan boros energi.",
+        "Latensi koneksi jaringan antar rumah sakit/kantor cabang yang menghambat sinkronisasi data rekam medis/transaksi.",
+        "Ketiadaan arsitektur hibrida yang fleksibel untuk ekspansi cabang baru secara cepat.",
+        "Tingginya ketergantungan pada hardware legacy tunggal yang berisiko single point of failure."
+      ],
+      "solutions": [
+        "Hybrid Cloud-to-OnPrem Interconnect & Modern Datacenter Architecture",
+        "SD-WAN Enterprise Deployment untuk Menghubungkan Kantor Cabang & Unit Rumah Sakit",
+        "Server Consolidation & Hyper-Converged Infrastructure (HCI) Upgrade",
+        "High-Availability Network Redundancy & Load Balancing"
+      ]
+    },
+    {
+      "id": "business_application",
+      "number": 3,
+      "name": "Business Application",
+      "category": "Software & Applications",
+      "summary": "Pengembangan dan modernisasi aplikasi inti bisnis (ERP, Core Banking add-on, SIMRS/HIS, SCM, CRM, BPM).",
+      "keywords": ["business application", "erp", "simrs", "his", "hospital information system", "core banking", "crm", "supply chain", "rekam medis elektronik", "emr", "otomatisasi proses", "workflow", "sap", "oracle"],
+      "pain_points": [
+        "Sistem ERP/Core yang terfragmentasi sehingga terjadi inefisiensi pengadaan barang dan rekonsiliasi keuangan.",
+        "Sistem Informasi Manajemen Rumah Sakit (SIMRS) atau Core Banking add-on yang kaku dan sulit dikustomisasi.",
+        "Proses alur kerja operasional antar departemen yang masih semi-manual menggunakan spreadsheet.",
+        "Tantangan integrasi modul klaim BPJS, asuransi swasta, dan vendor farmasi secara seamless."
+      ],
+      "solutions": [
+        "Next-Gen Hospital Information System (SIMRS) & Electronic Medical Record (EMR/RME)",
+        "Enterprise ERP Transformation (Supply Chain, Finance, Procurement & HR)",
+        "Custom Enterprise CRM & Customer/Patient Lifecycle Management",
+        "Business Process Automation (BPA) & Sharia Core Banking Workflow Automation"
+      ]
+    },
+    {
+      "id": "cyber_security",
+      "number": 4,
+      "name": "Cyber Security",
+      "category": "Security & Governance",
+      "summary": "Proteksi menyeluruh dari ancaman siber, implementasi SOC, VAPT, dan pemenuhan UU PDP serta regulasi industri.",
+      "keywords": ["cyber security", "keamanan siber", "uu pdp", "pelindungan data pribadi", "iso 27001", "soc", "siem", "ransomware", "vapt", "penetration testing", "data breach", "kebocoran data", "edr", "cyber resilience"],
+      "pain_points": [
+        "Kekhawatiran terhadap serangan ransomware dan malware yang mengancam data nasabah/rekam medis pasien.",
+        "Kewajiban kepatuhan hukum terhadap UU No. 27/2022 tentang Pelindungan Data Pribadi (UU PDP) dan POJK/Kemenkes.",
+        "Belum tersedianya monitoring Security Operations Center (SOC) 24/7 dan sistem deteksi intrusi mutakhir.",
+        "Kelemahan pada celah keamanan endpoint di cabang yang belum terproteksi EDR terpusat."
+      ],
+      "solutions": [
+        "Managed Security Operations Center (SOC) 24/7 & SIEM Monitoring",
+        "Comprehensive UU PDP & Regulatory Compliance Readiness Assessment",
+        "Regular Vulnerability Assessment & Penetration Testing (VAPT)",
+        "Endpoint Detection & Response (EDR) and Anti-Ransomware Zero Trust Shield"
+      ]
+    },
+    {
+      "id": "data_ai",
+      "number": 5,
+      "name": "Data & AI",
+      "category": "Data & Intelligence",
+      "summary": "Pemanfaatan Big Data, Enterprise Data Lakehouse, Real-time BI, dan AI Generatif/Prediktif untuk pengambilan keputusan cerdas.",
+      "keywords": ["data and ai", "big data", "data warehouse", "data lakehouse", "business intelligence", "power bi", "machine learning", "ai", "artificial intelligence", "prediktif", "analitik", "data silos", "diagnostic ai"],
+      "pain_points": [
+        "Data operasional dan keuangan tersebar di berbagai database terisolasi (data silos).",
+        "Laporan manajemen eksekutif memerlukan waktu lama untuk dikompilasi secara manual.",
+        "Minimnya kapabilitas analitik prediktif untuk memprediksi tren pasien, retensi nasabah, atau kebutuhan inventaris obat.",
+        "Belum memanfaatkan potensi AI untuk otomatisasi layanan dan analisis medis/finansial mendalam."
+      ],
+      "solutions": [
+        "Enterprise Data Warehouse & Unified Lakehouse Architecture",
+        "Real-Time Executive Dashboard & KPI Business Intelligence (PowerBI/Tableau)",
+        "Predictive AI for Patient Bed Occupancy / Credit Scoring / Churn Prevention",
+        "Generative AI Copilot for Internal Knowledge Base & Diagnostic Support"
+      ]
+    },
+    {
+      "id": "digital_business_platform",
+      "number": 6,
+      "name": "Digital Business Platform",
+      "category": "Digital Experience & Integration",
+      "summary": "Platform ekosistem digital (Mobile Banking SuperApp, Portal Pasien/Telemedicine, Open API Gateway, Omnichannel).",
+      "keywords": ["digital business platform", "mobile app", "superapp", "open api", "satusehat", "bi-fast", "telemedicine", "omnichannel", "portal digital", "patient portal", "digital onboarding", "ekosistem"],
+      "pain_points": [
+        "Aplikasi mobile nasabah atau portal pasien memiliki rating rendah atau sering mengalami kendala performa.",
+        "Keterbatasan integrasi Open API dengan ekosistem nasional (Kemenkes SatuSehat, BI-FAST, agregator fintech/asuransi).",
+        "Pengalaman digital pasien/nasabah yang terputus antara layanan online dan offline (ketiadaan omnichannel).",
+        "Tingginya waktu tunggu pendaftaran fisik karena minimnya self-service portal digital."
+      ],
+      "solutions": [
+        "Omnichannel Mobile SuperApp Platform (Mobile Banking / Patient Companion App)",
+        "Enterprise API Gateway & Integration Hub (SatuSehat, Open Banking, BPJS)",
+        "Integrated Telemedicine & Remote Consultation Platform",
+        "Self-Service Digital Kiosk & Smart Check-in System"
+      ]
+    },
+    {
+      "id": "iot_edge_computing",
+      "number": 7,
+      "name": "IoT & Edge Computing",
+      "category": "Connected Devices & Edge",
+      "summary": "Implementasi sensor IoT, pelacakan aset pintar, pemantauan rantai dingin (cold chain), dan otomatisasi edge.",
+      "keywords": ["iot", "internet of things", "edge computing", "telemetri", "cold chain", "smart hospital", "asset tracking", "sensor", "smart device", "pemantauan suhu", "smart building", "efisiensi energi"],
+      "pain_points": [
+        "Pemantauan suhu penyimpanan vaksin, darah, dan obat sensitif (Cold Chain) masih dicatat secara manual.",
+        "Tingginya risiko kehilangan atau kesulitan melacak posisi alat medis bernilai tinggi di rumah sakit.",
+        "Pemborosan konsumsi energi listrik dan pendingin di cabang/gedung rumah sakit tanpa sistem automasi.",
+        "Keterbatasan telemetri real-time pada mesin ATM/cabang bank syariah."
+      ],
+      "solutions": [
+        "IoT Smart Cold Chain & Environmental Monitoring System (Pharma & Blood Banks)",
+        "Real-Time Medical Asset Tracking (RTLS / RFID / BLE Smart Tags)",
+        "Smart Building & IoT Energy Management System for Hospitals & Branch Offices",
+        "Edge Gateway for Remote Diagnostic Equipment & ATM Telemetry"
+      ]
+    },
+    {
+      "id": "consulting_advisory",
+      "number": 8,
+      "name": "Consulting & Advisory",
+      "category": "Strategy & Governance",
+      "summary": "Penyusunan Rencana Induk IT (IT Master Plan), Enterprise Architecture, Audit Tata Kelola IT, dan Roadmap Kepatuhan.",
+      "keywords": ["consulting", "advisory", "it master plan", "tata kelola it", "it governance", "cobit", "togaf", "enterprise architecture", "audit it", "sharia compliance it", "roadmap digital", "esg it"],
+      "pain_points": [
+        "Investasi IT belum selaras secara strategis dengan tujuan jangka panjang bisnis perusahaan.",
+        "Belum memiliki IT Master Plan (ITMP) 3–5 tahunan yang komprehensif sesuai arahan OJK/Kemenkes.",
+        "Tuntutan kepatuhan syariah (Sharia Governance) pada arsitektur sistem dan kontrak vendor IT perbankan syariah.",
+        "Kurangnya evaluasi maturitas digital (Digital Maturity Assessment) dan kerangka Enterprise Architecture."
+      ],
+      "solutions": [
+        "Strategic IT Master Plan (ITMP) & Digital Transformation Roadmap Formulation",
+        "Enterprise Architecture Development (TOGAF-aligned Business, Data, App & Tech)",
+        "IT Governance, Risk & Compliance (IT GRC) Advisory (COBIT & ISO frameworks)",
+        "Sharia IT Compliance & Healthcare IT Governance Consulting"
+      ]
+    },
+    {
+      "id": "cloud_services",
+      "number": 9,
+      "name": "Cloud Services",
+      "category": "Cloud & Infrastructure",
+      "summary": "Layanan migrasi cloud, multi-cloud strategy, optimalisasi biaya cloud (FinOps), dan Disaster Recovery as a Service (DRaaS).",
+      "keywords": ["cloud services", "cloud migration", "multi cloud", "aws", "gcp", "azure", "local cloud", "finops", "cloud cost", "disaster recovery cloud", "draas", "cloud native", "kubernetes"],
+      "pain_points": [
+        "Biaya operasional data center cadangan (Disaster Recovery Center/DRC) fisik yang sangat mahal.",
+        "Kesulitan dalam mengelola biaya langganan cloud yang tidak terkontrol (minimnya FinOps).",
+        "Kekhawatiran kepatuhan data residency dalam negeri saat ingin memanfaatkan efisiensi cloud publik.",
+        "Lambatnya proses provisioning server untuk inisiatif bisnis baru."
+      ],
+      "solutions": [
+        "Managed Cloud Migration & Modernization (AWS, GCP, Azure, Sovereign/Local Cloud)",
+        "Cloud FinOps & Cost Governance Optimization",
+        "Cloud-Native Disaster Recovery as a Service (DRaaS) with Sub-Minute RTO/RPO",
+        "Enterprise Containerization & Kubernetes (EKS/GKE) Managed Platform"
+      ]
+    },
+    {
+      "id": "bootcamp",
+      "number": 10,
+      "name": "Bootcamp",
+      "category": "Talent & Enablement",
+      "summary": "Program upskilling intensif, corporate academy, dan penyediaan talenta IT siap kerja untuk percepatan transformasi.",
+      "keywords": ["bootcamp", "pelatihan it", "upskilling", "reskilling", "corporate training", "talenta it", "sertifikasi", "academy", "developer training", "cyber security awareness", "sharia fintech talent"],
+      "pain_points": [
+        "Kesenjangan kompetensi (skill gap) tim internal terkait teknologi modern (Cloud, AI, Microservices, DevSecOps).",
+        "Rendahnya kesadaran keamanan siber (cyber security awareness) di kalangan staf non-IT yang memicu insiden phishing.",
+        "Kelangkaan talenta IT yang memahami spesifikasi perbankan syariah atau standar integrasi rekam medis (HL7/FHIR).",
+        "Tingginya biaya dan waktu yang dihabiskan untuk onboarding staf IT baru."
+      ],
+      "solutions": [
+        "Custom Corporate IT Upskilling Bootcamp (Cloud, AI/Data, DevSecOps, Mobile)",
+        "Enterprise Cyber Security & Data Privacy Awareness Training Program",
+        "Specialized Sharia Fintech & Healthcare IT Developer Academy",
+        "IT Talent Incubation & Dedicated Team Enablement"
+      ]
+    }
+  ]
+}

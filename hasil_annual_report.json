@@ -1,0 +1,229 @@
+{
+  "retrieved_at": "2026-08-18",
+  "scope": "emiten BEI dengan kegiatan utama bank umum syariah",
+  "live_errors": {
+    "BRIS": "ValueError: tidak menemukan kartu laporan tahunan pada HTML"
+  },
+  "issuers": {
+    "BRIS": {
+      "issuer": {
+        "code": "BRIS",
+        "name": "PT Bank Syariah Indonesia (Persero) Tbk",
+        "technology": "PHP + Vue/jQuery + Bootstrap; Imperva WAF",
+        "page_url": "https://www.bankbsi.co.id/index.php/company-information/reports"
+      },
+      "reports": [
+        {
+          "code": "BRIS",
+          "company": "PT Bank Syariah Indonesia (Persero) Tbk",
+          "year": 2025,
+          "url": "https://ir.bankbsi.co.id/misc/AR/AR2025-ID/",
+          "discovery": "snapshot resmi 18-08-2026",
+          "link_status": "OK (flipbook)",
+          "link_detail": "HTTP 200; text/html"
+        },
+        {
+          "code": "BRIS",
+          "company": "PT Bank Syariah Indonesia (Persero) Tbk",
+          "year": 2024,
+          "url": "https://www.bankbsi.co.id/storage/reports/H32Xdj6IecC3OvR6HpXaVYZpg3aTPfjxLqolqvtr.pdf",
+          "discovery": "snapshot resmi 18-08-2026",
+          "link_status": "OK",
+          "link_detail": "HTTP 200; application/pdf"
+        },
+        {
+          "code": "BRIS",
+          "company": "PT Bank Syariah Indonesia (Persero) Tbk",
+          "year": 2023,
+          "url": "https://www.bankbsi.co.id/storage/reports/XE4D91ZySzkYrdpr9Vt7m1aiXNsUcmAzQ9Im8W4b.pdf",
+          "discovery": "snapshot resmi 18-08-2026",
+          "link_status": "OK",
+          "link_detail": "HTTP 200; application/pdf"
+        },
+        {
+          "code": "BRIS",
+          "company": "PT Bank Syariah Indonesia (Persero) Tbk",
+          "year": 2022,
+          "url": "https://www.bankbsi.co.id/storage/reports/CYUiWN8xhxNSweszsprHjbXOULvEoo9wB6NzzHd2.pdf",
+          "discovery": "snapshot resmi 18-08-2026",
+          "link_status": "OK",
+          "link_detail": "HTTP 200; application/pdf"
+        },
+        {
+          "code": "BRIS",
+          "company": "PT Bank Syariah Indonesia (Persero) Tbk",
+          "year": 2021,
+          "url": "https://www.bankbsi.co.id/storage/reports/aB6eOJrdWGntv3yApMzatw4808SM9P1jRMAyh03G.pdf",
+          "discovery": "snapshot resmi 18-08-2026",
+          "link_status": "OK",
+          "link_detail": "HTTP 200; application/pdf"
+        }
+      ]
+    },
+    "BTPS": {
+      "issuer": {
+        "code": "BTPS",
+        "name": "PT Bank BTPN Syariah Tbk",
+        "technology": "Nuxt 3/Vue (SSR) + Tailwind CSS",
+        "page_url": "https://www.btpnsyariah.com/laporan-tahunan"
+      },
+      "reports": [
+        {
+          "code": "BTPS",
+          "company": "PT Bank BTPN Syariah Tbk",
+          "year": 2025,
+          "url": "https://cdn-btpns-cms-prod.s3.ap-southeast-3.amazonaws.com/1776675345816-568448371-AR_BTPN_Syariah_2025__.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 200; application/pdf"
+        },
+        {
+          "code": "BTPS",
+          "company": "PT Bank BTPN Syariah Tbk",
+          "year": 2024,
+          "url": "https://cdn-btpns-cms-prod.s3.ap-southeast-3.amazonaws.com/1744633438703-718947652-BTPSAR2024IND-final.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 200; application/pdf"
+        },
+        {
+          "code": "BTPS",
+          "company": "PT Bank BTPN Syariah Tbk",
+          "year": 2023,
+          "url": "https://cdn-btpns-cms-prod.s3.ap-southeast-3.amazonaws.com/1737349460964-672629434-AR2023.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 200; application/pdf"
+        },
+        {
+          "code": "BTPS",
+          "company": "PT Bank BTPN Syariah Tbk",
+          "year": 2022,
+          "url": "https://cdn-btpns-cms-prod.s3.ap-southeast-3.amazonaws.com/1737349542713-248463324-AR2022.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 200; application/pdf"
+        },
+        {
+          "code": "BTPS",
+          "company": "PT Bank BTPN Syariah Tbk",
+          "year": 2021,
+          "url": "https://cdn-btpns-cms-prod.s3.ap-southeast-3.amazonaws.com/1737349620482-316816540-AR2021.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 200; application/pdf"
+        }
+      ]
+    },
+    "BANK": {
+      "issuer": {
+        "code": "BANK",
+        "name": "PT Bank Aladin Syariah Tbk",
+        "technology": "WordPress + Elementor/Elementor Pro",
+        "page_url": "https://aladinbank.id/laporan-tahunan/"
+      },
+      "reports": [
+        {
+          "code": "BANK",
+          "company": "PT Bank Aladin Syariah Tbk",
+          "year": 2025,
+          "url": "https://aladinbank.id/uploads/2026/04/AR-Bank-Aladin-Syariah-2025.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 200; application/pdf"
+        },
+        {
+          "code": "BANK",
+          "company": "PT Bank Aladin Syariah Tbk",
+          "year": 2024,
+          "url": "https://aladinbank.id/uploads/2025/04/Laporan-Tahunan-Aladin-2024-Final_compressed.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 200; application/pdf"
+        },
+        {
+          "code": "BANK",
+          "company": "PT Bank Aladin Syariah Tbk",
+          "year": 2023,
+          "url": "https://aladinbank.id/uploads/2024/04/AR-2023.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 200; application/pdf"
+        },
+        {
+          "code": "BANK",
+          "company": "PT Bank Aladin Syariah Tbk",
+          "year": 2022,
+          "url": "https://aladinbank.id/uploads/2023/05/AR-ALADIN-22-1.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 200; application/pdf"
+        },
+        {
+          "code": "BANK",
+          "company": "PT Bank Aladin Syariah Tbk",
+          "year": 2021,
+          "url": "https://aladinbank.id/uploads/2021/04/AR-BANK-ALADIN-2021-upload.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 200; application/pdf"
+        }
+      ]
+    },
+    "PNBS": {
+      "issuer": {
+        "code": "PNBS",
+        "name": "PT Bank Panin Dubai Syariah Tbk",
+        "technology": "Laravel/PHP + Bootstrap + jQuery",
+        "page_url": "https://www.pdsb.co.id/about/laporan_keuangan"
+      },
+      "reports": [
+        {
+          "code": "PNBS",
+          "company": "PT Bank Panin Dubai Syariah Tbk",
+          "year": 2025,
+          "url": "https://www.pdsb.co.id/about/download_ar/eyJpdiI6Ik04K1hMNGI1QU85enFaSDlDb0htZGc9PSIsInZhbHVlIjoiZFMydWd4ZFd0a3crS0ExMDlqTUxKL3EzT3M4Skw3cWxycWZ5aFE0b2tlZz0iLCJtYWMiOiI4MTMyNDljYzQxZDI4MmRkMmQyZTYxNTAyYzNjZWQxODVkNzQ5NGU2ZjIxZWFhZTNiNTRiMmJhN2FkOGJmMzZmIiwidGFnIjoiIn0=",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 200; application/pdf; TLS fallback pdsb.co.id"
+        },
+        {
+          "code": "PNBS",
+          "company": "PT Bank Panin Dubai Syariah Tbk",
+          "year": 2024,
+          "url": "https://www.pdsb.co.id/about/download_ar/eyJpdiI6InpnakNZK1dlMGNjeG1qbDdXdEl3RUE9PSIsInZhbHVlIjoiT1JpamE3U0tOVWNiMytjTmtLZi9hQUw3ZHBySnQxelh6M1pBSmgxakcvWT0iLCJtYWMiOiI4OWM1Njc1MWU3MDA0ZmEwYzk2ZDU5ZjM5MmIzMjlmZTNkNDZmNGNjODMwNjA0YTBlZTY1ZjFlYmJhYzk1ZDUxIiwidGFnIjoiIn0=",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 200; application/pdf; TLS fallback pdsb.co.id"
+        },
+        {
+          "code": "PNBS",
+          "company": "PT Bank Panin Dubai Syariah Tbk",
+          "year": 2023,
+          "url": "https://www.pdsb.co.id/about/download_ar/eyJpdiI6Ilo0bXpaT2VpQllZL2RncWs2RDVxbUE9PSIsInZhbHVlIjoiWUNiVC9RRHliZStxQ0JwN0ZkUkJDbW9VaCtVU2hXKzBDYWQ1cHVnOUpNND0iLCJtYWMiOiI2Zjk1OTc2MDIyNDQ4MTMzMmI3ZDI1YjU0OWViODQ1YzhjOTM2MjdiOGJkYjViYTFjZmMzMTA4YTVjZTc2YTI0IiwidGFnIjoiIn0=",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 200; application/pdf; TLS fallback pdsb.co.id"
+        },
+        {
+          "code": "PNBS",
+          "company": "PT Bank Panin Dubai Syariah Tbk",
+          "year": 2022,
+          "url": "https://www.pdsb.co.id/about/download_ar/eyJpdiI6IlV6OGR2SUkvYVhpam9aM1hzdXBsR1E9PSIsInZhbHVlIjoiWXpuQWNLenluZmx1eVlYMDVaYTBCL3NYdDdPR2tXanhlWWkrdFFMV1dRRT0iLCJtYWMiOiI5N2UxNDNiN2E2NTZjYzIxZGE2MTg1YmI1NTQxOTdkNjdkNzgwZjlmNWEzNDg0ZTg1YjRjZTExNGU2M2NiMmJiIiwidGFnIjoiIn0=",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 200; application/pdf; TLS fallback pdsb.co.id"
+        },
+        {
+          "code": "PNBS",
+          "company": "PT Bank Panin Dubai Syariah Tbk",
+          "year": 2021,
+          "url": "https://www.pdsb.co.id/about/download_ar/eyJpdiI6ImJFa2hIQloxTjY0c0V2Q1lKTlpDa3c9PSIsInZhbHVlIjoidEdMSWt2cmQ1OHdrTG15RmxWT3JKbHNCSnV3TzNNME5XaWUzeHA4aVgzbz0iLCJtYWMiOiI2MjBhNWI0YTU0YTdkYWUxZjhhZDg5ZWFiMDU4MjNkZDVlZGFiMDgwNGNjZWE5OThhOTdlMmRmYjU5ZThkNGJiIiwidGFnIjoiIn0=",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 200; application/pdf; TLS fallback pdsb.co.id"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nashta 10-Pillars Opportunity Intelligence | AI Business Radar & Assistant</title>
+  <meta name="description" content="Executive Dashboard and AI Assistant for analyzing business opportunities across Nashta's 10 pillars based on 5-year Annual Reports of IDX Bank Syariah and Healthcare issuers.">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <!-- Chart.js for Radar & Trend Visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand-section">
+        <div class="brand-logo-badge">N</div>
+        <div>
+          <div class="brand-title">
+            NASHTA OPPORTUNITY INTELLIGENCE
+            <span style="font-size:0.65rem;background:rgba(6,182,212,0.15);color:var(--nashta-cyan);padding:2px 8px;border-radius:12px;border:1px solid rgba(6,182,212,0.3);font-weight:700;">v2.5 TRUE RAG</span>
+          </div>
+          <div class="brand-subtitle">Analisis Peluang Bisnis 10 Pilar • Bank Syariah & Healthcare BEI</div>
+        </div>
+      </div>
+
+      <div class="header-metrics">
+        <div class="metric-pill">
+          <span>Emiten Aktif:</span>
+          <strong id="metricTotalIssuers">13</strong>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric-pill">
+          <span>Dokumen Terindeks:</span>
+          <strong id="metricTotalDocs">65+ Dokumen</strong>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric-pill">
+          <span>Pilar Layanan:</span>
+          <strong>10 Pilar Nashta</strong>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button class="btn btn-primary" id="quickProposalBtn">
+          <span>⚡ Buat Proposal Cepat</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-container">
+    
+    <!-- Sidebar: Emiten Selector & Filter -->
+    <aside class="sidebar-panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <span>Target Emiten BEI</span>
+          <span style="font-size:0.75rem;color:var(--nashta-cyan);font-family:var(--font-mono);">5 Yrs Scope</span>
+        </div>
+        <div class="panel-subtitle">Bank Syariah & Industri Kesehatan</div>
+      </div>
+
+      <!-- Search Box -->
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="emitenSearchInput" class="search-input" placeholder="Cari kode (BRIS, SILO), nama, kata kunci...">
+      </div>
+
+      <!-- Sector Filter Chips -->
+      <div class="sector-filter-tabs">
+        <button class="filter-chip active" data-sector="all">Semua</button>
+        <button class="filter-chip" data-sector="bank_syariah">Bank Syariah</button>
+        <button class="filter-chip" data-sector="rs">Rumah Sakit</button>
+        <button class="filter-chip" data-sector="farmasi">Farmasi</button>
+        <button class="filter-chip" data-sector="alkes">Alkes & Lab</button>
+      </div>
+
+      <!-- Emiten List Cards -->
+      <div class="emiten-list" id="emitenListContainer">
+        <!-- Rendered via JS -->
+      </div>
+    </aside>
+
+    <!-- Center Workspace -->
+    <section class="workspace-panel">
+      
+      <!-- Issuer Hero Profile Card -->
+      <div class="issuer-hero-card">
+        <div class="hero-info">
+          <div class="hero-tags-row">
+            <span class="badge-tag highlight" id="heroSubsector">Bank Umum Syariah</span>
+            <span class="badge-tag" id="heroMarketTier">Large Cap (Top 10 Bank Indonesia)</span>
+            <span class="badge-tag" style="background:rgba(16,185,129,0.1);color:#34d399;border-color:rgba(16,185,129,0.3);">
+              5-Year AR Audited (2020-2024)
+            </span>
+          </div>
+
+          <div class="hero-title-group">
+            <span class="hero-code" id="heroCode">BRIS</span>
+            <h1 class="hero-name" id="heroName">PT Bank Syariah Indonesia (Persero) Tbk</h1>
+          </div>
+
+          <p class="hero-summary" id="heroSummary">
+            Bank syariah terbesar di Indonesia hasil integrasi Bank Syariah Mandiri, BNI Syariah, dan BRI Syariah dengan jaringan operasional nasional.
+          </p>
+
+          <div class="hero-meta-row">
+            <div class="hero-meta-item">
+              <span>💻 <strong>Tech Stack:</strong></span>
+              <span id="heroTechStack" style="color:var(--text-secondary);">Core Banking, SuperApp BYOND, Imperva WAF, Hybrid Cloud</span>
+            </div>
+            <div class="hero-meta-item">
+              <span>🌐 <strong>Official IR:</strong></span>
+              <a href="#" id="heroWebsiteLink" target="_blank">www.bankbsi.co.id</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-score-box">
+          <div class="score-circle-val" id="heroOverallScore">88.5</div>
+          <div class="score-circle-label">Nashta Opportunity Index</div>
+          <div class="score-status-text" id="heroScoreStatus">🔥 PRIME OPPORTUNITY</div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="workspace-tabs">
+        <button class="tab-btn active" data-tab="tabScorecard">
+          <span>🎯 Scorecard 10 Pilar & Radar</span>
+        </button>
+        <button class="tab-btn" data-tab="tabWeakness">
+          <span>🚨 Matriks Kelemahan & Bukti Sitasi</span>
+          <span class="tab-count-badge" id="weaknessTabCount">3</span>
+        </button>
+        <button class="tab-btn" data-tab="tabTrend">
+          <span>📈 Tren Kebutuhan IT 5 Tahun</span>
+        </button>
+        <button class="tab-btn" data-tab="tabVault">
+          <span>📁 Vault Dokumen & Ingestor Drive</span>
+          <span class="tab-count-badge" id="reportsTabCount">5</span>
+        </button>
+      </nav>
+
+      <!-- Tab 1: 10 Pillars Scorecard & Radar -->
+      <div id="tabScorecard" class="tab-pane active">
+        <div class="scorecard-layout">
+          
+          <!-- Radar Chart Card -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title">Radar Pemetaan 10 Pilar Nashta</div>
+              <div class="chart-subtitle">Perbandingan Skor Emiten vs Rata-rata Industri BEI</div>
+            </div>
+            <div class="radar-wrapper">
+              <canvas id="radarChartCanvas"></canvas>
+            </div>
+          </div>
+
+          <!-- 10 Pillars Cards Grid -->
+          <div class="pillars-grid" id="pillarsGridContainer">
+            <!-- Rendered via JS -->
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Tab 2: Weakness Matrix & Evidence Binder -->
+      <div id="tabWeakness" class="tab-pane">
+        <div class="weakness-container" id="weaknessListContainer">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+
+      <!-- Tab 3: 5-Year IT Evolution Trend -->
+      <div id="tabTrend" class="tab-pane">
+        <div class="chart-card" style="height:480px;">
+          <div class="chart-header">
+            <div class="chart-title">Evolusi Maturitas & Pengeluaran IT 5 Tahun Terakhir (2020 - 2024)</div>
+            <div class="chart-subtitle">Historis inisiatif transformasi digital dan kesiapan adopsi teknologi dari laporan tahunan</div>
+          </div>
+          <div style="flex:1;position:relative;">
+            <canvas id="trendChartCanvas"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 4: Document Vault & Ingestor -->
+      <div id="tabVault" class="tab-pane">
+        <div class="vault-layout">
+          
+          <div class="reports-table-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div class="chart-title">Arsip Laporan Tahunan 5 Tahun (Terverifikasi)</div>
+                <div class="chart-subtitle">Daftar tautan dokumen resmi hasil akuisisi multi-tier scraper</div>
+              </div>
+              <button class="btn btn-secondary btn-sm" id="verifyReportsBtn">🔍 Uji Konektivitas Dokumen</button>
+            </div>
+
+            <div class="reports-list" id="reportsListContainer">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- Right Column: Drive & Upload Ingestor -->
+          <div style="display:flex;flex-direction:column;gap:1rem;">
+            
+            <!-- Direct Google Drive Auto-Sync Card -->
+            <div class="upload-zone-card" style="border:1px solid var(--nashta-cyan);box-shadow:0 0 15px rgba(6,182,212,0.15);">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div class="chart-title" style="color:var(--nashta-cyan);">🚀 Direct Google Drive Auto-Sync</div>
+                <span style="font-size:0.68rem;background:rgba(6,182,212,0.15);color:var(--nashta-cyan);padding:2px 6px;border-radius:10px;font-weight:700;">OTOMATIS</span>
+              </div>
+              <div class="chart-subtitle">Masukkan tautan Folder Google Drive publik atau ID folder yang berisi kumpulan Laporan Tahunan. Sistem akan langsung mengunduh seluruh isi folder dan memproses RAG secara otomatis.</div>
+
+              <div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:0.35rem;">
+                <div>
+                  <label style="font-size:0.72rem;color:var(--text-secondary);font-weight:600;display:block;margin-bottom:0.2rem;">
+                    Tautan Folder Google Drive (Shared / Publik):
+                  </label>
+                  <input type="text" id="gdriveFolderSyncInput" class="search-input" style="padding:0.5rem 0.75rem;" placeholder="https://drive.google.com/drive/folders/1ABCxyz...">
+                </div>
+
+                <button class="btn btn-primary btn-sm" id="btnSyncGDriveFolder" style="width:100%;font-weight:700;">
+                  📥 Tarik Seluruh Dokumen Drive & Proses RAG
+                </button>
+                <div id="driveSyncLogBox" style="display:none;background:#090d16;border:1px solid var(--border-default);border-radius:var(--radius-sm);padding:0.6rem;font-family:var(--font-mono);font-size:0.7rem;max-height:120px;overflow-y:auto;color:#cbd5e1;line-height:1.4;">
+                </div>
+              </div>
+            </div>
+
+            <!-- Google Drive & Folder Ingest Card -->
+            <div class="upload-zone-card">
+              <div class="chart-title">📂 Impor dari Folder Lokal / GDrive Desktop</div>
+              <div class="chart-subtitle">Jika Anda memiliki folder lokal di komputer yang tersinkronisasi dengan Google Drive Desktop:</div>
+
+              <div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:0.35rem;">
+                <div>
+                  <label style="font-size:0.72rem;color:var(--text-secondary);font-weight:600;display:block;margin-bottom:0.2rem;">
+                    Jalur Direktori Komputer:
+                  </label>
+                  <input type="text" id="driveFolderPathInput" class="search-input" style="padding:0.45rem 0.65rem;" placeholder="C:\Users\Apip\Downloads\Annual Report\data\documents atau G:\My Drive\...">
+                </div>
+
+                <button class="btn btn-secondary btn-sm" id="btnImportDrive" style="width:100%;">
+                  📂 Pindai & Indeks Folder Lokal
+                </button>
+                <div id="driveImportStatus" style="font-size:0.75rem;"></div>
+              </div>
+            </div>
+
+            <!-- Drag & Drop Upload Zone -->
+            <div class="upload-zone-card">
+              <div class="chart-title">📄 Ingest File PDF Langsung</div>
+              <div class="chart-subtitle">Tarik dan lepas file PDF laporan tahunan untuk diproses seketika.</div>
+
+              <div class="drop-area" id="pdfDropArea">
+                <div class="drop-icon">📄</div>
+                <div class="drop-text">Klik atau Tarik File PDF ke Sini</div>
+                <div class="drop-subtext">Mendukung PDF Laporan Tahunan hingga 100 MB</div>
+                <input type="file" id="pdfFileInput" accept=".pdf" style="display:none;">
+              </div>
+
+              <div id="uploadStatus" style="font-size:0.75rem;"></div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Floating AI Assistant Trigger -->
+  <button class="floating-ai-trigger" id="floatingAiTrigger">
+    <span>🤖</span>
+    <span>AI Copilot Penjualan</span>
+  </button>
+
+  <!-- AI Copilot Drawer -->
+  <div class="ai-copilot-drawer" id="aiCopilotDrawer">
+    <div class="copilot-header">
+      <div class="copilot-brand">
+        <div class="copilot-dot"></div>
+        <div class="copilot-title">Nashta AI Intelligence Copilot</div>
+      </div>
+      <button class="copilot-close" id="copilotCloseBtn">&times;</button>
+    </div>
+
+    <div class="copilot-chat-body" id="copilotChatBody">
+      <div class="chat-bubble bubble-assistant">
+        Halo! Saya adalah <strong>AI Business Copilot Nashta</strong>. Saya telah menganalisis laporan tahunan 5 tahun terakhir dari emiten yang Anda pilih.<br><br>
+        Anda dapat menanyakan celah kelemahan, potensi nilai deal, atau meminta saya membuat draf <em>Executive Pitch Proposal</em> untuk klien ini.
+      </div>
+    </div>
+
+    <!-- Quick Prompt Chips -->
+    <div class="quick-prompts-container">
+      <button class="prompt-chip" data-prompt="Apa temuan kelemahan operasional terbesar dan buktinya?">🚨 Cek Kelemahan & Bukti</button>
+      <button class="prompt-chip" data-prompt="Buatkan proposal penawaran 10 pilar lengkap untuk emiten ini">📄 Buat Proposal Pitch</button>
+      <button class="prompt-chip" data-prompt="Analisis potensi peluang Cyber Security dan UU PDP">🔒 Peluang Cyber Security</button>
+      <button class="prompt-chip" data-prompt="Analisis peluang Managed Service dan efisiensi biaya IT">🛠️ Peluang Managed Service</button>
+    </div>
+
+    <div class="copilot-input-bar">
+      <input type="text" class="copilot-input" id="copilotInput" placeholder="Ketik pertanyaan atau minta analisis spesifik...">
+      <button class="btn btn-primary btn-sm" id="copilotSendBtn">Kirim</button>
+    </div>
+  </div>
+
+  <!-- Proposal Modal Viewer -->
+  <div class="modal-backdrop" id="proposalModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" id="proposalModalTitle">Executive Proposal: Nashta Digital Accelerator</div>
+        <button class="copilot-close" id="modalCloseBtn">&times;</button>
+      </div>
+      <div class="modal-body" id="proposalModalBody">
+        <!-- Rendered via JS -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="modalCopyBtn">📋 Salin Teks Proposal</button>
+        <button class="btn btn-primary" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- App Scripts -->
+  <script src="/static/js/charts.js"></script>
+  <script src="/static/js/ai_assistant.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

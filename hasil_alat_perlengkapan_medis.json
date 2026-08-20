@@ -1,0 +1,262 @@
+{
+  "period": {
+    "from": 2021,
+    "to": 2025
+  },
+  "issuers": {
+    "IRRA": {
+      "metadata": {
+        "code": "IRRA",
+        "name": "PT Itama Ranoraya Tbk",
+        "technology": "WordPress + Divi + Bootstrap + jQuery",
+        "page_url": "https://itama.co.id/investors/openness/",
+        "classification": "Alat & perlengkapan medis (distributor)",
+        "note": ""
+      },
+      "page_access_error": "",
+      "reports": [
+        {
+          "code": "IRRA",
+          "company": "PT Itama Ranoraya Tbk",
+          "year": 2025,
+          "url": "https://iris.co.id/public/file_web_itama/IRRA-Annual-Report-2025.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 206; PDF"
+        },
+        {
+          "code": "IRRA",
+          "company": "PT Itama Ranoraya Tbk",
+          "year": 2024,
+          "url": "https://iris.co.id/public/file_web_itama/Annual-Report-2024-IRRA.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 206; PDF"
+        },
+        {
+          "code": "IRRA",
+          "company": "PT Itama Ranoraya Tbk",
+          "year": 2023,
+          "url": "https://iris.co.id/public/file_web_itama/annual-report-irra-2023.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 206; PDF"
+        },
+        {
+          "code": "IRRA",
+          "company": "PT Itama Ranoraya Tbk",
+          "year": 2022,
+          "url": "https://itama.co.id/wp-content/uploads/2023/04/Annual-Report-2022-PT-Itama-Ranoraya-Tbk.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 206; PDF"
+        },
+        {
+          "code": "IRRA",
+          "company": "PT Itama Ranoraya Tbk",
+          "year": 2021,
+          "url": "https://itama.co.id/wp-content/uploads/2022/05/AR-IRRA-2021_FINAL.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 206; PDF"
+        }
+      ]
+    },
+    "OMED": {
+      "metadata": {
+        "code": "OMED",
+        "name": "PT Jayamas Medica Industri Tbk",
+        "technology": "PHP/Laravel-style storage + HTML/CSS/JavaScript",
+        "page_url": "https://www.onemed.co.id/laporan-tahunan",
+        "classification": "Alat & perlengkapan medis (produsen)",
+        "note": "Laporan resmi tersedia sejak tahun buku 2022, bertepatan dengan tahun IPO."
+      },
+      "page_access_error": "",
+      "reports": [
+        {
+          "code": "OMED",
+          "company": "PT Jayamas Medica Industri Tbk",
+          "year": 2025,
+          "url": "https://www.onemed.co.id/storage/images/image/web-laporan-tahunan-dan-keberlanjutan-2025-omed.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 206; PDF"
+        },
+        {
+          "code": "OMED",
+          "company": "PT Jayamas Medica Industri Tbk",
+          "year": 2024,
+          "url": "https://www.onemed.co.id/storage/images/image/integrated-report-omed-2024.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 206; PDF"
+        },
+        {
+          "code": "OMED",
+          "company": "PT Jayamas Medica Industri Tbk",
+          "year": 2023,
+          "url": "https://www.onemed.co.id/storage/images/image/ir-omed-2023-hi-res-compressed.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 206; PDF"
+        },
+        {
+          "code": "OMED",
+          "company": "PT Jayamas Medica Industri Tbk",
+          "year": 2022,
+          "url": "https://www.onemed.co.id/storage/images/image/ir-jayamas-medika-2022-hires3.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 206; PDF"
+        }
+      ]
+    },
+    "CHIP": {
+      "metadata": {
+        "code": "CHIP",
+        "name": "PT Pelita Teknologi Global Tbk",
+        "technology": "HTML statis + Bootstrap 5 + JavaScript",
+        "page_url": "https://www.pelitateknologi.com/investor.html",
+        "classification": "Teknologi/telekomunikasi — bukan alat medis",
+        "note": "Tetap diproses karena kode ini ada dalam daftar pengguna."
+      },
+      "page_access_error": "",
+      "reports": [
+        {
+          "code": "CHIP",
+          "company": "PT Pelita Teknologi Global Tbk",
+          "year": 2025,
+          "url": "https://www.pelitateknologi.com/doc/Laporan%20Keuangan/2025/ARSR%20CHIP%202025.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 206; PDF"
+        },
+        {
+          "code": "CHIP",
+          "company": "PT Pelita Teknologi Global Tbk",
+          "year": 2024,
+          "url": "https://www.pelitateknologi.com/doc/Laporan%20Keuangan/2024/Annual%20Report%20ARSR%20CHIP%202024.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 206; PDF"
+        },
+        {
+          "code": "CHIP",
+          "company": "PT Pelita Teknologi Global Tbk",
+          "year": 2023,
+          "url": "https://www.pelitateknologi.com/doc/Laporan%20Keuangan/2023/Annual%20Report_CHIP_2023.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 206; PDF"
+        },
+        {
+          "code": "CHIP",
+          "company": "PT Pelita Teknologi Global Tbk",
+          "year": 2022,
+          "url": "https://www.pelitateknologi.com/doc/Laporan%20Keuangan/2022/Annual%20Report%20CHIP%202022.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 206; PDF"
+        }
+      ]
+    },
+    "HALO": {
+      "metadata": {
+        "code": "HALO",
+        "name": "PT Haloni Jane Tbk",
+        "technology": "WordPress + WPBakery + jQuery",
+        "page_url": "https://www.halonijane.co.id/annual-report/",
+        "classification": "Alat & perlengkapan medis (sarung tangan medis)",
+        "note": "Halaman menamai bagian menurut tahun terbit; tahun buku laporan adalah satu tahun sebelumnya."
+      },
+      "page_access_error": "",
+      "reports": [
+        {
+          "code": "HALO",
+          "company": "PT Haloni Jane Tbk",
+          "year": 2025,
+          "url": "http://www.halonijane.co.id/wp-content/uploads/2026/06/20260430-AR-SR-HALONI-Final.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 206; PDF"
+        },
+        {
+          "code": "HALO",
+          "company": "PT Haloni Jane Tbk",
+          "year": 2024,
+          "url": "http://www.halonijane.co.id/wp-content/uploads/2025/04/20250327-IR-HALO-2024.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 206; PDF"
+        },
+        {
+          "code": "HALO",
+          "company": "PT Haloni Jane Tbk",
+          "year": 2023,
+          "url": "http://www.halonijane.co.id/wp-content/uploads/2025/04/20240429-AR-SR-HALO-JANE-23.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 206; PDF"
+        },
+        {
+          "code": "HALO",
+          "company": "PT Haloni Jane Tbk",
+          "year": 2022,
+          "url": "http://www.halonijane.co.id/wp-content/uploads/2023/06/ARSR-HALO-FINAL-31052023-FINAL.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 206; PDF"
+        }
+      ]
+    },
+    "PEVE": {
+      "metadata": {
+        "code": "PEVE",
+        "name": "PT Penta Valent Tbk",
+        "technology": "WordPress + Gradiant theme + jQuery",
+        "page_url": "https://www.pentavalent.co.id/sustainability-reports",
+        "classification": "Distribusi farmasi dan alat kesehatan",
+        "note": "Tautan 2022 diarahkan oleh situs resmi perusahaan ke Google Drive."
+      },
+      "page_access_error": "",
+      "reports": [
+        {
+          "code": "PEVE",
+          "company": "PT Penta Valent Tbk",
+          "year": 2025,
+          "url": "https://www.pentavalent.co.id/wp-content/uploads/2026/05/IR25-PEVE-30April2026.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 206; PDF"
+        },
+        {
+          "code": "PEVE",
+          "company": "PT Penta Valent Tbk",
+          "year": 2024,
+          "url": "https://www.pentavalent.co.id/wp-content/uploads/2025/05/Book_IR24_PEVE_OJK.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 206; PDF"
+        },
+        {
+          "code": "PEVE",
+          "company": "PT Penta Valent Tbk",
+          "year": 2023,
+          "url": "https://www.pentavalent.co.id/wp-content/uploads/2024/06/IR-PEVE-2023_0905-R.pdf",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 206; PDF"
+        },
+        {
+          "code": "PEVE",
+          "company": "PT Penta Valent Tbk",
+          "year": 2022,
+          "url": "https://drive.google.com/file/d/1S52hGF-rHN21XIh4L0WU7bIm8iVfkhS9/view?usp=sharing",
+          "discovery": "live",
+          "link_status": "OK",
+          "link_detail": "HTTP 200; halaman resmi Google Drive"
+        }
+      ]
+    }
+  }
+}
