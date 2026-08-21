@@ -254,6 +254,58 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await safe_edit_or_reply(query, full_text, reply_markup=reply_markup)
         return
 
+async def send_long_chat_message(update: Update, text: str, emiten_code: str):
+    """Sends response text in logical untruncated chunks with clean HTML/Markdown formatting."""
+    footer = (
+        f"\n\n━━━━━━━━━━━━━━━━━━━━━━\n"
+        f"🏢 <i>Emiten: {emiten_code} | /emiten (ganti) | /reset (hapus riwayat chat)</i>"
+    )
+
+    # Check if single message is within safe length (<3800 chars)
+    if len(text) + len(footer) < 3800:
+        full_msg = f"🤖 <b>Analisis Advisory untuk {emiten_code}:</b>\n\n{text}{footer}"
+        try:
+            await update.message.reply_text(full_msg, parse_mode=constants.ParseMode.HTML)
+        except Exception:
+            try:
+                await update.message.reply_text(full_msg, parse_mode=constants.ParseMode.MARKDOWN)
+            except Exception:
+                await update.message.reply_text(full_msg)
+        return
+
+    # If message is long, split by double newlines into chunks (<3400 chars each)
+    paragraphs = text.split("\n\n")
+    chunks = []
+    current_chunk = []
+    current_len = 0
+
+    for p in paragraphs:
+        if current_len + len(p) + 2 > 3400 and current_chunk:
+            chunks.append("\n\n".join(current_chunk))
+            current_chunk = [p]
+            current_len = len(p)
+        else:
+            current_chunk.append(p)
+            current_len += len(p) + 2
+
+    if current_chunk:
+        chunks.append("\n\n".join(current_chunk))
+
+    total_chunks = len(chunks)
+    for idx, chunk in enumerate(chunks, 1):
+        header = f"🤖 <b>Analisis Advisory untuk {emiten_code} (Bagian {idx}/{total_chunks}):</b>\n\n"
+        msg_to_send = f"{header}{chunk}"
+        if idx == total_chunks:
+            msg_to_send += footer
+
+        try:
+            await update.message.reply_text(msg_to_send, parse_mode=constants.ParseMode.HTML)
+        except Exception:
+            try:
+                await update.message.reply_text(msg_to_send, parse_mode=constants.ParseMode.MARKDOWN)
+            except Exception:
+                await update.message.reply_text(msg_to_send)
+
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle free-form user text messages / Q&A."""
     if not update.message or not update.message.text:
@@ -280,20 +332,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Process Query in background worker thread with persistent multi-turn chat memory
     response_text = await asyncio.to_thread(engine.answer_free_query, emiten_code, user_query, user_id)
 
-    formatted_msg = (
-        f"🤖 <b>Analisis Advisory untuk {emiten_code}:</b>\\n\\n"
-        f"{response_text}\\n\\n"
-        f"━━━━━━━━━━━━━━━━━━━━━━\\n"
-        f"🏢 <i>Emiten: {emiten_code} | /emiten (ganti) | /reset (hapus riwayat chat)</i>"
-    )
-
-    if len(formatted_msg) > 3900:
-        formatted_msg = formatted_msg[:3850] + "...\\n\\n<i>[Teks terpotong karena batas panjang pesan]</i>"
-
-    try:
-        await update.message.reply_text(formatted_msg, parse_mode=constants.ParseMode.HTML)
-    except Exception:
-        await update.message.reply_text(f"🤖 Analisis untuk {emiten_code}:\\n\\n{response_text}")
+    # Send untruncated message
+    await send_long_chat_message(update, response_text, emiten_code)
 
 async def reset_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle /reset command to clear conversational memory."""
@@ -301,7 +341,7 @@ async def reset_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     emiten_code = await asyncio.to_thread(engine.get_user_emiten, user_id)
     if emiten_code:
         await asyncio.to_thread(engine.db_manager.clear_chat_history, user_id, emiten_code)
-        msg = f"🧹 <b>Riwayat percakapan untuk emiten {emiten_code} telah direset.</b>\\nAnda dapat memulai diskusi baru!"
+        msg = f"🧹 <b>Riwayat percakapan untuk emiten {emiten_code} telah direset.</b>\nAnda dapat memulai diskusi baru!"
     else:
         msg = "ℹ️ Tidak ada emiten aktif. Silakan pilih emiten dengan /emiten."
 

@@ -227,10 +227,11 @@ PERTANYAAN PENGGUNA TERBARU:
 "{user_query}"
 
 PANDUAN MENJAWAB:
-1. Jawab secara langsung, lugas, profesional, dan relevan dengan konteks percakapan sebelumnya.
+1. Jawab secara langsung, lugas, terstruktur, dan relevan dengan konteks percakapan sebelumnya.
 2. Hubungkan temuan fakta/masalah dari dokumen laporan tahunan dengan solusi relevan dari portofolio Nashta di atas.
-3. Sebutkan rujukan dokumen atau nomor halaman jika relevan.
-4. Gunakan format markdown yang rapi dengan bullet points agar mudah dibaca di layar Telegram.
+3. Sebutkan rujukan dokumen atau nomor halaman spesifik.
+4. Gunakan format markdown yang rapi dengan bullet points/numbered lists (hindari tabel markdown lebar yang sulit dibaca di layar ponsel).
+5. Sajikan ringkasan yang padat dan tajam agar komprehensif sekaligus nyaman dibaca di Telegram.
 """
 )
 
