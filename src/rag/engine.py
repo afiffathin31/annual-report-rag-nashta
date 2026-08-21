@@ -252,21 +252,10 @@ class RAGEngine:
             return f"Maaf, terjadi kendala saat memproses jawaban: {e}"
 
     def get_user_emiten(self, user_id: int) -> Optional[str]:
-        """Get selected emiten for user from SQLite."""
-        conn = sqlite3.connect(str(self.db_path))
-        cursor = conn.cursor()
-        cursor.execute("SELECT current_emiten FROM user_sessions WHERE user_id = ?", (user_id,))
-        row = cursor.fetchone()
-        conn.close()
-        return row[0] if row else None
+        """Get selected emiten for user from SQLite via DatabaseManager."""
+        return self.db_manager.get_user_emiten(user_id)
 
     def set_user_emiten(self, user_id: int, emiten_code: str):
-        """Save selected emiten for user into SQLite."""
-        conn = sqlite3.connect(str(self.db_path))
-        cursor = conn.cursor()
-        cursor.execute("""
-            INSERT OR REPLACE INTO user_sessions (user_id, current_emiten, updated_at)
-            VALUES (?, ?, CURRENT_TIMESTAMP)
-        """, (user_id, emiten_code.upper()))
-        conn.commit()
-        conn.close()
+        """Save selected emiten for user into SQLite via DatabaseManager."""
+        self.db_manager.set_user_emiten(user_id, emiten_code)
+

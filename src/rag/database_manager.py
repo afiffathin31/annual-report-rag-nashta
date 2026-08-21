@@ -370,3 +370,53 @@ class DatabaseManager:
         cursor.execute("DELETE FROM chat_memory WHERE user_id = ? AND emiten_code = ?", (user_id, emiten_code.upper()))
         conn.commit()
         conn.close()
+
+    # --- User Session Management ---
+
+    def get_user_emiten(self, user_id: int) -> Optional[str]:
+        """Get currently selected emiten for user from SQLite."""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        try:
+            cursor.execute("SELECT current_emiten FROM user_sessions WHERE user_id = ?", (user_id,))
+            row = cursor.fetchone()
+            if row and row["current_emiten"]:
+                conn.close()
+                return row["current_emiten"]
+        except Exception:
+            pass
+
+        try:
+            cursor.execute("SELECT selected_emiten FROM user_sessions WHERE user_id = ?", (user_id,))
+            row = cursor.fetchone()
+            if row and row["selected_emiten"]:
+                conn.close()
+                return row["selected_emiten"]
+        except Exception:
+            pass
+
+        conn.close()
+        return None
+
+    def set_user_emiten(self, user_id: int, emiten_code: str):
+        """Save selected emiten for user into SQLite."""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        emiten_code = emiten_code.upper()
+        try:
+            cursor.execute("""
+                INSERT INTO user_sessions (user_id, current_emiten, selected_emiten, updated_at)
+                VALUES (?, ?, ?, CURRENT_TIMESTAMP)
+                ON CONFLICT(user_id) DO UPDATE SET 
+                    current_emiten=excluded.current_emiten,
+                    selected_emiten=excluded.selected_emiten,
+                    updated_at=CURRENT_TIMESTAMP
+            """, (user_id, emiten_code, emiten_code))
+        except Exception:
+            cursor.execute("""
+                INSERT OR REPLACE INTO user_sessions (user_id, current_emiten, selected_emiten, updated_at)
+                VALUES (?, ?, ?, CURRENT_TIMESTAMP)
+            """, (user_id, emiten_code, emiten_code))
+        conn.commit()
+        conn.close()
+
