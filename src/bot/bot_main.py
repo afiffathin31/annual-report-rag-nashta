@@ -265,23 +265,36 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Send Typing Action
     await context.bot.send_chat_action(chat_id=update.effective_chat.id, action=constants.ChatAction.TYPING)
 
-    # Process Query in background worker thread
-    response_text = await asyncio.to_thread(engine.answer_free_query, emiten_code, user_query)
+    # Process Query in background worker thread with persistent multi-turn chat memory
+    response_text = await asyncio.to_thread(engine.answer_free_query, emiten_code, user_query, user_id)
 
     formatted_msg = (
-        f"🤖 <b>Analisis Advisory untuk {emiten_code}:</b>\n\n"
-        f"{response_text}\n\n"
-        f"━━━━━━━━━━━━━━━━━━━━━━\n"
-        f"🏢 <i>Emiten Aktif: {emiten_code} | Gunakan /emiten untuk ganti emiten</i>"
+        f"🤖 <b>Analisis Advisory untuk {emiten_code}:</b>\\n\\n"
+        f"{response_text}\\n\\n"
+        f"━━━━━━━━━━━━━━━━━━━━━━\\n"
+        f"🏢 <i>Emiten: {emiten_code} | /emiten (ganti) | /reset (hapus riwayat chat)</i>"
     )
 
     if len(formatted_msg) > 3900:
-        formatted_msg = formatted_msg[:3850] + "...\n\n<i>[Teks terpotong karena batas panjang pesan]</i>"
+        formatted_msg = formatted_msg[:3850] + "...\\n\\n<i>[Teks terpotong karena batas panjang pesan]</i>"
 
     try:
         await update.message.reply_text(formatted_msg, parse_mode=constants.ParseMode.HTML)
     except Exception:
-        await update.message.reply_text(f"🤖 Analisis untuk {emiten_code}:\n\n{response_text}")
+        await update.message.reply_text(f"🤖 Analisis untuk {emiten_code}:\\n\\n{response_text}")
+
+async def reset_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Handle /reset command to clear conversational memory."""
+    user_id = update.effective_user.id
+    emiten_code = await asyncio.to_thread(engine.get_user_emiten, user_id)
+    if emiten_code:
+        await asyncio.to_thread(engine.db_manager.clear_chat_history, user_id, emiten_code)
+        msg = f"🧹 <b>Riwayat percakapan untuk emiten {emiten_code} telah direset.</b>\\nAnda dapat memulai diskusi baru!"
+    else:
+        msg = "ℹ️ Tidak ada emiten aktif. Silakan pilih emiten dengan /emiten."
+
+    if update.message:
+        await update.message.reply_text(msg, parse_mode=constants.ParseMode.HTML)
 
 async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE):
     """Log errors caused by updates."""
@@ -321,6 +334,7 @@ def run_bot():
             app.add_handler(CommandHandler("start", start_command))
             app.add_handler(CommandHandler("help", help_command))
             app.add_handler(CommandHandler("emiten", emiten_command))
+            app.add_handler(CommandHandler("reset", reset_command))
             app.add_handler(CallbackQueryHandler(handle_callback))
             app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
             app.add_error_handler(error_handler)

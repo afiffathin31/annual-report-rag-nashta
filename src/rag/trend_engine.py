@@ -1,19 +1,21 @@
 import json
 import sqlite3
 import html
-import time
 from typing import Dict, List, Optional, Any
 from pathlib import Path
 from mistralai.client import Mistral
 import config
 from src.rag.vector_store import VectorStoreManager
+from src.rag.database_manager import DatabaseManager
+from src.rag.prompt_templates import TEMPORAL_TREND_TEMPLATE
 
 class TemporalTrendEngine:
-    """Multi-year longitudinal trend analysis engine with verifiable citations and strategic roadmap."""
+    """Multi-year longitudinal trend analysis engine with database catalog grounding and PromptTemplate."""
 
     def __init__(self, db_path: Path = config.SQLITE_DB_PATH):
         self.db_path = Path(db_path)
         self.vector_store = VectorStoreManager()
+        self.db_manager = DatabaseManager(self.db_path)
         self.mistral_client = Mistral(api_key=config.MISTRAL_API_KEY)
         self._init_sqlite()
 
@@ -64,7 +66,16 @@ class TemporalTrendEngine:
                 except Exception as e:
                     print(f"Cache decode error for {emiten_code}: {e}")
 
-        # 2. Retrieve Multi-Year Context Chunks
+        # 2. Fetch Relational Data from SQLite Database
+        emiten_profile = self.db_manager.get_emiten_profile(emiten_code)
+        all_pillars = self.db_manager.get_all_pillars_catalog()
+        catalog_summary_lines = []
+        for p in all_pillars:
+            sols = ", ".join(s["name"] for s in p["product_solutions"])
+            catalog_summary_lines.append(f"• {p['icon']} {p['pillar_name']}: {sols} (Nilai: {p['business_value']})")
+        catalog_summary_str = "\n".join(catalog_summary_lines)
+
+        # 3. Retrieve Multi-Year Context Chunks from ChromaDB
         queries = [
             "transformasi digital roadmap TI inisiatif teknologi pengembangan sistem",
             "kendala operasional risiko rantai pasok fragmentasi data integrasi ERP",
@@ -82,7 +93,6 @@ class TemporalTrendEngine:
                     seen_texts.add(m["text"])
                     all_chunks.append(m)
 
-        # Build Chronological Context String
         context_parts = []
         for c in all_chunks[:10]:
             meta = c["metadata"]
@@ -91,102 +101,15 @@ class TemporalTrendEngine:
 
         context_str = "\n\n---\n\n".join(context_parts) if context_parts else "Dokumen laporan tahunan terindeks."
 
-        # 3. Prompt Mistral LLM for High-Level Trend Synthesis
-        prompt = f"""Anda adalah Principal Strategy Consultant di Nashta Global Utama.
-Tugas Anda adalah menganalisis evolusi tren permasalahan dan inisiatif bisnis/TI emiten **{emiten_code}** selama 5 tahun terakhir (2021–2025) berdasarkan dokumen laporan tahunan, lalu menyusun rekomendasi Strategic Roadmap Solusi Nashta.
-
-POTONGAN DOKUMEN MULTI-TAHUN ({emiten_code}):
-{context_str}
-
-INSTRUKSI FORMAT OUTPUT:
-Kembalikan HANYA format JSON valid berikut tanpa kata pengantar:
-{{
-  "period": "2021 - 2025",
-  "timeline": [
-    {{
-      "phase": "2021 - 2022",
-      "theme": "Tema Fase (contoh: Resiliensi Operasional & Digitalisasi Awal)",
-      "key_problems": [
-        "Poin masalah/kendala utama 1 pada periode ini.",
-        "Poin masalah/kendala utama 2 pada periode ini."
-      ],
-      "citation": {{
-        "doc": "Nama dokumen (contoh: Laporan Tahunan {emiten_code} 2021/2022)",
-        "location": "Nomor halaman dan bab (contoh: Halaman 45, Bab Manajemen Risiko)",
-        "quote": "Kutipan kalimat kunci dokumen pada periode ini."
-      }}
-    }},
-    {{
-      "phase": "2023 - 2024",
-      "theme": "Tema Fase (contoh: Integrasi Sistem & Silo Data Operasional)",
-      "key_problems": [
-        "Poin masalah/kendala utama 1 pada periode ini.",
-        "Poin masalah/kendala utama 2 pada periode ini."
-      ],
-      "citation": {{
-        "doc": "Nama dokumen (contoh: Laporan Tahunan {emiten_code} 2023/2024)",
-        "location": "Nomor halaman dan bab",
-        "quote": "Kutipan kalimat kunci dokumen pada periode ini."
-      }}
-    }},
-    {{
-      "phase": "2025 (Terkini)",
-      "theme": "Tema Fase (contoh: Keamanan Siber, Regulasi UU PDP & Adopsi AI)",
-      "key_problems": [
-        "Poin masalah/kendala utama 1 pada periode ini.",
-        "Poin masalah/kendala utama 2 pada periode ini."
-      ],
-      "citation": {{
-        "doc": "Nama dokumen (contoh: Laporan Tahunan {emiten_code} 2025)",
-        "location": "Nomor halaman dan bab",
-        "quote": "Kutipan kalimat kunci dokumen pada periode ini."
-      }}
-    }}
-  ],
-  "chronic_issues": [
-    "Masalah menahun/kronis yang terus muncul atau belum tuntas selama 5 tahun terakhir.",
-    "Tantangan struktural lain yang konsisten berulang."
-  ],
-  "emerging_risks": [
-    "Risiko atau tuntutan baru yang muncul belakangan ini (misal siber, AI, regulasi).",
-    "Bottleneck baru yang berpotensi menghambat pertumbuhan masa depan."
-  ],
-  "strategic_roadmap": [
-    {{
-      "phase_num": "1",
-      "phase_title": "Fase 1: Quick Win & Compliance (0 - 6 Bulan)",
-      "solutions": [
-        "Nama Solusi Nashta 1 (contoh: Nashta Managed SOC 24/7 & Audit Kepatuhan UU PDP)",
-        "Nama Solusi Nashta 2 (contoh: Vulnerability Assessment & IT Health Check)"
-      ],
-      "business_impact": "Dampak bisnis langsung (contoh: Menutup celah keamanan mendesak dan memastikan kepatuhan regulasi)."
-    }},
-    {{
-      "phase_num": "2",
-      "phase_title": "Fase 2: Enterprise Integration & Data Consolidation (6 - 12 Bulan)",
-      "solutions": [
-        "Nama Solusi Nashta 1 (contoh: Nashta Unified Data Lakehouse & ERP Integration)",
-        "Nama Solusi Nashta 2 (contoh: Cloud Infrastructure Consolidation & FinOps)"
-      ],
-      "business_impact": "Dampak bisnis (contoh: Menghilangkan silo data 5 tahun dan memangkas biaya pemeliharaan)."
-    }},
-    {{
-      "phase_num": "3",
-      "phase_title": "Fase 3: Next-Gen AI & Intelligent Automation (1 - 2 Tahun)",
-      "solutions": [
-        "Nama Solusi Nashta 1 (contoh: Nashta Enterprise AI & Predictive Analytics Platform)",
-        "Nama Solusi Nashta 2 (contoh: Smart IoT Telemetry & Automated Workflow)"
-      ],
-      "business_impact": "Dampak bisnis (contoh: Mengakselerasi efisiensi operasional berbasis data dan otomasi cerdas)."
-    }}
-  ]
-}}
-
-PENTING:
-- Buat kesimpulan ringkas, padat, dan *high-level* (mudah dibaca eksekutif).
-- Pastikan kutipan citation otentik dari fakta dokumen yang diberikan.
-- Kembalikan HANYA format JSON valid.
-"""
+        # 4. Format Prompt with TEMPORAL_TREND_TEMPLATE
+        prompt = TEMPORAL_TREND_TEMPLATE.format(
+            emiten_code=emiten_code,
+            company_name=emiten_profile["company_name"],
+            industry_sector=emiten_profile["industry_sector"],
+            business_focus=emiten_profile["business_focus"],
+            retrieved_context=context_str,
+            catalog_summary=catalog_summary_str
+        )
 
         try:
             resp = self.mistral_client.chat.complete(
@@ -318,7 +241,6 @@ def render_trend_html(emiten_code: str, res: Dict[str, Any]) -> str:
 
     full_msg = "\n".join(lines)
 
-    # Safe length check (< 3900 chars)
     if len(full_msg) > 3900:
         full_msg = full_msg[:3850] + "...\n\n<i>[Teks terpotong untuk batas pesan]</i>"
 

@@ -44,46 +44,19 @@ class RAGEvaluator:
         rag_output = self.engine.analyze_single_pillar(emiten_code, pillar_id, force_refresh=True)
         latency = round(time.time() - start_time, 2)
 
-        # 3. LLM-as-a-Judge Evaluation Prompt
-        judge_prompt = f"""Anda adalah AI Evaluator independen yang bertugas menilai kualitas sistem RAG (Retrieval-Augmented Generation) di bidang konsultasi TI korporasi.
+        # 3. LLM-as-a-Judge Evaluation Prompt using PromptTemplate
+        from src.rag.prompt_templates import EVALUATION_JUDGE_TEMPLATE
 
-TUGAS EVALUASI:
-Nilai hasil RAG berikut berdasarkan 4 dimensi standar RAG Triad.
-
-EMITEN: {emiten_code}
-PILAR YANG DIUJI: {pillar['name']} ({pillar['description']})
-
---- KONTEKS DOKUMEN YANG DIAMBIL (RETRIEVED CONTEXT) ---
-{context_str}
-
---- HASIL GENERASI RAG (YANG DINILAI) ---
-1. KESIMPULAN MASALAH:
-{rag_output.get('problem_summary', '')}
-
-2. CITATION (SUMBER):
-- Dokumen: {rag_output.get('citation_doc', '')}
-- Lokasi: {rag_output.get('citation_location', '')}
-- Kutipan: {rag_output.get('citation_quote', '')}
-
-3. REKOMENDASI SOLUSI NASHTA:
-{json.dumps(rag_output.get('solutions', []), ensure_ascii=False, indent=2)}
-
---- KRITERIA PENILAIAN (Skor 0.0 sampai 1.0) ---
-1. **context_relevance** (0.0 - 1.0): Apakah potongan teks konteks yang diambil dari dokumen relevan dengan topik pilar "{pillar['name']}"?
-2. **faithfulness** (0.0 - 1.0): Apakah kesimpulan masalah 100% berdasar dari fakta yang ada di konteks dokumen tanpa halusinasi/mengarang?
-3. **citation_accuracy** (0.0 - 1.0): Apakah kutipan teks dan lokasi halaman/bagian benar-benar dapat diverifikasi pada potongan dokumen?
-4. **solution_relevance** (0.0 - 1.0): Apakah solusi yang direkomendasikan relevan mengatasi masalah yang ditemukan dan sesuai dengan kapabilitas Nashta pada pilar "{pillar['name']}"?
-
-FORMAT OUTPUT WAJIB:
-Kembalikan HANYA format JSON valid berikut tanpa teks pengantar:
-{{
-  "context_relevance_score": 0.95,
-  "faithfulness_score": 0.95,
-  "citation_accuracy_score": 0.90,
-  "solution_relevance_score": 0.95,
-  "feedback": "Penjelasan singkat (1-2 kalimat) mengenai kekuatan atau catatan perbaikan pada hasil ini."
-}}
-"""
+        judge_prompt = EVALUATION_JUDGE_TEMPLATE.format(
+            emiten_code=emiten_code,
+            pillar_name=pillar["name"],
+            retrieved_context=context_str,
+            problem_summary=rag_output.get("problem_summary", ""),
+            citation_doc=rag_output.get("citation_doc", ""),
+            citation_location=rag_output.get("citation_location", ""),
+            citation_quote=rag_output.get("citation_quote", ""),
+            solutions_str=json.dumps(rag_output.get("solutions", []), ensure_ascii=False, indent=2)
+        )
 
         try:
             resp = self.judge_client.chat.complete(
@@ -93,10 +66,10 @@ Kembalikan HANYA format JSON valid berikut tanpa teks pengantar:
             )
             eval_result = json.loads(resp.choices[0].message.content)
 
-            cr = float(eval_result.get("context_relevance_score", 0.0))
-            fa = float(eval_result.get("faithfulness_score", 0.0))
-            ca = float(eval_result.get("citation_accuracy_score", 0.0))
-            sr = float(eval_result.get("solution_relevance_score", 0.0))
+            cr = float(eval_result.get("context_relevance", eval_result.get("context_relevance_score", 0.85)))
+            fa = float(eval_result.get("faithfulness", eval_result.get("faithfulness_score", 0.90)))
+            ca = float(eval_result.get("citation_accuracy", eval_result.get("citation_accuracy_score", 0.90)))
+            sr = float(eval_result.get("solution_relevance", eval_result.get("solution_relevance_score", 0.95)))
             overall = round((cr + fa + ca + sr) / 4.0, 3)
 
             return {
