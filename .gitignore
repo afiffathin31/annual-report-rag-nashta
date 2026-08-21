@@ -1,0 +1,29 @@
+# Environments & Virtualenv
+.venv/
+venv/
+ENV/
+env/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Sensitive Environment Variables
+.env
+*.pem
+*.key
+
+# Data & Local Storage (Avoid committing large binaries)
+*.pdf
+docs/
+data/raw_pdf/
+data/parsed_md/
+data/chromadb/
+data/app.db
+output.md
+
+# Logs & Temporary Files
+*.log
+scratch/
+.DS_Store
+Thumbs.db

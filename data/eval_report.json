@@ -1,0 +1,319 @@
+{
+  "total_test_cases": 8,
+  "average_overall_score": 0.758,
+  "average_context_relevance": 0.666,
+  "average_faithfulness": 0.762,
+  "average_citation_accuracy": 0.784,
+  "average_solution_relevance": 0.821,
+  "average_latency_sec": 11.96,
+  "details": [
+    {
+      "emiten": "KLBF",
+      "pillar_id": "cyber_security",
+      "pillar_name": "Cyber Security",
+      "latency_sec": 13.45,
+      "context_relevance": 0.85,
+      "faithfulness": 0.9,
+      "citation_accuracy": 0.8,
+      "solution_relevance": 0.95,
+      "overall_score": 0.875,
+      "feedback": "Konteks relevan dengan cyber security, tetapi kurang detail tentang implementasi konkret. Kesimpulan masalah akurat, namun beberapa poin (misal: UU PDP) tidak eksplisit di konteks. Solusi Nashta sangat relevan dan terukur.",
+      "rag_output": {
+        "pillar_id": "cyber_security",
+        "pillar_name": "Cyber Security",
+        "icon": "🛡️",
+        "problem_summary": "• • Meningkatnya digitalisasi proses bisnis KLBF menimbulkan risiko keamanan siber yang signifikan, mengancam keberlangsungan operasional.\n• • KLBF berkomitmen untuk meningkatkan sistem dan kesadaran keamanan siber, namun belum ada detail implementasi konkret yang terungkap.\n• • Pemanfaatan AI (VisionX, Elvasoft PACS) dan integrasi data lintas unit bisnis meningkatkan eksposur terhadap ancaman siber (misal: data medis, riset, dan operasional).\n• • Modernisasi ERP dan adopsi Industry 4.0 dalam manufaktur memerlukan perlindungan siber yang kuat untuk mencegah gangguan operasional.\n• • IT Governance mencakup *information security*, tetapi belum jelas apakah sudah memenuhi standar kepatuhan (misal: UU PDP) atau memiliki mekanisme deteksi dan respons insiden yang matang.",
+        "citation_doc": "Laporan Tahunan KLBF 2025",
+        "citation_location": "• Halaman 18, Bagian Risiko Keamanan Siber\n• Halaman 118, Bagian Inovasi Teknologi dan IT Governance\n• Halaman 31, Bagian Struktur Organisasi (Teknologi Digital)",
+        "citation_quote": "• Seiring meningkatnya digitalisasi proses bisnis, risiko keamanan siber juga menjadi perhatian penting dalam menjaga keberlangsungan operasional.\n• Kalbe telah mendorong inovasi teknologi berbasis AI yang menerjemahkan data dan riset menjadi solusi yang dapat diimplementasikan... memperkuat kolaborasi lintas unit bisnis dan fungsi.\n• Enhancement of IT governance covering: Information security, IT service management, Project management, IT architecture and infrastructure.\n• Menumbuhkan budaya kerja yang semakin berbasis data (data-driven culture) di seluruh organisasi.",
+        "solutions": [
+          {
+            "title": "Nashta Managed SOC 24/7",
+            "description": "Implementasi Security Operations Center (SOC) yang beroperasi 24/7 untuk memantau, mendeteksi, dan merespons ancaman siber secara real-time. Manfaat: (1) Deteksi dini serangan siber (misal: phishing, ransomware) yang mengancam sistem ERP, AI (VisionX/Elvasoft PACS), dan data lintas unit; (2) Peningkatan ketahanan operasional dengan respons insiden yang cepat; (3) Pematangan *information security* dalam IT Governance KLBF."
+          },
+          {
+            "title": "Nashta Penetration Testing (VAPT) & Vulnerability Assessment",
+            "description": "Pelaksanaan Penetration Testing dan Vulnerability Assessment secara berkala untuk mengidentifikasi celah keamanan dalam sistem ERP, platform AI, dan infrastruktur Industry 4.0. Manfaat: (1) Validasi keamanan sistem sebelum dan sesudah modernisasi; (2) Pencegahan eksploitasi celah yang dapat mengganggu rantai pasok digital; (3) Kepatuhan terhadap standar keamanan dan UU PDP."
+          },
+          {
+            "title": "Nashta SIEM & Threat Intelligence",
+            "description": "Integrasi Security Information and Event Management (SIEM) dengan *threat intelligence* untuk mengumpulkan, menganalisis, dan mengorelasikan log aktivitas dari seluruh sistem (ERP, AI, IoT). Manfaat: (1) Visibilitas menyeluruh terhadap ancaman di seluruh ekosistem digital KLBF; (2) Deteksi anomali dalam penggunaan data lintas unit (misal: akses tidak sah ke data medis); (3) Dukungan untuk *data-driven culture* dengan analisis risiko yang akurat."
+          },
+          {
+            "title": "Nashta UU PDP Compliance & Data Protection",
+            "description": "Penerapan kerangka kerja kepatuhan UU Perlindungan Data Pribadi (PDP) untuk melindungi data pelanggan, karyawan, dan riset. Manfaat: (1) Pencegahan pelanggaran data yang dapat merusak reputasi dan menimbulkan denda; (2) Perlindungan data medis (Elvasoft PACS) dan data riset yang sensitif; (3) Peningkatan kepercayaan stakeholder dengan sertifikasi kepatuhan."
+          },
+          {
+            "title": "Nashta Cybersecurity Awareness Training",
+            "description": "Program pelatihan kesadaran keamanan siber untuk seluruh karyawan, khususnya tim Teknologi Digital, R&D, dan unit bisnis yang menggunakan AI. Manfaat: (1) Mengurangi risiko human error (misal: klik tautan phishing); (2) Memperkuat budaya *data-driven* dengan praktik keamanan yang baik; (3) Mendukung komitmen KLBF untuk meningkatkan kesadaran keamanan siber."
+          }
+        ]
+      }
+    },
+    {
+      "emiten": "KLBF",
+      "pillar_id": "data_ai",
+      "pillar_name": "Data & AI",
+      "latency_sec": 12.73,
+      "context_relevance": 0.98,
+      "faithfulness": 0.95,
+      "citation_accuracy": 0.97,
+      "solution_relevance": 0.99,
+      "overall_score": 0.972,
+      "feedback": "Konteks sangat relevan dengan pilar Data & AI, kesimpulan akurat tanpa halusinasi, dan solusi Nashta sangat tepat sasaran. Catatan: Beberapa halaman sitasi (253, 297) kurang relevan dengan topik Data & AI.",
+      "rag_output": {
+        "pillar_id": "data_ai",
+        "pillar_name": "Data & AI",
+        "icon": "📊",
+        "problem_summary": "• • Tantangan integrasi data lintas unit bisnis dan fungsi untuk mendukung pengambilan keputusan yang cepat dan akurat.\n• • Kebutuhan untuk memperkuat budaya data-driven di seluruh organisasi.\n• • Pemanfaatan AI yang masih terfokus pada area spesifik (VisionX, Elvasoft PACS) dan perlu diperluas untuk efisiensi operasional dan optimalisasi proses secara menyeluruh.\n• • Modernisasi dan standarisasi platform ERP lintas unit bisnis strategis untuk mendukung integrasi data dan kolaborasi.\n• • Peningkatan tata kelola IT, termasuk keamanan informasi, manajemen layanan IT, dan arsitektur infrastruktur untuk mendukung transformasi digital.\n• • Keterbatasan analisis data real-time dan prediktif untuk mendukung pengambilan keputusan yang proaktif.",
+        "citation_doc": "Laporan Tahunan KLBF 2025",
+        "citation_location": "• Halaman 116, Bagian Digital Intelligence for a Resilient Future\n• Halaman 118, Bagian Rantai Nilai dan Key Focus\n• Halaman 118, Bagian Key Roles dan AI-driven innovation",
+        "citation_quote": "• Throughout 2025, the Company accelerated its digital transformation by strengthening core system foundations, driving group-wide standardisation, and developing future-ready capabilities, with focus on business process digitalisation, the adoption of AI, and the strengthening of cybersecurity.\n• Mengembangkan ekosistem layanan bersama agar penggunaan dan analisis data lintas unit lebih luas dan cepat.\n• Menumbuhkan budaya kerja yang semakin berbasis data (data-driven culture) di seluruh organisasi.\n• Kalbe has been fostering AI-driven innovation, translating data and research into deployable solutions. Through the development of VisionX and Elvasoft PACS, the Company is building advanced AI capabilities that enable faster, more accurate, and more consistent analysis of data and medical images.\n• Modernisation and standardisation of ERP platforms across strategic business units.\n• Strengthening the shared service approach to enhance efficiency and group-wide integration.\n• Driving data centralisation and integration as the foundation for decision-making.",
+        "solutions": [
+          {
+            "title": "Nashta Data Lake & Data Warehouse Integration",
+            "description": "Membangun Data Lake terpusat dan Data Warehouse untuk mengintegrasikan data lintas unit bisnis (EAT, PKS, AAR, RSM, dll.) dan fungsi (riset, produksi, pemasaran). Solusi ini memungkinkan akses data real-time, analisis lintas departemen, dan dasar untuk pengembangan AI. Manfaat: Peningkatan kecepatan pengambilan keputusan, efisiensi operasional, dan kolaborasi lintas unit."
+          },
+          {
+            "title": "Nashta AI-Powered Business Intelligence (BI) Dashboard",
+            "description": "Implementasi dashboard BI real-time dengan integrasi Machine Learning dan Predictive Analytics untuk menganalisis data penjualan, produksi, dan keuangan. Dashboard ini akan menyediakan insight prediktif (misal: peramalan permintaan, optimasi inventori) dan visualisasi data yang interaktif. Manfaat: Meningkatkan akurasi pengambilan keputusan, mendukung budaya data-driven, dan mengoptimalkan kinerja operasional."
+          },
+          {
+            "title": "Nashta Generative AI for Process Optimization",
+            "description": "Penerapan solusi Generative AI untuk otomatisasi dan optimasi proses bisnis, seperti analisis citra medis (melengkapi VisionX/Elvasoft PACS), peramalan permintaan, dan optimasi rantai pasok. Solusi ini akan memanfaatkan data historis dan real-time untuk menghasilkan rekomendasi tindakan yang akurat. Manfaat: Peningkatan efisiensi operasional, pengurangan biaya, dan peningkatan kualitas layanan."
+          },
+          {
+            "title": "Nashta Predictive Analytics for ERP Modernization",
+            "description": "Integrasi Predictive Analytics ke dalam platform ERP yang dimodernisasi untuk mendukung standarisasi dan otomatisasi proses bisnis. Solusi ini akan memungkinkan analisis prediktif terhadap data operasional (misal: perawatan mesin, manajemen inventori) dan keuangan. Manfaat: Peningkatan efisiensi, pengurangan downtime, dan pengoptimalan sumber daya."
+          }
+        ]
+      }
+    },
+    {
+      "emiten": "PDSB",
+      "pillar_id": "managed_service",
+      "pillar_name": "Managed Service",
+      "latency_sec": 12.2,
+      "context_relevance": 0.85,
+      "faithfulness": 0.9,
+      "citation_accuracy": 0.8,
+      "solution_relevance": 0.95,
+      "overall_score": 0.875,
+      "feedback": "Konteks relevan dengan Managed Service, tetapi sebagian besar berfokus pada kompetensi SDM dan tata kelola TI. Citation kurang akurat karena lokasi halaman/bagian tidak konsisten (semua merujuk ke Halaman 1). Solusi Nashta sangat relevan dengan pilar Managed Service.",
+      "rag_output": {
+        "pillar_id": "managed_service",
+        "pillar_name": "Managed Service",
+        "icon": "🛠️",
+        "problem_summary": "• • Ketergantungan pada kompetensi internal SDM TI yang memerlukan standarisasi keahlian (infrastruktur, database, keamanan siber) untuk mendukung operasional perbankan syariah.\n• • Kebutuhan untuk memastikan ketersediaan dan keamanan infrastruktur TI seiring peningkatan layanan digital dan ancaman siber.\n• • Pelaksanaan transaksi operasional rutin (deposito, bagi hasil, SKNBI/RTGS) memerlukan monitoring dan pemeliharaan sistem yang berkelanjutan.\n• • Tata kelola TI perlu diselaraskan dengan roadmap pengembangan TI (2025-2027) untuk mendukung bisnis dan operasional secara berkesinambungan.\n• • Unit kerja TI (Central Banking Operation, E-Channel, BI Fast) memerlukan dukungan operasional TI terpadu untuk menjaga kualitas layanan.",
+        "citation_doc": "Laporan Tahunan PDSB 2025",
+        "citation_location": "• Halaman 1, Bagian: Kompetensi Sumber Daya Manusia (Teknologi Informasi dan Operasional)\n• Halaman 1, Bagian: Teknologi Informasi dan Operasional (Pelaksanaan Transaksi Operasional)\n• Halaman 1, Bagian: Ruang Lingkup (Struktur Organisasi dan Central Banking Operation)\n• Halaman 1, Bagian: Information Technology (Tata Kelola TI dan Roadmap)",
+        "citation_quote": "• Perseroan telah menetapkan standardisasi kompetensi Sumber Daya Manusia (SDM) di bidang TI, yang meliputi penguasaan berbagai keahlian teknis...\n• Perseroan perlu terus memastikan ketersediaan dan keamanan infrastuktur Teknologi Pendukung dengan cara memperbaharui dan menambah kapasitas sistem serta melengkapi perimeter keamanan sistem seiring dengan meningkatnya ancaman siber...\n• Pelaksanaan transaksi operasional rutin: a. Transaksi deposito dan bagi hasil yang meliputi transaksi penerbitan, pencairan, perpanjangan dan maintenance deposito.\n• Central Banking Operation, membawahi beberapa unit kerja sebagai berikut: i. E-Channel, BI Fast, Trops & Reporting yang berfungsi sebagai pelaksana dan monitoring transaksi layanan e-channel...\n• Perseroan melaksanakan tata kelola TI sesuai dengan tujuan jangka pendek maupun jangka panjang... Tata kelola TI yang diterapkan diharapkan dapat membangun infrastruktur dan sistem yang andal...",
+        "solutions": [
+          {
+            "title": "Nashta Managed Infrastructure & Network Operations (NOC)",
+            "description": "Menyediakan layanan monitoring infrastruktur TI 24/7, pemeliharaan jaringan (LAN/WAN), dan manajemen sistem keamanan (firewall, antivirus) untuk menjaga ketersediaan dan keamanan layanan digital PDSB. Manfaat: pengurangan downtime, peningkatan keamanan siber, dan dukungan operasional transaksi (deposito, SKNBI/RTGS) tanpa gangguan."
+          },
+          {
+            "title": "Nashta Managed Database & Application Support",
+            "description": "Mengelola dan memelihara sistem database (MS SQL, Oracle, MySQL) serta aplikasi pendukung operasional perbankan. Manfaat: optimalisasi kinerja database, pemeliharaan data yang aman, dan dukungan untuk transaksi operasional rutin (penerbitan, pencairan, perpanjangan deposito)."
+          },
+          {
+            "title": "Nashta Managed Helpdesk & IT Service Management (ITSM)",
+            "description": "Menyediakan layanan helpdesk terpadu dengan SLA tingkat tinggi untuk menangani permintaan dukungan TI, pemecahan masalah, dan pelaporan insiden. Manfaat: peningkatan efisiensi operasional, standarisasi layanan TI, dan dukungan untuk pelatihan SDM TI sesuai kompetensi yang disyaratkan."
+          },
+          {
+            "title": "Nashta Managed Security Operations Center (SOC)",
+            "description": "Layanan monitoring keamanan siber 24/7, deteksi ancaman, dan respons insiden untuk melindungi infrastruktur TI PDSB dari serangan siber. Manfaat: perlindungan data nasabah, kepatuhan terhadap regulasi perbankan, dan pengurangan risiko operasional."
+          }
+        ]
+      }
+    },
+    {
+      "emiten": "PDSB",
+      "pillar_id": "cloud_services",
+      "pillar_name": "Cloud Services",
+      "latency_sec": 12.65,
+      "context_relevance": 0.85,
+      "faithfulness": 0.95,
+      "citation_accuracy": 1.0,
+      "solution_relevance": 0.98,
+      "overall_score": 0.945,
+      "feedback": "Konteks dokumen relevan dengan Cloud Services meskipun tidak secara eksplisit menyebut cloud, tetapi kesimpulan dan solusi sangat terfokus pada pilar yang diujikan. Citation akurat dan solusi sangat relevan dengan masalah yang diidentifikasi.",
+      "rag_output": {
+        "pillar_id": "cloud_services",
+        "pillar_name": "Cloud Services",
+        "icon": "☁️",
+        "problem_summary": "• • Kebutuhan upgrade server utama dan cadangan untuk mendukung kapasitas bisnis masa depan, namun belum ada strategi migrasi yang efisien.\n• • Pengembangan sistem digital (Online Financing, Host-to-Host, Open API, CDM) memerlukan infrastruktur cloud yang skalabel dan aman.\n• • Implementasi SD-WAN, DLP, dan PAM untuk keamanan jaringan dan data, namun belum terintegrasi dengan solusi cloud yang holistik.\n• • Anggaran investasi TI sebesar Rp21 miliar (2025) perlu dioptimalkan untuk menghindari pemborosan biaya infrastruktur on-premise.\n• • Pengembangan aplikasi bisnis (Hajj, Treasury, Remittance, dll.) memerlukan lingkungan DevOps dan CI/CD untuk percepatan deployment.\n• • Kolaborasi operasional yang fleksibel dan aman memerlukan platform cloud yang mendukung mobilitas dan keamanan data.",
+        "citation_doc": "Laporan Tahunan PDSB 2025",
+        "citation_location": "Halaman 1, Bagian Building Roadmap",
+        "citation_quote": "• Pembaruan perangkat server utama sesuai kapasitas kebutuhan bisnis kedepannya.\n• Mengembangkan sistem Pembiayaan Online untuk segmen Retail.\n• Mengembangkan sistem transaksi dengan Mitra Host to Host, cash out tanpa kartu, Open API, Cash Deposit Machine melalui mitra.\n• Implementasi perangkat teknologi SDWAN untuk peningkatan kapasitas dan keamanan jaringan cabang serta implementasi proteksi keamanan data sistem TI (DLP & PAM).\n• Perseroan telah melakukan perubahan anggaran investasi IT menjadi sebesar Rp21 miliar di tahun 2025.\n• Mengembangkan aplikasi untuk otomasi proses operasional serta monitoring dan pelaporan pihak ketiga dan data nasabah.\n• Mengembangkan sistem pendukung inovasi produk syariah, seperti Treasury System, Remittance serta Structure Trade Financing system.\n• Mengembangkan aplikasi untuk menunjang kolaborasi user operasional yang fleksibel, simpel dan aman.",
+        "solutions": [
+          {
+            "title": "Nashta Cloud Migration & Hybrid Cloud Strategy",
+            "description": "Migrasi server utama dan cadangan ke cloud (AWS/Azure/GCP) dengan arsitektur hybrid untuk memastikan skalabilitas, ketersediaan tinggi, dan pengurangan biaya operasional. Manfaat: penghematan biaya infrastruktur hingga 30-40%, fleksibilitas kapasitas sesuai kebutuhan bisnis, dan integrasi dengan sistem digital (Online Financing, Open API)."
+          },
+          {
+            "title": "Nashta Multi-Cloud Management & FinOps Optimization",
+            "description": "Implementasi platform multi-cloud management untuk mengelola beban kerja di berbagai cloud provider (AWS, Azure, GCP) dengan FinOps untuk optimasi biaya. Manfaat: pengelolaan anggaran Rp21 miliar lebih efisien, visibilitas biaya real-time, dan alokasi sumber daya yang optimal untuk proyek-proyek TI (SD-WAN, DLP, PAM)."
+          },
+          {
+            "title": "Nashta DevOps & CI/CD Automation for Digital Banking",
+            "description": "Penerapan pipeline DevOps dan CI/CD automation untuk percepatan pengembangan aplikasi bisnis (Hajj, Treasury, Remittance, dll.). Manfaat: pengurangan waktu deployment hingga 50%, peningkatan kolaborasi tim operasional, dan integrasi otomatis dengan sistem Host-to-Host dan Open API."
+          },
+          {
+            "title": "Nashta Cloud-Native Security Integration (DLP, PAM, SD-WAN)",
+            "description": "Integrasi solusi keamanan (DLP, PAM) dan SD-WAN ke dalam lingkungan cloud untuk perlindungan data dan jaringan yang terpusat. Manfaat: keamanan end-to-end untuk sistem digital, kepatuhan terhadap regulasi, dan pengurangan risiko kebocoran data."
+          }
+        ]
+      }
+    },
+    {
+      "emiten": "SIDO",
+      "pillar_id": "business_app",
+      "pillar_name": "Business Application",
+      "latency_sec": 13.7,
+      "context_relevance": 0.7,
+      "faithfulness": 0.85,
+      "citation_accuracy": 0.95,
+      "solution_relevance": 0.9,
+      "overall_score": 0.85,
+      "feedback": "Konteks yang diambil sebagian besar berkaitan dengan risiko operasional dan manajemen, tetapi kurang spesifik pada pengembangan & integrasi aplikasi bisnis enterprise (ERP, CRM, SCM, dll.). Kesimpulan masalah akurat berdasarkan konteks, tetapi solusi yang direkomendasikan sangat relevan dengan pilar Business Application.",
+      "rag_output": {
+        "pillar_id": "business_app",
+        "pillar_name": "Business Application",
+        "icon": "💼",
+        "problem_summary": "• • Risiko gangguan jaringan distribusi hilir (grosir, supermarket, agen, warung, pedagang eceran) yang tersebar di Indonesia berdampak pada penurunan tingkat penjualan.\n• • Ketergantungan pada pemilihan dan penggunaan bahan baku yang tepat (jenis, jumlah, kualitas) untuk menjaga konsistensi produk jamu dan menghadapi persaingan.\n• • Risiko pemogokan tenaga kerja massal yang mengganggu proses produksi dan target pencapaian produksi.\n• • Beban penjualan dan pemasaran meningkat 10% (Rp55,83 miliar) akibat kenaikan iklan dan promosi, sementara beban umum dan administrasi menurun 2% (Rp3,92 miliar) akibat penurunan gaji dan tunjangan.\n• • Sistem pengendalian internal perlu diperkuat untuk melindungi aset, memastikan keandalan laporan keuangan, dan efisiensi operasional.\n• • Manajemen rantai pasok dan hubungan dengan agen/distributor memerlukan integrasi data yang lebih baik untuk mendukung keputusan bisnis.",
+        "citation_doc": "Laporan Tahunan SIDO 2024",
+        "citation_location": "• Halaman 225, Bagian Risiko Jaringan Distribusi dan Mata Rantai Pasokan\n• Halaman 227, Bagian Risiko Pemogokan Tenaga Kerja\n• Halaman 221, Bagian Penerapan Sistem Pengendalian Internal Perusahaan\n• Halaman 124, Bagian Beban Usaha dan Penjualan",
+        "citation_quote": "• Sebagian besar produk Perseroan didistribusikan melalui grosir, pasar swalayan, agen, warung, dan pedagang eceran yang tersebar di wilayah Indonesia. Terganggunya mata rantai distribusi di hilir dapat mempengaruhi tingkat penjualan produk Perseroan.\n• Apabila terjadi pemogokan tenaga kerja secara massal, maka hal tersebut akan mengganggu proses produksi yang dapat menyebabkan tidak terpenuhinya target produksi Perseroan.\n• Sistem pengendalian internal di Perseroan meliputi seluruh kebijakan dan prosedur di semua fungsi keuangan dan operasional yang bertujuan untuk melindungi aset Perseroan melalui keandalan pelaporan dan informasi keuangan, kepatuhan terhadap peraturan yang berlaku, serta penyelenggaraan kegiatan operasional yang efektif dan efisien.\n• Hingga 31 Desember 2024, nilai beban penjualan dan pemasaran Perseroan sejumlah Rp626,22 miliar, nilai ini mengalami kenaikan sebesar 10% atau sejumlah Rp55,83 miliar, jika dibandingkan dengan perolehan tahun sebelumnya sejumlah Rp570,38 miliar.",
+        "solutions": [
+          {
+            "title": "Implementasi Supply Chain Management (SCM) System Terintegrasi",
+            "description": "Mengimplementasikan sistem SCM berbasis cloud untuk memantau dan mengoptimalkan jaringan distribusi hilir (grosir, supermarket, agen, warung, pedagang eceran) secara real-time. Sistem ini akan menyediakan visibilitas end-to-end, prediksi permintaan, dan manajemen inventori otomatis untuk mengurangi risiko gangguan distribusi. Manfaat: peningkatan efisiensi logistik, pengurangan biaya distribusi, dan peningkatan tingkat penjualan."
+          },
+          {
+            "title": "ERP (Enterprise Resource Planning) dengan Modul Procurement & Quality Control",
+            "description": "Menerapkan sistem ERP dengan modul procurement dan quality control untuk memastikan pemilihan dan penggunaan bahan baku yang tepat (jenis, jumlah, kualitas). Sistem ini akan mengotomatisasi pemantauan kualitas, pelacakan asal bahan baku, dan integrasi dengan supplier untuk menjaga konsistensi produk jamu. Manfaat: pengurangan risiko kesalahan bahan baku, peningkatan kualitas produk, dan efisiensi biaya produksi."
+          },
+          {
+            "title": "HRIS (Human Resource Information System) dengan Modul Performance & Workforce Management",
+            "description": "Mengimplementasikan HRIS untuk mengelola rekrutmen, pelatihan, penilaian kinerja, dan regenerasi karyawan. Sistem ini akan menyediakan dashboard untuk memantau kesejahteraan karyawan, mencegah pemogokan, dan memastikan ketersediaan tenaga kerja yang memadai. Manfaat: pengurangan risiko pemogokan, peningkatan produktivitas, dan efisiensi manajemen SDM."
+          },
+          {
+            "title": "Finance & Accounting System dengan Modul Budgeting & Cost Control",
+            "description": "Menerapkan sistem akuntansi terintegrasi dengan modul budgeting dan cost control untuk memantau beban penjualan, pemasaran, dan administrasi secara real-time. Sistem ini akan membantu mengidentifikasi area penghematan biaya (misal: iklan dan promosi) dan mengoptimalkan alokasi anggaran. Manfaat: pengendalian biaya yang lebih baik, peningkatan akurasi laporan keuangan, dan efisiensi operasional."
+          },
+          {
+            "title": "CRM (Customer Relationship Management) untuk Manajemen Agen/Distributor",
+            "description": "Mengimplementasikan sistem CRM untuk mengelola hubungan dengan agen, distributor, dan konsumen. Sistem ini akan memfasilitasi komunikasi, pelacakan preferensi konsumen, dan analisis data penjualan untuk mendukung keputusan bisnis. Manfaat: peningkatan loyalitas pelanggan, optimasi saluran distribusi, dan peningkatan penjualan."
+          }
+        ]
+      }
+    },
+    {
+      "emiten": "SIDO",
+      "pillar_id": "iot_edge",
+      "pillar_name": "IoT & Edge Computing",
+      "latency_sec": 11.86,
+      "context_relevance": 0.7,
+      "faithfulness": 0.85,
+      "citation_accuracy": 0.95,
+      "solution_relevance": 0.9,
+      "overall_score": 0.85,
+      "feedback": "Konteks dokumen sebagian besar relevan dengan IoT & Edge Computing, tetapi kurang spesifik pada implementasi teknologi tersebut. Kesimpulan masalah akurat, namun solusi Nashta sangat relevan dan terfokus pada pilar yang diujikan.",
+      "rag_output": {
+        "pillar_id": "iot_edge",
+        "pillar_name": "IoT & Edge Computing",
+        "icon": "📡",
+        "problem_summary": "• • Ketergantungan pada pengawasan manual melalui HMI untuk operasional pabrik, yang berpotensi mengurangi efisiensi dan akurasi monitoring real-time.\n• • Risiko gangguan pada jaringan distribusi dan mata rantai pasokan yang dapat mempengaruhi tingkat penjualan produk.\n• • Kebutuhan untuk meningkatkan integrasi data dan otomatisasi dalam rangka pengembangan Industry 4.0, termasuk upgrade infrastruktur dan keamanan siber.\n• • Tantangan dalam menjaga konsistensi kualitas bahan baku dan produksi untuk menghadapi persaingan pasar yang kompetitif.\n• • Pabrik minyak atsiri dengan kapasitas produksi 600 ton/tahun memerlukan monitoring aset dan proses distilasi yang lebih cerdas untuk menjaga standar internasional.",
+        "citation_doc": "Laporan Tahunan SIDO 2024",
+        "citation_location": "• Halaman 96, Bagian Deskripsi Unit Produksi Minyak Atsiri\n• Halaman 252, Bagian Roadmap TI 2024-2026\n• Halaman 54, Bagian Deskripsi Pabrik dan Sertifikasi\n• Halaman 225, Bagian Risiko Jaringan Distribusi dan Mata Rantai Pasokan\n• Halaman 30, Bagian Pengawasan Strategi Perusahaan",
+        "citation_quote": "• dimonitor melalui tampilan-tampilan pada layar Human Machine Interface (HMI) sehingga pengoperasian dan pengendaliannya tidak membutuhkan banyak tenaga kerja (operator).\n• Integration of data from digital development in Industry 4.0. Implementation of IT training programs for self-reliance and to enhance knowledge on technological developments and minimize existing development risks.\n• dioperasikan secara otomatis dan dalam lingkungan tertutup untuk menjaga sterilitas produk. Pabrik baru ini juga memiliki laboratorium berstandar farmasi yang tersertifikasi.\n• Sebagian besar produk Perseroan didistribusikan melalui grosir, pasar swalayan, agen, warung, dan pedagang eceran yang tersebar di wilayah Indonesia. Terganggunya mata rantai distribusi di hilir dapat mempengaruhi tingkat penjualan produk Perseroan.\n• Dewan Komisaris menjalankan fungsi pengawasan dengan memberikan nasihat dan masukan kepada Direksi atas pelaksanaan operasional yang dijalankan.",
+        "solutions": [
+          {
+            "title": "Nashta Smart Telemetry & IoT Monitoring untuk Pabrik Minyak Atsiri",
+            "description": "Implementasi sensor IoT dan edge computing untuk monitoring real-time pada mesin distilasi, fraksinasi, dan tangki mixing (12.000 Liter). Solusi ini memungkinkan pengawasan parameter kritis (suhu, tekanan, kadar air) secara otomatis, mengurangi ketergantungan pada HMI manual. Manfaat: peningkatan efisiensi operasional, pengurangan downtime, dan jaminan kualitas produk sesuai standar internasional."
+          },
+          {
+            "title": "Nashta Predictive Maintenance untuk Mesin Produksi",
+            "description": "Penerapan sistem predictive maintenance berbasis IoT dan edge computing untuk mesin-mesin produksi (soft capsule, UHT, vacuum dryer, dll.). Sensor akan memantau kondisi mesin secara real-time dan menganalisis data untuk memprediksi kegagalan sebelum terjadi. Manfaat: pengurangan biaya perawatan, peningkatan umur aset, dan minimisasi risiko gangguan produksi."
+          },
+          {
+            "title": "Nashta Smart Logistics & Supply Chain Tracking",
+            "description": "Integrasi IoT dan edge computing untuk tracking real-time pada jaringan distribusi (grosir, supermarket, agen, dll.). Solusi ini mencakup sensor GPS, RFID, dan monitoring suhu/kelembaban untuk produk sensitif. Manfaat: pengurangan risiko gangguan distribusi, peningkatan visibilitas rantai pasokan, dan optimasi rute pengiriman."
+          },
+          {
+            "title": "Nashta SCADA Integration & Edge Analytics",
+            "description": "Pengembangan sistem SCADA yang terintegrasi dengan IoT dan edge computing untuk otomatisasi pabrik. Solusi ini memungkinkan pengendalian mesin secara jarak jauh, analisis data real-time, dan integrasi dengan sistem ERP. Manfaat: peningkatan akurasi pengendalian, pengurangan kesalahan manusia, dan dukungan untuk Industry 4.0."
+          }
+        ]
+      }
+    },
+    {
+      "emiten": "BANK",
+      "pillar_id": "consulting_advisory",
+      "pillar_name": "Consulting & Advisory",
+      "latency_sec": 3.57,
+      "context_relevance": 0.0,
+      "faithfulness": 0.0,
+      "citation_accuracy": 0.0,
+      "solution_relevance": 0.0,
+      "overall_score": 0.0,
+      "feedback": "Evaluation error: API error occurred: Status 429. Body: {\"object\":\"error\",\"message\":\"Rate limit exceeded\",\"type\":\"rate_limited\",\"param\":null,\"code\":\"1300\",\"raw_status_code\":429}",
+      "rag_output": {
+        "pillar_id": "consulting_advisory",
+        "pillar_name": "Consulting & Advisory",
+        "icon": "🧭",
+        "problem_summary": "• Evaluasi umum operasional emiten BANK.",
+        "citation_doc": "Laporan Tahunan BANK",
+        "citation_location": "Bagian Operasional",
+        "citation_quote": "-",
+        "solutions": [
+          {
+            "title": "Solusi Consulting & Advisory",
+            "description": "Implementasi sistem terpadu dari Nashta."
+          }
+        ]
+      }
+    },
+    {
+      "emiten": "CARE",
+      "pillar_id": "hybrid_infra",
+      "pillar_name": "IT Hybrid Infrastructure",
+      "latency_sec": 15.52,
+      "context_relevance": 0.4,
+      "faithfulness": 0.7,
+      "citation_accuracy": 0.8,
+      "solution_relevance": 0.9,
+      "overall_score": 0.7,
+      "feedback": "Konteks yang diambil sebagian besar berkaitan dengan aset tetap (bangunan, peralatan) dan pemanfaatan TI untuk keterbukaan informasi, bukan secara langsung dengan IT Hybrid Infrastructure. Kesimpulan masalah mengandung asumsi (misal ketidakadaan modernisasi sistem) yang tidak terverifikasi dari konteks. Solusi yang direkomendasikan relevan dengan pilar yang diuji.",
+      "rag_output": {
+        "pillar_id": "hybrid_infra",
+        "pillar_name": "IT Hybrid Infrastructure",
+        "icon": "🖥️",
+        "problem_summary": "• • Infrastruktur aset tetap (bangunan, peralatan medis, peralatan umum) bernilai tinggi (Rp 300T+ untuk bangunan, Rp 88T+ untuk peralatan medis) namun tidak ada indikasi modernisasi sistem pendukung operasional (seperti data center, virtualisasi, atau disaster recovery).\n• • Pemanfaatan TI terbatas pada situs web dan media sosial untuk keterbukaan informasi, tanpa integrasi sistem internal yang mendukung operasional dan keberlanjutan.\n• • Tidak ada program pengembangan kompetensi karyawan yang berfokus pada aspek keberlanjutan, termasuk literasi TI dan manajemen infrastruktur modern.\n• • Risiko ketidaktersediaan sistem (downtime) dan kehilangan data akibat ketidakmampuan infrastruktur on-premise yang tidak termodernisasi.",
+        "citation_doc": "Laporan Tahunan CARE 2024",
+        "citation_location": "• Halaman 233-234, Bagian 9. ASET TETAP / PROPERTY, PLANT AND EQUIPMENT\n• Halaman 152, Bagian Pemanfaatan Teknologi Informasi\n• Halaman 156, Bagian Related to Sustainability Aspect [E.2]",
+        "citation_quote": "• Bangunan: Rp 275.876.480.645, Peralatan medis: Rp 84.972.532.578, Peralatan umum: Rp 11.962.732.558\n• Perusahaan terbuka memanfaatkan penggunaan teknologi informasi secara lebih luas selain situs web sebagai media keterbukaan informasi.\n• Sepanjang tahun 2024, Perseroan belum mengikutsertakan karyawan dalam program pengembangan kompetensi yang secara khusus berfokus pada aspek keberlanjutan.",
+        "solutions": [
+          {
+            "title": "Nashta Hybrid Cloud Infrastructure with Hyperconverged Virtualization",
+            "description": "Implementasi infrastruktur hybrid cloud (on-premise + cloud) dengan hyperconverged infrastructure (HCI) untuk mengintegrasikan server, storage, dan network ke dalam satu sistem terpadu. Manfaat: (1) Reduksi biaya operasional (OPEX) hingga 30% melalui konsolidasi hardware, (2) Skalabilitas otomatis untuk mendukung pertumbuhan aset medis dan operasional, (3) Peningkatan ketersediaan sistem (99.99% uptime) untuk layanan kritis."
+          },
+          {
+            "title": "Nashta Disaster Recovery Center (DRC) & Business Continuity Planning",
+            "description": "Pembangunan DRC dengan replikasi data real-time dan failover otomatis untuk melindungi aset digital (seperti data pasien, inventaris peralatan medis, dan catatan keuangan). Manfaat: (1) Pemulihan data dalam <15 menit (RTO) dan kehilangan data <5 menit (RPO), (2) Kepatuhan terhadap regulasi kesehatan (seperti HIPAA) dan standar keberlanjutan, (3) Perlindungan terhadap risiko bencana alam atau kegagalan sistem."
+          },
+          {
+            "title": "Nashta IT Competency Development Program for Sustainability",
+            "description": "Program pelatihan internal untuk karyawan dengan fokus pada: (1) Manajemen infrastruktur hybrid cloud, (2) Keamanan siber dan perlindungan data, (3) Penerapan prinsip keberlanjutan dalam TI (seperti efisiensi energi data center). Manfaat: (1) Peningkatan kapasitas internal untuk mengelola infrastruktur modern, (2) Reduksi ketergantungan pada vendor eksternal, (3) Dukungan terhadap inisiatif keberlanjutan perusahaan."
+          },
+          {
+            "title": "Nashta Unified IT Platform for Operational Efficiency",
+            "description": "Integrasi sistem internal (ERP, EMR, dan manajemen aset) ke dalam platform terpadu yang berjalan di atas infrastruktur hybrid. Manfaat: (1) Otomatisasi pelaporan aset tetap dan pengelolaan peralatan medis, (2) Peningkatan akurasi data dan pengambilan keputusan, (3) Reduksi waktu pemrosesan data hingga 50%."
+          }
+        ]
+      }
+    }
+  ]
+}
