@@ -254,8 +254,68 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await safe_edit_or_reply(query, full_text, reply_markup=reply_markup)
         return
 
-async def send_long_chat_message(update: Update, text: str, emiten_code: str):
-    """Sends response text in logical untruncated chunks with clean HTML/Markdown formatting."""
+def markdown_to_telegram_html(text: str) -> str:
+    """Converts LLM Markdown into valid, beautiful Telegram HTML without raw symbols."""
+    if not text:
+        return ""
+
+    lines = text.split("\n")
+    processed_lines = []
+
+    for line in lines:
+        stripped = line.strip()
+
+        # Skip table divider |---|---|
+        if re.match(r"^\|?(\s*:?-+:?\s*\|)+\s*$", stripped):
+            continue
+
+        # Convert horizontal rules --- or ***
+        if stripped in ["---", "***", "___"]:
+            processed_lines.append("━━━━━━━━━━━━━━━━━━━━━━")
+            continue
+
+        # Convert headers ### Header -> 📌 <b>Header</b>
+        header_match = re.match(r"^(#{1,6})\s+(.*)$", stripped)
+        if header_match:
+            header_text = header_match.group(2)
+            safe_hdr = html.escape(header_text)
+            safe_hdr = re.sub(r"\*\*(.*?)\*\*", r"\1", safe_hdr)
+            processed_lines.append(f"\n📌 <b>{safe_hdr}</b>")
+            continue
+
+        # Convert table row | Col1 | Col2 | Col3 | to bullet points
+        if stripped.startswith("|") and stripped.endswith("|") and stripped.count("|") >= 3:
+            cols = [c.strip() for c in stripped.split("|")[1:-1]]
+            if any(cols):
+                col_str = "  ↳  ".join(c for c in cols if c)
+                escaped_col = html.escape(col_str)
+                escaped_col = re.sub(r"\*\*(.*?)\*\*", r"<b>\1</b>", escaped_col)
+                processed_lines.append(f"  • {escaped_col}")
+                continue
+
+        # Escape HTML entities first
+        escaped_line = html.escape(line)
+
+        # Convert `code`
+        escaped_line = re.sub(r"`(.*?)`", r"<code>\1</code>", escaped_line)
+
+        # Convert **bold** -> <b>bold</b>
+        escaped_line = re.sub(r"\*\*(.*?)\*\*", r"<b>\1</b>", escaped_line)
+
+        # Convert *italic* or _italic_
+        escaped_line = re.sub(r"(?<!\w)\*(.*?)\*(?!\w)", r"<i>\1</i>", escaped_line)
+        escaped_line = re.sub(r"(?<!\w)_(.*?)_(?!\w)", r"<i>\1</i>", escaped_line)
+
+        processed_lines.append(escaped_line)
+
+    res = "\n".join(processed_lines)
+    return re.sub(r"\n{3,}", "\n\n", res).strip()
+
+async def send_long_chat_message(update: Update, raw_text: str, emiten_code: str):
+    """Sends converted HTML response in logical untruncated chunks without raw symbols."""
+    # Convert Markdown to Telegram HTML
+    text = markdown_to_telegram_html(raw_text)
+
     footer = (
         f"\n\n━━━━━━━━━━━━━━━━━━━━━━\n"
         f"🏢 <i>Emiten: {emiten_code} | /emiten (ganti) | /reset (hapus riwayat chat)</i>"
@@ -267,10 +327,8 @@ async def send_long_chat_message(update: Update, text: str, emiten_code: str):
         try:
             await update.message.reply_text(full_msg, parse_mode=constants.ParseMode.HTML)
         except Exception:
-            try:
-                await update.message.reply_text(full_msg, parse_mode=constants.ParseMode.MARKDOWN)
-            except Exception:
-                await update.message.reply_text(full_msg)
+            clean_plain = re.sub(r"<[^>]+>", "", full_msg)
+            await update.message.reply_text(clean_plain)
         return
 
     # If message is long, split by double newlines into chunks (<3400 chars each)
@@ -301,10 +359,8 @@ async def send_long_chat_message(update: Update, text: str, emiten_code: str):
         try:
             await update.message.reply_text(msg_to_send, parse_mode=constants.ParseMode.HTML)
         except Exception:
-            try:
-                await update.message.reply_text(msg_to_send, parse_mode=constants.ParseMode.MARKDOWN)
-            except Exception:
-                await update.message.reply_text(msg_to_send)
+            clean_plain = re.sub(r"<[^>]+>", "", msg_to_send)
+            await update.message.reply_text(clean_plain)
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle free-form user text messages / Q&A."""
