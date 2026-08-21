@@ -181,16 +181,17 @@ class TemporalTrendEngine:
                 ]
             }
 
-def render_trend_html(emiten_code: str, res: Dict[str, Any]) -> str:
-    """Formats executive 5-year trend analysis into clean, structured Telegram HTML."""
+def render_trend_html_parts(emiten_code: str, res: Dict[str, Any]) -> List[str]:
+    """Splits executive 5-year trend analysis into 2 clean, untruncated Telegram HTML messages."""
     period = html.escape(res.get("period", "2021 - 2025"))
     timeline = res.get("timeline", [])
     chronic = res.get("chronic_issues", [])
     emerging = res.get("emerging_risks", [])
     roadmap = res.get("strategic_roadmap", [])
 
-    lines = [
-        f"📊 <b>EXECUTIVE BRIEF: TREN 5 TAHUN {emiten_code}</b>",
+    # === PART 1: Evolusi Tren & Root Causes ===
+    part1_lines = [
+        f"📊 <b>EXECUTIVE BRIEF: TREN 5 TAHUN {emiten_code} (Bagian 1/2)</b>",
         f"🗓️ <i>Periode Analisis: {period}</i>",
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n",
         "📈 <b>EVOLUSI TREN PERMASALAHAN DARI WAKTU KE WAKTU:</b>\n"
@@ -207,41 +208,52 @@ def render_trend_html(emiten_code: str, res: Dict[str, Any]) -> str:
         cit_loc = html.escape(citation.get("location", "-"))
         cit_quote = html.escape(citation.get("quote", "-"))
 
-        lines.append(f"⏳ <b>{phase}: {theme}</b>")
-        lines.append(f"{prob_text}")
-        lines.append(f"  📖 <i>Citation: {cit_doc} | {cit_loc}</i>")
-        lines.append(f"  💬 <i>\"{cit_quote}\"</i>\n")
+        part1_lines.append(f"⏳ <b>{phase}: {theme}</b>")
+        part1_lines.append(f"{prob_text}")
+        part1_lines.append(f"  📖 <i>Citation: {cit_doc} | {cit_loc}</i>")
+        part1_lines.append(f"  💬 <i>\"{cit_quote}\"</i>\n")
 
-    lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    lines.append("🔍 <b>POLA PERMASALAHAN UTAMA (ROOT CAUSE):</b>")
-    lines.append("⚠️ <b>Isu Kronis (Menahun):</b>")
+    part1_lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    part1_lines.append("🔍 <b>POLA PERMASALAHAN UTAMA (ROOT CAUSE):</b>")
+    part1_lines.append("⚠️ <b>Isu Kronis (Menahun):</b>")
     for c in chronic:
-        lines.append(f"  • {html.escape(c)}")
+        part1_lines.append(f"  • {html.escape(c)}")
 
-    lines.append("\n⚡ <b>Ancaman Baru (Emerging Risks):</b>")
+    part1_lines.append("\n⚡ <b>Ancaman Baru (Emerging Risks):</b>")
     for em in emerging:
-        lines.append(f"  • {html.escape(em)}")
+        part1_lines.append(f"  • {html.escape(em)}")
 
-    lines.append("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    lines.append("💡 <b>STRATEGIC ROADMAP SOLUSI NASHTA:</b>")
+    part1_lines.append("\n⬇️ <i>Lanjutan: Strategic Roadmap Solusi Nashta pada pesan berikut...</i>")
+
+    # === PART 2: Strategic Roadmap Nashta ===
+    part2_lines = [
+        f"💡 <b>STRATEGIC ROADMAP SOLUSI NASHTA (Bagian 2/2)</b>",
+        f"🏢 <i>Emiten Target: {emiten_code} | Periode: {period}</i>",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n",
+        "Peta jalan solusi strategis 3-fase yang dirancang khusus untuk mengatasi akar masalah & mengakselerasi pertumbuhan bisnis:\n"
+    ]
 
     for r in roadmap:
         title = html.escape(r.get("phase_title", ""))
         sols = r.get("solutions", [])
         impact = html.escape(r.get("business_impact", ""))
 
-        lines.append(f"\n🔹 <b>{title}</b>")
+        part2_lines.append(f"🔹 <b>{title}</b>")
         for s in sols:
-            lines.append(f"   ↳ <b>{html.escape(s)}</b>")
+            part2_lines.append(f"   ↳ <b>{html.escape(s)}</b>")
         if impact:
-            lines.append(f"   🎯 <i>Impact: {impact}</i>")
+            part2_lines.append(f"   🎯 <i>Impact: {impact}</i>\n")
 
-    lines.append("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    lines.append(f"🏢 <i>Emiten: {emiten_code} | /emiten untuk ganti</i>")
+    part2_lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    part2_lines.append(f"🏢 <i>Emiten: {emiten_code} | Gunakan tombol di bawah untuk eksplorasi 10 Pilar</i>")
 
-    full_msg = "\n".join(lines)
+    part1_text = "\n".join(part1_lines)
+    part2_text = "\n".join(part2_lines)
 
-    if len(full_msg) > 3900:
-        full_msg = full_msg[:3850] + "...\n\n<i>[Teks terpotong untuk batas pesan]</i>"
+    return [part1_text, part2_text]
 
-    return full_msg
+def render_trend_html(emiten_code: str, res: Dict[str, Any]) -> str:
+    """Formats executive 5-year trend analysis into clean Telegram HTML."""
+    parts = render_trend_html_parts(emiten_code, res)
+    return parts[0]
+

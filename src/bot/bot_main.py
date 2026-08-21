@@ -14,7 +14,7 @@ from telegram.ext import (
 )
 import config
 from src.rag.engine import RAGEngine
-from src.rag.trend_engine import TemporalTrendEngine, render_trend_html
+from src.rag.trend_engine import TemporalTrendEngine, render_trend_html, render_trend_html_parts
 from src.rag.nashta_pillars import NASHTA_PILLARS, PILLAR_DICT
 from src.bot.keyboards import (
     get_emiten_keyboard,
@@ -187,12 +187,24 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         emiten_code = data.split(":")[1].upper()
         await safe_edit_or_reply(
             query,
-            f"⏳ <i>Sedang menganalisis <b>Evolusi Tren Masalah 5 Tahun ({emiten_code})</b> & menyusun Strategic Roadmap Nashta...</i>"
+            f"⏳ <i>Sedang menyusun <b>Executive Brief & Roadmap 5 Tahun ({emiten_code})</b>...</i>"
         )
 
         trend_result = await asyncio.to_thread(trend_engine.analyze_5_year_trend, emiten_code)
-        trend_html = render_trend_html(emiten_code, trend_result)
-        await safe_edit_or_reply(query, trend_html, reply_markup=get_trend_keyboard(emiten_code))
+        parts = render_trend_html_parts(emiten_code, trend_result)
+
+        if len(parts) == 1:
+            await safe_edit_or_reply(query, parts[0], reply_markup=get_trend_keyboard(emiten_code))
+        else:
+            # Edit current message with Part 1 (Evolusi Tren & Root Cause Issues)
+            await safe_edit_or_reply(query, parts[0])
+            # Send Part 2 (Strategic Roadmap Solusi Nashta 3-Fase) with the navigation keyboard
+            if query.message:
+                await query.message.reply_text(
+                    parts[1],
+                    parse_mode=constants.ParseMode.HTML,
+                    reply_markup=get_trend_keyboard(emiten_code)
+                )
         return
 
     if data.startswith("pillars:"):
