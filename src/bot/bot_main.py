@@ -1,3 +1,4 @@
+import re
 import html
 import asyncio
 import logging
