@@ -173,11 +173,12 @@ class AIAssistantRAGEngine:
 
     def _answer_pillar_inquiry(self, code: str, issuer: Dict[str, Any], pillar_id: int, analysis: Dict[str, Any], retrieved_chunks: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Provides in-depth consultation on a specific Nashta pillar."""
-        pillar_info = next((p for p in self.pillars if p["id"] == pillar_id), None)
+        pillar_info = next((p for p in self.pillars if p.get("number") == pillar_id or p.get("id") == str(pillar_id)), None)
         pillar_scores = analysis.get("pillar_scores", [])
         matched_score = next((ps for ps in pillar_scores if ps.get("pillar_number") == pillar_id), None)
         recs = analysis.get("strategic_recommendations", [])
-        pillar_recs = [r for r in recs if r.get("pillar_id") == pillar_id or r.get("pillar_name") == (pillar_info.get("name") if pillar_info else "")]
+        p_name = pillar_info.get("name") if pillar_info else f"Pilar {pillar_id}"
+        pillar_recs = [r for r in recs if r.get("pillar_id") == pillar_id or r.get("pillar_name") == p_name]
 
         p_name = pillar_info.get("name") if pillar_info else f"Pilar {pillar_id}"
         score_val = matched_score.get("score", 75) if matched_score else 75
