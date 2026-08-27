@@ -50,5 +50,16 @@ class AICopilotResponseTests(unittest.TestCase):
         self.assertIn("reply", res)
         self.assertIn("Temuan Fakta", res["reply"])
 
+    def test_mistral_provider_configuration(self):
+        import os
+        from backend.llm_provider import llm_provider
+        os.environ["MISTRAL_API_KEY"] = "test_mistral_key_123"
+        os.environ["MISTRAL_MODEL"] = "ministral-8b-latest"
+        info = llm_provider.get_active_provider_info()
+        self.assertEqual(info["provider"], "mistral")
+        self.assertEqual(info["model"], "ministral-8b-latest")
+        self.assertTrue(info["has_key"])
+        del os.environ["MISTRAL_API_KEY"]
+
 if __name__ == "__main__":
     unittest.main()

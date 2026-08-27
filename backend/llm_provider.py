@@ -43,11 +43,15 @@ class LLMProvider:
     def get_active_provider_info(self) -> Dict[str, Any]:
         """Returns the currently active provider name and model."""
         load_env_file()
+        mistral_key = os.environ.get("MISTRAL_API_KEY") or os.environ.get("MINISTRAL_API_KEY")
         gemini_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
         openai_key = os.environ.get("OPENAI_API_KEY")
         groq_key = os.environ.get("GROQ_API_KEY")
         ollama_url = os.environ.get("OLLAMA_BASE_URL")
 
+        if mistral_key:
+            model = os.environ.get("MISTRAL_MODEL") or os.environ.get("MINISTRAL_MODEL", "ministral-8b-latest")
+            return {"provider": "mistral", "model": model, "has_key": True}
         if gemini_key:
             return {"provider": "gemini", "model": "gemini-1.5-flash", "has_key": True}
         if openai_key:
@@ -67,7 +71,9 @@ class LLMProvider:
         provider_info = self.get_active_provider_info()
         provider = provider_info["provider"]
 
-        if provider == "gemini":
+        if provider == "mistral":
+            return self._call_mistral(prompt, system_prompt, temperature)
+        elif provider == "gemini":
             return self._call_gemini(prompt, system_prompt, temperature)
         elif provider == "openai":
             return self._call_openai(prompt, system_prompt, temperature)
@@ -76,6 +82,42 @@ class LLMProvider:
         elif provider == "ollama":
             return self._call_ollama(prompt, system_prompt, temperature)
 
+        return None
+
+    def _call_mistral(self, prompt: str, system_prompt: str, temperature: float) -> Optional[str]:
+        api_key = os.environ.get("MISTRAL_API_KEY") or os.environ.get("MINISTRAL_API_KEY")
+        if not api_key:
+            return None
+
+        model = os.environ.get("MISTRAL_MODEL") or os.environ.get("MINISTRAL_MODEL", "ministral-8b-latest")
+        url = "https://api.mistral.ai/v1/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json"
+        }
+        messages = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "user", "content": prompt})
+
+        payload = {
+            "model": model,
+            "messages": messages,
+            "temperature": temperature,
+            "max_tokens": 2048,
+        }
+
+        try:
+            resp = requests.post(url, headers=headers, json=payload, timeout=25)
+            if resp.status_code == 200:
+                data = resp.json()
+                choices = data.get("choices", [])
+                if choices:
+                    return choices[0].get("message", {}).get("content", "")
+            else:
+                logger.error(f"Mistral API error ({resp.status_code}): {resp.text}")
+        except Exception as e:
+            logger.error(f"Mistral call failed: {e}")
         return None
 
     def _call_gemini(self, prompt: str, system_prompt: str, temperature: float) -> Optional[str]:
