@@ -113,14 +113,16 @@ class AIAssistantUI {
     const bubble = document.createElement('div');
     bubble.className = `chat-bubble bubble-${sender}`;
     
-    // Simple markdown format
+    // Rich Markdown formatting for Chat Copilot
     let formatted = text
-      .replace(/### (.*?)\n/g, '<h3>$1</h3>')
-      .replace(/## (.*?)\n/g, '<h2>$1</h2>')
-      .replace(/# (.*?)\n/g, '<h1>$1</h1>')
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/`([^`]+)`/g, '<code style="background:#0b0f17;padding:2px 4px;border-radius:4px;color:#06b6d4;">$1</code>')
+      .replace(/#### (.*?)\n/g, '<h4 style="color:#38bdf8;font-size:0.88rem;margin-top:0.6rem;margin-bottom:0.3rem;">$1</h4>')
+      .replace(/### (.*?)\n/g, '<h3 style="color:#06b6d4;font-size:0.95rem;margin-top:0.5rem;margin-bottom:0.4rem;">$1</h3>')
+      .replace(/## (.*?)\n/g, '<h2 style="color:#38bdf8;font-size:1.05rem;margin-top:0.6rem;margin-bottom:0.4rem;">$1</h2>')
+      .replace(/# (.*?)\n/g, '<h1 style="color:#f8fafc;font-size:1.15rem;margin-top:0.7rem;margin-bottom:0.5rem;">$1</h1>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong style="color:#f1f5f9;">$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em style="color:#cbd5e1;">$1</em>')
+      .replace(/`([^`]+)`/g, '<code style="background:#090d16;padding:2px 6px;border-radius:4px;color:#38bdf8;font-size:0.8rem;border:1px solid #1e293b;">$1</code>')
+      .replace(/^>\s*(.*?)$/gm, '<div style="background:rgba(15,23,42,0.6);border-left:3px solid #06b6d4;padding:0.4rem 0.75rem;margin:0.4rem 0;border-radius:4px;color:#94a3b8;font-style:italic;font-size:0.8rem;">$1</div>')
       .replace(/\n/g, '<br>');
 
     bubble.innerHTML = formatted;
