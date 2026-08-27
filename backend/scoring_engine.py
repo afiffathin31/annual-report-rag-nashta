@@ -140,19 +140,25 @@ class ScoringEngine:
         name = issuer.get("name", "")
         code = issuer.get("code", "")
         p_name = pillar.get("name", "")
+        p_id = pillar.get("id", "")
 
-        if weaknesses:
-            w = weaknesses[0]
+        # Look for matching weakness specific to this pillar's keywords
+        matching = [w for w in weaknesses if w.get("pillar_id") == p_id]
+        if not matching and weaknesses:
+            matching = [w for w in weaknesses if any(kw in (w.get("evidence_quote", "") + " " + w.get("title", "")).lower() for kw in pillar.get("keywords", []))]
+
+        if matching:
+            w = matching[0]
+            p_display = w.get("page_display") or f"Hal. {w.get('page_number')}"
             return (
-                f"Terdapat temuan dokumen nyata pada {code} (Hal. {w.get('page_number')}, '{w.get('chapter_title')}'): "
+                f"Terdapat temuan dokumen nyata pada {code} ({p_display}, '{w.get('chapter_title')}'): "
                 f"\"{w.get('evidence_quote')}\". "
-                f"Mengindikasikan kebutuhan mendesak untuk penguatan {p_name}."
+                f"Mengindikasikan urgensi implementasi {p_name}."
             )
         else:
             return (
-                f"Berdasarkan rencana strategis dan arsitektur IT {name}, "
-                f"pilar {p_name} memiliki potensi ekspansi bernilai tinggi (Skor: {score}/100) guna mengoptimalkan "
-                f"efisiensi belanja modal dan kepatuhan industri."
+                f"Berdasarkan tinjauan rencana strategis Laporan Tahunan {name}, "
+                f"pilar {p_name} memiliki potensi akselerasi tinggi (Skor Peluang: {score}/100) guna mendukung efisiensi belanja modal dan kepatuhan industri."
             )
 
     def _get_proposed_solution(self, issuer: Dict[str, Any], pillar: Dict[str, Any], weaknesses: List[Dict[str, Any]]) -> str:

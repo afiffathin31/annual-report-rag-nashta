@@ -607,8 +607,8 @@ Proposal ini disusun berbasis audit langsung terhadap Laporan Tahunan resmi {iss
 """
         return {
             "emiten_code": code,
-            "title": f"Proposal Penawaran Bisnis 10 Pilar Nashta - {issuer.get('name')}",
-            "reply": proposal_md,
+            "title": f"Executive Proposal 10 Pilar Nashta - {issuer.get('name')}",
+            "reply": f"📄 **Draf Proposal Penawaran 10 Pilar Berhasil Dibuat!**\n\nProposal lengkap telah disiapkan untuk **{issuer.get('name')} ({code})** berdasarkan audit laporan tahunan dan rekomendasi 10 Pilar Nashta.",
             "proposal_markdown": proposal_md,
             "citations": weaknesses,
         }
