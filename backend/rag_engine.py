@@ -520,16 +520,90 @@ Tolong berikan jawaban yang cerdas, komprehensif, dan solutif:"""
             "citations": citations,
         }
 
+    def _generate_llm_proposal(
+        self,
+        code: str,
+        issuer: Dict[str, Any],
+        analysis: Dict[str, Any],
+        recs: List[Dict[str, Any]],
+        top_pillars: List[Dict[str, Any]],
+    ) -> Optional[str]:
+        """Synthesizes bespoke executive proposal via active LLM (Ministral / Gemini / OpenAI)."""
+        name = issuer.get("name", code)
+        subsector = issuer.get("subsector", "Perbankan / Enterprise")
+        overall = analysis.get("overall_opportunity_score", 85)
+
+        # Build context from recommendations & citations
+        rec_summary = []
+        for r in recs[:5]:
+            cit_strs = [f"{c.get('page_display', '')}: \"{c.get('evidence_quote', '')}\"" for c in r.get("supporting_citations", [])[:2]]
+            rec_summary.append(
+                f"- Pilar: {r.get('pillar_name')} ({r.get('severity')} Priority)\n"
+                f"  Diagnosa Masalah: {r.get('problem_synthesis')}\n"
+                f"  Solusi Nashta: {r.get('nashta_opportunity')}\n"
+                f"  Bukti Dokumen: {'; '.join(cit_strs)}"
+            )
+        recs_text = "\n\n".join(rec_summary)
+
+        system_prompt = (
+            "Anda adalah Senior Enterprise Solution Architect & Business Advisory Lead untuk PT Nashta Global Nusantara. "
+            "Tugas Anda adalah menyusun dokumen Executive Proposal formal, komprehensif, dan elegan untuk klien target "
+            "berdasarkan hasil audit Laporan Tahunan resmi dan portofolio 10 Pilar Layanan Nashta.\n"
+            "Format dokumen wajib menggunakan format Markdown rapi dengan struktur:\n"
+            "# EXECUTIVE PROPOSAL: NASHTA DIGITAL TRANSFORMATION ACCELERATOR\n"
+            "**Klien Target:** ...\n"
+            "**Sektor:** ...\n"
+            "**Tanggal:** 28 Agustus 2026\n"
+            "**Disusun Oleh:** Nashta Solution Advisory & Enterprise Architecture Team\n\n"
+            "---\n\n"
+            "## 1. Executive Summary & Dasar Dokumen\n"
+            "(Jelaskan urgensi transformasi, latar belakang emiten, dan 3 pilar prioritas teratas)\n\n"
+            "## 2. Diagnosa Kebutuhan Strategis & Klaster Bukti Laporan Tahunan\n"
+            "(Jabarkan temuan masalah dan bukti kutipan halaman nyata untuk tiap rekomendasi pilar secara mendalam)\n\n"
+            "## 3. Paket Penawaran Solusi 10 Pilar Nashta\n"
+            "(Wajib sertakan tabel perbandingan 10 pilar dengan format tabel markdown | No | Pilar Nashta | Rekomendasi Solusi Khusus | Nilai Tambah |)\n\n"
+            "## 4. Rencana Kerja & Tahapan Implementasi\n"
+            "(Bagi dalam fase 1 hingga fase 4 dengan durasi dan output yang jelas)\n\n"
+            "## 5. Hubungi Tim Nashta\n"
+            "- Email: business@nashta.co.id\n"
+            "- Website: https://nashta.co.id\n"
+        )
+
+        user_prompt = f"""Target Klien: {name} ({code})
+Sektor: {subsector}
+Skor Peluang Agregat: {overall}/100
+
+[DATA REKOMENDASI DAN BUKTI DOKUMEN LAPORAN TAHUNAN]:
+{recs_text}
+
+Tolong susun draf Executive Pitch Proposal formal lengkap dalam bahasa Indonesia profesional sekarang:"""
+
+        return llm_provider.generate(user_prompt, system_prompt=system_prompt, temperature=0.2)
+
     def generate_proposal(self, code: str) -> Dict[str, Any]:
         analysis = scoring_engine.analyze_issuer(code)
         issuer = analysis.get("issuer", {})
         weaknesses = analysis.get("verified_weaknesses", [])
         top_pillars = analysis.get("top_priority_pillars", [])
+        recs = analysis.get("strategic_recommendations", [])
 
+        # 1. If Generative LLM (Ministral / Gemini / OpenAI) is configured, generate dynamic bespoke proposal!
+        if llm_provider.is_llm_available():
+            llm_proposal = self._generate_llm_proposal(code, issuer, analysis, recs, top_pillars)
+            if llm_proposal and len(llm_proposal.strip()) > 300:
+                return {
+                    "emiten_code": code,
+                    "title": f"Executive Proposal 10 Pilar Nashta - {issuer.get('name')}",
+                    "reply": f"📄 **Draf Proposal Penawaran 10 Pilar Berhasil Disintesis oleh AI!**\n\nDokumen proposal lengkap untuk **{issuer.get('name')} ({code})** telah disusun secara dinamis berdasarkan audit dokumen laporan tahunan dan kapabilitas 10 Pilar Nashta.",
+                    "proposal_markdown": llm_proposal,
+                    "citations": weaknesses,
+                }
+
+        # 2. Deterministic Fallback
         proposal_md = f"""# EXECUTIVE PROPOSAL: NASHTA DIGITAL TRANSFORMATION ACCELERATOR
 **Klien Target:** {issuer.get('name')} ({code})  
 **Sektor:** {issuer.get('subsector')}  
-**Tanggal:** 18 Agustus 2026  
+**Tanggal:** 28 Agustus 2026  
 **Disusun Oleh:** Nashta Solution Advisory & Enterprise Architecture Team  
 
 ---

@@ -114,52 +114,64 @@ class EvidenceEngine:
             printed_page = chunk.get("printed_page", page_num)
             physical_page = chunk.get("physical_page", page_num)
 
+            # Determine PRIMARY pillar for this chunk based on highest matching score
+            best_pillar_id = None
+            best_score = 0
+            best_matched_kws = []
+
             for pillar in self.pillars:
                 pillar_id = pillar["id"]
                 pillar_keywords = pillar.get("keywords", [])
                 matched_kws = [kw for kw in pillar_keywords if kw in raw_lower]
-
                 if matched_kws:
-                    # Select the most informative sentence
-                    best_sentence = ""
-                    for s in sentences:
-                        s_clean = s.strip()
-                        s_lower = s_clean.lower()
-                        if len(s_clean) < 35 or len(s_clean) > 350:
-                            continue
-                        if any(pw in s_lower for pw in PAIN_TRIGGER_WORDS) and any(kw in s_lower for kw in matched_kws):
-                            best_sentence = s_clean
-                            break
-                        elif not best_sentence and any(pw in s_lower for pw in PAIN_TRIGGER_WORDS):
-                            best_sentence = s_clean
+                    # Give bonus for longer, more specific multi-word keywords
+                    score = sum(len(kw) * (2 if " " in kw else 1) for kw in matched_kws)
+                    if score > best_score:
+                        best_score = score
+                        best_pillar_id = pillar_id
+                        best_matched_kws = matched_kws
 
-                    if not best_sentence and sentences:
-                        valid_sentences = [s.strip() for s in sentences if 40 < len(s.strip()) < 300]
-                        best_sentence = valid_sentences[0] if valid_sentences else raw_para[:220]
-
-                    best_sentence = re.sub(r"^\d+\s+", "", best_sentence).strip()
-                    if len(best_sentence) < 35:
+            if best_pillar_id and best_score > 0:
+                # Select the most informative sentence for this specific pillar
+                best_sentence = ""
+                for s in sentences:
+                    s_clean = s.strip()
+                    s_lower = s_clean.lower()
+                    if len(s_clean) < 35 or len(s_clean) > 350:
                         continue
+                    if any(pw in s_lower for pw in PAIN_TRIGGER_WORDS) and any(kw in s_lower for kw in best_matched_kws):
+                        best_sentence = s_clean
+                        break
+                    elif not best_sentence and any(pw in s_lower for pw in PAIN_TRIGGER_WORDS):
+                        best_sentence = s_clean
 
-                    is_high = any(w in raw_lower for w in ["insiden", "siber", "pdp", "gangguan", "kegagalan", "kritis", "tinggi", "serangan", "kebocoran", "ransomware", "sanksi"])
-                    confidence = 96 if is_high else 90
+                if not best_sentence and sentences:
+                    valid_sentences = [s.strip() for s in sentences if 40 < len(s.strip()) < 300]
+                    best_sentence = valid_sentences[0] if valid_sentences else raw_para[:220]
 
-                    valid_evidence_by_pillar[pillar_id].append({
-                        "pillar_id": pillar_id,
-                        "report_year": year,
-                        "page_ref": f"{page_display} ({chapter})",
-                        "page_display": page_display,
-                        "page_number": printed_page,
-                        "printed_page": printed_page,
-                        "physical_page": physical_page,
-                        "doc_name": doc_name,
-                        "chapter_title": chapter,
-                        "evidence_quote": best_sentence,
-                        "context_window": raw_para,
-                        "matched_keywords": matched_kws,
-                        "is_high": is_high,
-                        "confidence": confidence,
-                    })
+                best_sentence = re.sub(r"^\d+\s+", "", best_sentence).strip()
+                if len(best_sentence) < 35:
+                    continue
+
+                is_high = any(w in raw_lower for w in ["insiden", "siber", "pdp", "gangguan", "kegagalan", "kritis", "tinggi", "serangan", "kebocoran", "ransomware", "sanksi"])
+                confidence = 96 if is_high else 90
+
+                valid_evidence_by_pillar[best_pillar_id].append({
+                    "pillar_id": best_pillar_id,
+                    "report_year": year,
+                    "page_ref": f"{page_display} ({chapter})",
+                    "page_display": page_display,
+                    "page_number": printed_page,
+                    "printed_page": printed_page,
+                    "physical_page": physical_page,
+                    "doc_name": doc_name,
+                    "chapter_title": chapter,
+                    "evidence_quote": best_sentence,
+                    "context_window": raw_para,
+                    "matched_keywords": best_matched_kws,
+                    "is_high": is_high,
+                    "confidence": confidence,
+                })
 
         # 2. Synthesize Strategic Recommendation Clusters (Top 4-5 Themes)
         recommendations: List[Dict[str, Any]] = []
@@ -168,15 +180,17 @@ class EvidenceEngine:
 
         # Priority Pillar Ordering
         pillar_priority_order = [
-            "cyber_security", "it_hybrid_infra", "business_app", "data_ai",
+            "cyber_security", "it_hybrid_infrastructure", "business_application", "data_ai",
             "cloud_services", "digital_business_platform", "managed_service",
-            "consulting_advisory", "bootcamp", "iot_edge"
+            "consulting_advisory", "bootcamp", "iot_edge_computing"
         ]
+
+        globally_used_quotes = set()
+        globally_used_pages = set()
 
         for p_id in pillar_priority_order:
             evidence_list = valid_evidence_by_pillar.get(p_id, [])
             if not evidence_list:
-                # If no raw chunks matched after filtering, check fallback for this pillar
                 continue
 
             pillar_def = next((p for p in self.pillars if p["id"] == p_id), {})
@@ -185,14 +199,16 @@ class EvidenceEngine:
             # Sort evidence: High severity first, newest year first, distinct pages
             evidence_list.sort(key=lambda x: (1 if x["is_high"] else 0, x["report_year"], x["confidence"]), reverse=True)
 
-            # Deduplicate citations by page & year to form a rich multi-citation cluster
+            # Deduplicate citations globally across recommendations
             distinct_citations: List[Dict[str, Any]] = []
-            seen_pages = set()
 
             for ev in evidence_list:
-                page_key = f"{ev['report_year']}_{ev['printed_page']}"
-                if page_key not in seen_pages:
-                    seen_pages.add(page_key)
+                quote_key = ev["evidence_quote"][:50]
+                page_key = f"{ev['doc_name']}_{ev['printed_page']}"
+
+                if page_key not in globally_used_pages and quote_key not in globally_used_quotes:
+                    globally_used_pages.add(page_key)
+                    globally_used_quotes.add(quote_key)
                     distinct_citations.append({
                         "citation_index": len(distinct_citations) + 1,
                         "report_year": ev["report_year"],
