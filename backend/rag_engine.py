@@ -9,6 +9,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from backend.catalog import catalog_manager
 from backend.evidence_engine import FINANCIAL_NOISE_TERMS, evidence_engine
+from backend.llm_provider import llm_provider
 from backend.rag_indexer import rag_indexer
 from backend.scoring_engine import scoring_engine
 
@@ -27,15 +28,20 @@ PILLAR_KEYWORDS_MAP = {
     10: ["bootcamp", "pelatihan", "talent", "sdm ti", "upskilling", "academy", "devsecops training", "sertifikasi ti", "enablement"],
 }
 
+GREETING_TRIGGERS = [
+    "hai", "halo", "hello", "hi", "pagi", "siang", "sore", "malam",
+    "assalamualaikum", "apa kabar", "siapa kamu", "siapa anda", "bantu saya", "tolong bantu"
+]
+
 
 class AIAssistantRAGEngine:
-    """True RAG Assistant that searches indexed document chunks, cites exact pages, and presents surrounding paragraph context."""
+    """True RAG Assistant with Hybrid Generative LLM & Deterministic Precision Synthesis."""
 
     def __init__(self) -> None:
         self.pillars = catalog_manager.get_pillars()
 
     def process_chat(self, query: str, active_emiten: Optional[str] = None) -> Dict[str, Any]:
-        q_lower = query.lower()
+        q_lower = query.lower().strip()
         active_code = active_emiten.upper() if active_emiten else None
 
         # Auto-detect emiten in query if not explicitly passed
@@ -51,6 +57,10 @@ class AIAssistantRAGEngine:
         weaknesses = analysis.get("verified_weaknesses", [])
         strategic_recs = analysis.get("strategic_recommendations", [])
 
+        # 0. Intent: Greetings / Small Talk / Conversational Welcome
+        if q_lower in GREETING_TRIGGERS or any(q_lower == gt or q_lower.startswith(gt + " ") or q_lower.startswith(gt + ",") for gt in GREETING_TRIGGERS):
+            return self._answer_greeting(target_code, issuer_info)
+
         # Retrieve matching chunks from RAG index with strict noise gatekeeping
         chunks = rag_indexer.get_chunks_for_emiten(target_code)
         retrieved_chunks = self._search_chunks(chunks, query)
@@ -59,6 +69,13 @@ class AIAssistantRAGEngine:
         if any(w in q_lower for w in ["proposal", "pitch", "penawaran", "buatkan proposal"]):
             return self.generate_proposal(target_code)
 
+        # If a live Generative LLM is configured (Gemini / OpenAI / Groq / Ollama), use it!
+        if llm_provider.is_llm_available():
+            llm_res = self._generate_llm_rag_answer(query, target_code, issuer_info, retrieved_chunks, strategic_recs, analysis)
+            if llm_res:
+                return llm_res
+
+        # --- Deterministic Expert Fallback (Offline Mode) ---
         # 2. Intent: Specific Finding / Quote Solution Inquiry (From "Analisis dengan AI Copilot" Button)
         if ("bagaimana nashta dapat menawarkan solusi" in q_lower or "bagaimana solusi" in q_lower) and ("halaman" in q_lower or "temuan" in q_lower or '"' in query or '“' in query):
             return self._answer_quote_solution_inquiry(target_code, issuer_info, query, analysis)
@@ -82,6 +99,107 @@ class AIAssistantRAGEngine:
 
         # 7. General RAG QA Synthesis
         return self._answer_general_rag(target_code, issuer_info, query, retrieved_chunks, strategic_recs, analysis)
+
+    def _answer_greeting(self, code: str, issuer: Dict[str, Any]) -> Dict[str, Any]:
+        """Provides a natural, welcoming conversational response when the user says hi."""
+        name = issuer.get("name", code)
+        reply = f"""Halo! 👋 Senang bertemu dengan Anda.
+
+Saya adalah **AI Business Copilot Nashta**, asisten cerdas yang siap membantu Anda menganalisis Laporan Tahunan resmi **{name} ({code})** dan merancang strategi solusi digital berbasis **10 Pilar Layanan Nashta**.
+
+💡 **Beberapa hal yang dapat Anda tanyakan:**
+- **🔍 Temuan Masalah & Bukti**: *"Apa kelemahan operasional & risiko TI di {code}?"*
+- **🏛️ Analisis Pilar Layanan**: *"Jelaskan tentang Cyber Security / Cloud / Data & AI untuk {code}"*
+- **💻 Profil Arsitektur & Teknologi**: *"Apa teknologi eksisting yang digunakan {code}?"*
+- **📄 Draf Pitch Proposal Eksekutif**: *"Tolong buatkan proposal penawaran untuk {code}"*
+- **❓ Pertanyaan Bebas**: Tanyakan topik apa saja seputar inisiatif transformasi digital atau regulasi di laporan tahunan.
+
+Ada yang bisa saya bantu analisis hari ini? 😊"""
+
+        return {
+            "emiten_code": code,
+            "title": f"AI Copilot - {code}",
+            "reply": reply,
+            "citations": [],
+        }
+
+    def _generate_llm_rag_answer(
+        self,
+        query: str,
+        code: str,
+        issuer: Dict[str, Any],
+        chunks: List[Dict[str, Any]],
+        recs: List[Dict[str, Any]],
+        analysis: Dict[str, Any]
+    ) -> Optional[Dict[str, Any]]:
+        """Synthesizes rich generative answer from active LLM (Gemini / OpenAI / Groq / Ollama)."""
+        provider_info = llm_provider.get_active_provider_info()
+        name = issuer.get("name", code)
+        subsector = issuer.get("subsector", "Umum")
+        overall = analysis.get("overall_opportunity_score", 80)
+
+        # Build Context Block from chunks
+        context_parts = []
+        for idx, c in enumerate(chunks[:4], 1):
+            p_str = f"Halaman {c.get('printed_page', c.get('page_number'))}"
+            context_parts.append(
+                f"[Kutipan {idx} - {p_str} | Bab: {c.get('chapter_title')} | Dokumen: {c.get('doc_name')}]\n"
+                f"\"{c.get('raw_paragraph')}\""
+            )
+        context_text = "\n\n".join(context_parts) if context_parts else "Tidak ada teks langsung yang cocok secara persis."
+
+        # Build Domain Knowledge Block
+        rec_parts = []
+        for r in recs[:3]:
+            rec_parts.append(f"- {r.get('title')} (Pilar: {r.get('pillar_name')} | Severity: {r.get('severity')})\n  Diagnosa: {r.get('problem_synthesis')}\n  Solusi Nashta: {r.get('nashta_opportunity')}")
+        recs_text = "\n".join(rec_parts) if rec_parts else "Belum ada rekomendasi khusus."
+
+        system_prompt = (
+            "Anda adalah AI Business Copilot & Senior Enterprise Solution Architect untuk PT Nashta Global Nusantara. "
+            "Tugas Anda adalah menganalisis Laporan Tahunan resmi emiten BEI dan merumuskan solusi transformasi digital "
+            "berdasarkan 10 Pilar Layanan Nashta (Managed Service, IT Hybrid Infra, Business App, Cyber Security, Data & AI, "
+            "Digital Business Platform, IoT, Consulting, Cloud Services, Bootcamp).\n"
+            "Pedoman Jawaban:\n"
+            "1. Jawab secara ramah, profesional, lugas, dan terstruktur rapi dengan format Markdown (Gunakan bold, list, dan blockquote).\n"
+            "2. Wajib berbasis FAKTA dokumen yang diberikan di bawah. Jangan berhalusinasi.\n"
+            "3. Sertakan referensi halaman dokumen (misal: 'Halaman 213') jika mengambil kutipan fakta.\n"
+            "4. Hubungkan temuan masalah emiten dengan solusi bernilai tinggi dari 10 Pilar Nashta."
+        )
+
+        user_prompt = f"""Target Emiten: {name} ({code}) | Sektor: {subsector} | Skor Peluang Nashta: {overall}/100
+
+[KONTEKS DOKUMEN LAPORAN TAHUNAN RESMI (RAG CHUNKS)]:
+{context_text}
+
+[DIAGNOSA & REKOMENDASI 10 PILAR NASHTA]:
+{recs_text}
+
+[PERTANYAAN PENGGUNA]:
+{query}
+
+Tolong berikan jawaban yang cerdas, komprehensif, dan solutif:"""
+
+        llm_reply = llm_provider.generate(user_prompt, system_prompt=system_prompt)
+        if not llm_reply or len(llm_reply.strip()) < 20:
+            return None
+
+        citations = []
+        for c in chunks[:3]:
+            citations.append({
+                "title": c.get("chapter_title"),
+                "doc_name": c.get("doc_name"),
+                "page_number": c.get("printed_page", c.get("page_number")),
+                "quote": c.get("raw_paragraph"),
+                "context": c.get("raw_paragraph"),
+            })
+
+        return {
+            "emiten_code": code,
+            "title": f"AI Copilot ({provider_info['provider'].upper()}) - {code}",
+            "reply": llm_reply.strip(),
+            "citations": citations,
+            "llm_provider": provider_info
+        }
 
     def _detect_pillar_inquiry(self, q_lower: str) -> Optional[int]:
         """Detects if query targets a specific pillar."""
@@ -118,8 +236,12 @@ class AIAssistantRAGEngine:
                 bonus = 2 if any(it_kw in text for it_kw in ["teknologi", "sistem", "digital", "siber", "cloud", "data"]) else 0
                 scored_chunks.append((match_count + bonus, c))
 
+        if not scored_chunks:
+            clean_chunks = [c for c in chunks if not any(nt in (c.get("raw_paragraph", "") + " " + c.get("chapter_title", "")).lower() for nt in FINANCIAL_NOISE_TERMS)]
+            return clean_chunks[:top_k]
+
         scored_chunks.sort(key=lambda x: x[0], reverse=True)
-        return [item[1] for item in scored_chunks[:top_k]] or chunks[:top_k]
+        return [item[1] for item in scored_chunks[:top_k]]
 
     def _answer_quote_solution_inquiry(self, code: str, issuer: Dict[str, Any], query: str, analysis: Dict[str, Any]) -> Dict[str, Any]:
         """Directly answers solution inquiry generated from clicking Copilot button on specific finding card."""

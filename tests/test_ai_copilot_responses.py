@@ -10,6 +10,13 @@ from backend.rag_engine import rag_engine
 
 class AICopilotResponseTests(unittest.TestCase):
 
+    def test_greeting_small_talk(self):
+        res = rag_engine.process_chat("hai", active_emiten="BRIS")
+        self.assertIn("reply", res)
+        self.assertIn("Halo!", res["reply"])
+        self.assertIn("AI Business Copilot Nashta", res["reply"])
+        self.assertEqual(len(res["citations"]), 0)
+
     def test_pillar_inquiry_cyber_security(self):
         res = rag_engine.process_chat("Jelaskan tentang Cyber Security di BRIS", active_emiten="BRIS")
         self.assertIn("reply", res)
@@ -39,7 +46,7 @@ class AICopilotResponseTests(unittest.TestCase):
         self.assertIn("EXECUTIVE PROPOSAL", res["proposal_markdown"])
 
     def test_general_rag_question(self):
-        res = rag_engine.process_chat("Bagaimana strategi digitalisasi dan transformasi Sido Muncul?", active_emiten="SIDO")
+        res = rag_engine.process_chat("Bagaimana strategi digitalisasi dan transformasi BRIS?", active_emiten="BRIS")
         self.assertIn("reply", res)
         self.assertIn("Temuan Fakta", res["reply"])
 
