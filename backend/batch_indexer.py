@@ -38,29 +38,63 @@ CHAPTER_PATTERNS = [
 ]
 
 
-def detect_printed_page(page: pymupdf.Page, physical_page: int, total_pages: int) -> Optional[int]:
-    """Detects printed page number from header/footer text blocks."""
+def detect_printed_page(page: pymupdf.Page, physical_page: int, total_pages: int, prev_printed: Optional[int] = None) -> Optional[int]:
+    """Detects printed page number strictly from true margins with sequential continuity."""
     rect = page.rect
     blocks = page.get_text("blocks")
-    edge_blocks = [b[4].strip() for b in blocks if (b[1] > rect.height * 0.82 or b[3] < rect.height * 0.18)]
+    # Strict margins: top 10% or bottom 10% only (avoiding body text & tables)
+    edge_blocks = [b for b in blocks if (b[1] >= rect.height * 0.90 or b[3] <= rect.height * 0.10)]
 
     candidates = []
-    for txt in edge_blocks:
-        # Match isolated numbers or numbers at boundary of line
-        nums = re.findall(r"(?:^|[\s\|\n\r\t])(\d{1,4})(?:[\s\|\n\r\t]|$)", txt)
-        for n in nums:
-            val = int(n)
-            # Accept if within reasonable difference from physical page
-            if 1 <= val <= total_pages + 50 and abs(val - physical_page) <= 60:
-                candidates.append(val)
+    for b in edge_blocks:
+        txt = b[4].strip()
+        # Pattern 1: 'LAPORAN TAHUNAN 2025 11' or 'Annual Report 2023 | 45'
+        m = re.search(r"(?i)(?:laporan\s+tahunan|annual\s+report)\s+\d{4}\s*[:\|\-]?\s*(\d{1,4})", txt)
+        if m:
+            candidates.append((int(m.group(1)), 10))
 
-    return candidates[-1] if candidates else None
+        # Pattern 2: '... TBK 10' or '... TBK\n10'
+        m = re.search(r"(?i)(?:tbk|bank|persero)\s*[:\|\-]?\s*(\d{1,4})$", txt)
+        if m:
+            candidates.append((int(m.group(1)), 8))
+
+        # Pattern 3: Number with pipe delimiter '... | 461' or '461 | ...'
+        m = re.search(r"\|\s*(\d{1,4})|(\d{1,4})\s*\|", txt)
+        if m:
+            val = m.group(1) or m.group(2)
+            candidates.append((int(val), 7))
+
+        # Pattern 4: Standalone number line in footer/header
+        lines = [l.strip() for l in txt.split("\n") if l.strip()]
+        for l in lines:
+            if l.isdigit() and 1 <= len(l) <= 4:
+                candidates.append((int(l), 5))
+
+    if not candidates:
+        return None
+
+    expected = prev_printed + 1 if prev_printed is not None else physical_page
+
+    # Filter candidates within +/- 35 of physical page
+    valid = [c for c in candidates if abs(c[0] - physical_page) <= 40 and 1 <= c[0] <= total_pages + 50]
+    if not valid:
+        return None
+
+    # Sort by priority desc, then closeness to expected
+    valid.sort(key=lambda x: (-x[1], abs(x[0] - expected)))
+    return valid[0][0]
 
 
 def detect_chapter(page_text: str, header_blocks: List[str], current_chapter: str) -> str:
     """Identifies the chapter title from header blocks or leading page text."""
     combined_header = " ".join(header_blocks).strip()
-    target_search = combined_header if len(combined_header) > 5 else page_text[:400]
+    
+    # If combined header is a global navbar containing 2 or more chapter section names, inspect page body instead
+    navbar_matches = sum(1 for p, _ in CHAPTER_PATTERNS if re.search(p, combined_header))
+    if navbar_matches > 1:
+        target_search = page_text[:400]
+    else:
+        target_search = combined_header if len(combined_header) > 5 else page_text[:400]
 
     for pattern, title in CHAPTER_PATTERNS:
         if re.search(pattern, target_search):
@@ -82,6 +116,7 @@ def extract_and_index_pdf(pdf_path: Path, emiten_code: str, year: int, doc_name:
         doc = pymupdf.open(str(pdf_path))
         total_pages = len(doc)
         current_chapter = "Laporan Tahunan"
+        prev_printed: Optional[int] = None
         last_offset = 0  # physical_page - printed_page
 
         for page_idx in range(total_pages):
@@ -94,12 +129,13 @@ def extract_and_index_pdf(pdf_path: Path, emiten_code: str, year: int, doc_name:
             blocks = page.get_text("blocks")
 
             # Extract header and footer blocks
-            header_blocks = [b[4].strip() for b in blocks if b[3] < rect.height * 0.18]
+            header_blocks = [b[4].strip() for b in blocks if b[3] < rect.height * 0.10]
             
-            # Detect printed page number
-            detected_printed = detect_printed_page(page, physical_page, total_pages)
+            # Detect printed page number with sequential tracker
+            detected_printed = detect_printed_page(page, physical_page, total_pages, prev_printed)
             if detected_printed is not None:
                 printed_page = detected_printed
+                prev_printed = printed_page
                 last_offset = physical_page - printed_page
             else:
                 printed_page = max(1, physical_page - last_offset)
