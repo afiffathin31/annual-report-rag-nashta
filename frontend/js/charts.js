@@ -26,8 +26,11 @@ function initRadarChart(canvasId, issuerScores, benchmarkScores) {
     radarChartInstance.destroy();
   }
 
-  const scores = issuerScores.map(p => p.score);
-  const bench = benchmarkScores ? benchmarkScores.map(b => b.overall_industry_avg) : [60, 65, 70, 75, 68, 62, 55, 60, 68, 58];
+  const sortedIssuer = [...issuerScores].sort((a, b) => a.pillar_number - b.pillar_number);
+  const scores = sortedIssuer.map(p => p.score);
+  const bench = benchmarkScores 
+    ? [...benchmarkScores].sort((a, b) => a.pillar_number - b.pillar_number).map(b => b.overall_industry_avg) 
+    : [60, 65, 70, 75, 68, 62, 55, 60, 68, 58];
 
   radarChartInstance = new Chart(ctx, {
     type: 'radar',

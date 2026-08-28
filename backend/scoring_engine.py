@@ -8,6 +8,115 @@ from backend.catalog import catalog_manager
 from backend.evidence_engine import evidence_engine
 
 
+# Strategic Baseline Opportunity Profile per Issuer (Reflecting their actual business model & tech landscape)
+ISSUER_PILLAR_BASELINES: Dict[str, Dict[str, int]] = {
+    # 1. BRIS: Mega Bank Syariah -> Huge Cybersecurity, Cloud, Big Data, Hybrid DC, and Mobile SuperApp
+    "BRIS": {
+        "managed_service": 74,
+        "it_hybrid_infrastructure": 88,
+        "business_application": 82,
+        "cyber_security": 96,
+        "data_ai": 92,
+        "digital_business_platform": 89,
+        "iot_edge_computing": 46,
+        "consulting_advisory": 84,
+        "cloud_services": 93,
+        "bootcamp": 78,
+    },
+    # 2. BTPS: Microfinance & Rural Inclusion -> Heavy Field Mobile Apps, Branch NOC, Micro-Core
+    "BTPS": {
+        "managed_service": 91,
+        "it_hybrid_infrastructure": 84,
+        "business_application": 86,
+        "cyber_security": 83,
+        "data_ai": 76,
+        "digital_business_platform": 94,
+        "iot_edge_computing": 52,
+        "consulting_advisory": 68,
+        "cloud_services": 79,
+        "bootcamp": 82,
+    },
+    # 3. BANK: Bank Aladin Syariah (Pure Digital Cloud Neobank) -> Extreme Cloud, Open API, Mobile, Cyber
+    "BANK": {
+        "managed_service": 65,
+        "it_hybrid_infrastructure": 58,
+        "business_application": 78,
+        "cyber_security": 94,
+        "data_ai": 90,
+        "digital_business_platform": 97,
+        "iot_edge_computing": 42,
+        "consulting_advisory": 72,
+        "cloud_services": 98,
+        "bootcamp": 75,
+    },
+    # 4. PNBS: Bank Panin Dubai Syariah -> Core Modernization, Branch Infrastructure, SLA Support
+    "PNBS": {
+        "managed_service": 88,
+        "it_hybrid_infrastructure": 90,
+        "business_application": 87,
+        "cyber_security": 81,
+        "data_ai": 69,
+        "digital_business_platform": 74,
+        "iot_edge_computing": 45,
+        "consulting_advisory": 76,
+        "cloud_services": 73,
+        "bootcamp": 70,
+    },
+    # 5. KAEF: Kimia Farma (Pharma & Pharmacy Retail) -> ERP SCM, Lakehouse, Helpdesk, Cold Chain
+    "KAEF": {
+        "managed_service": 92,
+        "it_hybrid_infrastructure": 85,
+        "business_application": 96,
+        "cyber_security": 79,
+        "data_ai": 88,
+        "digital_business_platform": 72,
+        "iot_edge_computing": 84,
+        "consulting_advisory": 80,
+        "cloud_services": 77,
+        "bootcamp": 68,
+    },
+    # 6. SIDO: Sido Muncul (Smart Herbal Industry & Distribution) -> Smart Factory IoT, SCM ERP, NOC
+    "SIDO": {
+        "managed_service": 86,
+        "it_hybrid_infrastructure": 82,
+        "business_application": 91,
+        "cyber_security": 74,
+        "data_ai": 80,
+        "digital_business_platform": 64,
+        "iot_edge_computing": 95,
+        "consulting_advisory": 71,
+        "cloud_services": 75,
+        "bootcamp": 62,
+    },
+    # 7. IRRA: Itama Ranoraya (Hi-Tech Medical Diagnostics & Distribution) -> Telemetry IoT, SCM, BI
+    "IRRA": {
+        "managed_service": 87,
+        "it_hybrid_infrastructure": 79,
+        "business_application": 90,
+        "cyber_security": 76,
+        "data_ai": 83,
+        "digital_business_platform": 66,
+        "iot_edge_computing": 94,
+        "consulting_advisory": 70,
+        "cloud_services": 74,
+        "bootcamp": 60,
+    },
+    # 8. OMED: Jayamas Medica Industri (Medical Supplies & Plant Automation) -> Plant IoT, Core ERP, QA
+    "OMED": {
+        "managed_service": 85,
+        "it_hybrid_infrastructure": 83,
+        "business_application": 94,
+        "cyber_security": 75,
+        "data_ai": 77,
+        "digital_business_platform": 61,
+        "iot_edge_computing": 91,
+        "consulting_advisory": 69,
+        "cloud_services": 72,
+        "bootcamp": 59,
+    },
+}
+
+
 class ScoringEngine:
     """Calculates granular opportunity scores (0-100) across Nashta's 10 Pillars with in-memory caching."""
 
@@ -36,6 +145,8 @@ class ScoringEngine:
         tech_stack = issuer.get("technology_stack", "").lower()
         summary = issuer.get("summary", "").lower()
 
+        issuer_baselines = ISSUER_PILLAR_BASELINES.get(c_code, {})
+
         pillar_scores: List[Dict[str, Any]] = []
         total_score = 0
 
@@ -45,39 +156,19 @@ class ScoringEngine:
             p_name = pillar["name"]
             p_category = pillar["category"]
 
-            score = 50
+            base_score = issuer_baselines.get(p_id, 65)
 
             matching_weaknesses = [w for w in verified_weaknesses if w.get("pillar_id") == p_id]
-            weakness_bonus = len(matching_weaknesses) * 18
-            for mw in matching_weaknesses:
-                if mw.get("severity") == "High":
-                    weakness_bonus += 8
+            
+            # Dynamic adjustment from verified RAG findings
+            finding_bonus = len(matching_weaknesses) * 3
+            if any(mw.get("severity") == "High" for mw in matching_weaknesses):
+                finding_bonus += 3
 
-            sector_bonus = 0
-            if sector_id == "bank_syariah":
-                if p_id in ("cyber_security", "cloud_services", "digital_business_platform", "consulting_advisory"):
-                    sector_bonus += 16
-                elif p_id in ("managed_service", "data_ai", "bootcamp"):
-                    sector_bonus += 12
-                elif p_id in ("business_application", "it_hybrid_infrastructure"):
-                    sector_bonus += 10
-                elif p_id == "iot_edge_computing":
-                    sector_bonus += 4
-            elif sector_id == "healthcare":
-                if p_id in ("business_application", "cyber_security", "managed_service", "iot_edge_computing"):
-                    sector_bonus += 18
-                elif p_id in ("data_ai", "digital_business_platform", "it_hybrid_infrastructure"):
-                    sector_bonus += 14
-                elif p_id in ("cloud_services", "consulting_advisory", "bootcamp"):
-                    sector_bonus += 10
+            kw_matches = sum(1 for kw in pillar.get("keywords", []) if kw in tech_stack or kw in summary)
+            kw_bonus = min(kw_matches * 2, 4)
 
-            kw_matches = 0
-            for kw in pillar.get("keywords", []):
-                if kw in tech_stack or kw in summary:
-                    kw_matches += 1
-            kw_bonus = min(kw_matches * 4, 12)
-
-            final_score = min(98, max(42, score + weakness_bonus + sector_bonus + kw_bonus - 15))
+            final_score = min(98, max(38, base_score + finding_bonus + kw_bonus))
 
             if final_score >= 85:
                 maturity = "Critical / Prime Opportunity"
