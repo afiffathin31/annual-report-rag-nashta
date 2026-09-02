@@ -66,25 +66,25 @@ class LLMProvider:
     def is_llm_available(self) -> bool:
         return self.get_active_provider_info()["has_key"]
 
-    def generate(self, prompt: str, system_prompt: str = "", temperature: float = 0.3) -> Optional[str]:
-        """Generates a text completion from the active LLM provider."""
+    def generate(self, prompt: str, system_prompt: str = "", temperature: float = 0.3, max_tokens: int = 8192) -> Optional[str]:
+        """Generates a text completion from the active LLM provider with configurable token limits."""
         provider_info = self.get_active_provider_info()
         provider = provider_info["provider"]
 
         if provider == "mistral":
-            return self._call_mistral(prompt, system_prompt, temperature)
+            return self._call_mistral(prompt, system_prompt, temperature, max_tokens)
         elif provider == "gemini":
-            return self._call_gemini(prompt, system_prompt, temperature)
+            return self._call_gemini(prompt, system_prompt, temperature, max_tokens)
         elif provider == "openai":
-            return self._call_openai(prompt, system_prompt, temperature)
+            return self._call_openai(prompt, system_prompt, temperature, max_tokens)
         elif provider == "groq":
-            return self._call_groq(prompt, system_prompt, temperature)
+            return self._call_groq(prompt, system_prompt, temperature, max_tokens)
         elif provider == "ollama":
-            return self._call_ollama(prompt, system_prompt, temperature)
+            return self._call_ollama(prompt, system_prompt, temperature, max_tokens)
 
         return None
 
-    def _call_mistral(self, prompt: str, system_prompt: str, temperature: float) -> Optional[str]:
+    def _call_mistral(self, prompt: str, system_prompt: str, temperature: float, max_tokens: int = 8192) -> Optional[str]:
         api_key = os.environ.get("MISTRAL_API_KEY") or os.environ.get("MINISTRAL_API_KEY")
         if not api_key:
             return None
@@ -104,11 +104,11 @@ class LLMProvider:
             "model": model,
             "messages": messages,
             "temperature": temperature,
-            "max_tokens": 2048,
+            "max_tokens": max_tokens,
         }
 
         try:
-            resp = requests.post(url, headers=headers, json=payload, timeout=25)
+            resp = requests.post(url, headers=headers, json=payload, timeout=60)
             if resp.status_code == 200:
                 data = resp.json()
                 choices = data.get("choices", [])
@@ -120,7 +120,7 @@ class LLMProvider:
             logger.error(f"Mistral call failed: {e}")
         return None
 
-    def _call_gemini(self, prompt: str, system_prompt: str, temperature: float) -> Optional[str]:
+    def _call_gemini(self, prompt: str, system_prompt: str, temperature: float, max_tokens: int = 4096) -> Optional[str]:
         api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
         if not api_key:
             return None
@@ -138,12 +138,12 @@ class LLMProvider:
             "contents": contents,
             "generationConfig": {
                 "temperature": temperature,
-                "maxOutputTokens": 2048,
+                "maxOutputTokens": max_tokens,
             }
         }
 
         try:
-            resp = requests.post(url, json=payload, timeout=20)
+            resp = requests.post(url, json=payload, timeout=60)
             if resp.status_code == 200:
                 data = resp.json()
                 candidates = data.get("candidates", [])
@@ -157,7 +157,7 @@ class LLMProvider:
             logger.error(f"Gemini call failed: {e}")
         return None
 
-    def _call_openai(self, prompt: str, system_prompt: str, temperature: float) -> Optional[str]:
+    def _call_openai(self, prompt: str, system_prompt: str, temperature: float, max_tokens: int = 4096) -> Optional[str]:
         api_key = os.environ.get("OPENAI_API_KEY")
         if not api_key:
             return None
@@ -177,11 +177,11 @@ class LLMProvider:
             "model": model,
             "messages": messages,
             "temperature": temperature,
-            "max_tokens": 2048,
+            "max_tokens": max_tokens,
         }
 
         try:
-            resp = requests.post(url, headers=headers, json=payload, timeout=20)
+            resp = requests.post(url, headers=headers, json=payload, timeout=60)
             if resp.status_code == 200:
                 data = resp.json()
                 choices = data.get("choices", [])
@@ -193,7 +193,7 @@ class LLMProvider:
             logger.error(f"OpenAI call failed: {e}")
         return None
 
-    def _call_groq(self, prompt: str, system_prompt: str, temperature: float) -> Optional[str]:
+    def _call_groq(self, prompt: str, system_prompt: str, temperature: float, max_tokens: int = 4096) -> Optional[str]:
         api_key = os.environ.get("GROQ_API_KEY")
         if not api_key:
             return None
@@ -212,11 +212,11 @@ class LLMProvider:
             "model": "llama-3.3-70b-versatile",
             "messages": messages,
             "temperature": temperature,
-            "max_tokens": 2048,
+            "max_tokens": max_tokens,
         }
 
         try:
-            resp = requests.post(url, headers=headers, json=payload, timeout=20)
+            resp = requests.post(url, headers=headers, json=payload, timeout=60)
             if resp.status_code == 200:
                 data = resp.json()
                 choices = data.get("choices", [])
@@ -228,7 +228,7 @@ class LLMProvider:
             logger.error(f"Groq call failed: {e}")
         return None
 
-    def _call_ollama(self, prompt: str, system_prompt: str, temperature: float) -> Optional[str]:
+    def _call_ollama(self, prompt: str, system_prompt: str, temperature: float, max_tokens: int = 4096) -> Optional[str]:
         base_url = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
         model = os.environ.get("OLLAMA_MODEL", "qwen2.5:7b")
         url = f"{base_url}/api/generate"
@@ -238,7 +238,7 @@ class LLMProvider:
             "system": system_prompt,
             "prompt": prompt,
             "stream": False,
-            "options": {"temperature": temperature}
+            "options": {"temperature": temperature, "num_predict": max_tokens}
         }
 
         try:

@@ -132,43 +132,62 @@ Ada yang bisa saya bantu analisis hari ini? 😊"""
         recs: List[Dict[str, Any]],
         analysis: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
-        """Synthesizes rich generative answer from active LLM (Gemini / OpenAI / Groq / Ollama)."""
+        """Synthesizes rich generative answer from active LLM with footnote citations and complete output."""
         provider_info = llm_provider.get_active_provider_info()
         name = issuer.get("name", code)
         subsector = issuer.get("subsector", "Umum")
         overall = analysis.get("overall_opportunity_score", 80)
 
-        # Build Context Block from chunks
+        # Build Context Block from chunks with clear numbered evidence
         context_parts = []
-        for idx, c in enumerate(chunks[:4], 1):
-            p_str = f"Halaman {c.get('printed_page', c.get('page_number'))}"
+        for idx, c in enumerate(chunks[:5], 1):
+            p_display = c.get("page_display") or f"Hal. {c.get('printed_page', c.get('page_number'))}"
+            doc_name = c.get("doc_name", f"AR_{code}.pdf")
+            year = c.get("year", 2025)
+            chapter = c.get("chapter_title", "Tata Kelola TI & Operasional")
             context_parts.append(
-                f"[Kutipan {idx} - {p_str} | Bab: {c.get('chapter_title')} | Dokumen: {c.get('doc_name')}]\n"
-                f"\"{c.get('raw_paragraph')}\""
+                f"[Sumber ({idx})]\n"
+                f"- Dokumen & Tahun: {doc_name} ({year})\n"
+                f"- Halaman & Bab: {p_display} ({chapter})\n"
+                f"- Kutipan Fakta Dokumen: \"{c.get('raw_paragraph')}\""
             )
         context_text = "\n\n".join(context_parts) if context_parts else "Tidak ada teks langsung yang cocok secara persis."
 
         # Build Domain Knowledge Block
         rec_parts = []
         for r in recs[:3]:
-            rec_parts.append(f"- {r.get('title')} (Pilar: {r.get('pillar_name')} | Severity: {r.get('severity')})\n  Diagnosa: {r.get('problem_synthesis')}\n  Solusi Nashta: {r.get('nashta_opportunity')}")
+            rec_parts.append(
+                f"- {r.get('title')} (Pilar: {r.get('pillar_name')} | Prioritas: {r.get('severity')})\n"
+                f"  Diagnosa Masalah: {r.get('problem_synthesis')}\n"
+                f"  Solusi Terpilih Nashta: {r.get('nashta_opportunity')}"
+            )
         recs_text = "\n".join(rec_parts) if rec_parts else "Belum ada rekomendasi khusus."
 
         system_prompt = (
-            "Anda adalah AI Business Copilot & Senior Enterprise Solution Architect untuk PT Nashta Global Nusantara. "
-            "Tugas Anda adalah menganalisis Laporan Tahunan resmi emiten BEI dan merumuskan solusi transformasi digital "
+            "Anda adalah Senior AI Business Copilot & Enterprise Solution Architect untuk PT Nashta Global Nusantara. "
+            "Tugas Anda adalah menganalisis Laporan Tahunan resmi emiten BEI dan merumuskan paket solusi transformasi digital "
             "berdasarkan 10 Pilar Layanan Nashta (Managed Service, IT Hybrid Infra, Business App, Cyber Security, Data & AI, "
-            "Digital Business Platform, IoT, Consulting, Cloud Services, Bootcamp).\n"
-            "Pedoman Jawaban:\n"
-            "1. Jawab secara ramah, profesional, lugas, dan terstruktur rapi dengan format Markdown (Gunakan bold, list, dan blockquote).\n"
-            "2. Wajib berbasis FAKTA dokumen yang diberikan di bawah. Jangan berhalusinasi.\n"
-            "3. Sertakan referensi halaman dokumen (misal: 'Halaman 213') jika mengambil kutipan fakta.\n"
-            "4. Hubungkan temuan masalah emiten dengan solusi bernilai tinggi dari 10 Pilar Nashta."
+            "Digital Business Platform, IoT, Consulting, Cloud Services, Bootcamp).\n\n"
+            "STRUKTUR JAWABAN YANG WAJIB DIIKUTI:\n"
+            "1. 🔍 Diagnosa Utama dari Laporan Tahunan {code}\n"
+            "   - Jabarkan indikator kunci masalah/risiko dengan footnote berurutan seperti (1), (2), (3) tepat setelah klaim temuan dokumen.\n"
+            "   - DILARANG menuliskan referensi kurung halaman di tengah kalimat narasi seperti '(Halaman 281)' atau '(Kutipan 1, Halaman 412)'.\n"
+            "   - Contoh yang BENAR:\n"
+            "     'Uji coba BCP/DRP dilakukan secara periodik (1), tetapi tidak dijelaskan apakah menggunakan teknologi otomatisasi (misal: AI-driven threat detection).'\n"
+            "   - Tepat di bagian akhir dari sesi 'Diagnosa Utama' ini (sebelum lanjut ke Solusi), WAJIB buat sub-bagian 'Bukti Dokumen' dengan format:\n"
+            "     ### 📑 Bukti Dokumen\n"
+            "     (1) \"[Kutipan kalimat fakta persis dari dokumen]\" — [Nama Laporan Tahunan] ([Tahun]), [Halaman & Bab]\n"
+            "     (2) \"[Kutipan kalimat fakta persis dari dokumen]\" — [Nama Laporan Tahunan] ([Tahun]), [Halaman & Bab]\n\n"
+            "2. 🚀 Rekomendasi Solusi Nashta\n"
+            "   - Uraikan paket solusi terintegrasi, komponen arsitektur, dan tabel fitur & manfaat secara ringkas, padat, dan terstruktur.\n\n"
+            "3. 🛠️ Rencana Kerja & Tahapan Implementasi\n"
+            "   - Paparkan tahapan implementasi secara tuntas (Fase 1 s/d Fase 3/4) hingga kesimpulan akhir.\n\n"
+            "KELENGKAPAN OUTPUT (PENTING): Tulis respon secara LENGKAP, MENYELURUH, dan TUNTAS. JANGAN PERNAH menghentikan respon atau membiarkan tabel/fase implementasi terpotong di tengah kalimat."
         )
 
-        user_prompt = f"""Target Emiten: {name} ({code}) | Sektor: {subsector} | Skor Peluang Nashta: {overall}/100
+        user_prompt = f"""Target Klien: {name} ({code}) | Sektor: {subsector} | Skor Peluang Nashta: {overall}/100
 
-[KONTEKS DOKUMEN LAPORAN TAHUNAN RESMI (RAG CHUNKS)]:
+[DATA REFERENSI RESMI BUKTI LAPORAN TAHUNAN]:
 {context_text}
 
 [DIAGNOSA & REKOMENDASI 10 PILAR NASHTA]:
@@ -177,20 +196,24 @@ Ada yang bisa saya bantu analisis hari ini? 😊"""
 [PERTANYAAN PENGGUNA]:
 {query}
 
-Tolong berikan jawaban yang cerdas, komprehensif, dan solutif:"""
+Tolong berikan jawaban konsultasi yang cerdas, komprehensif, dan solutif. Ingat aturan sitasi: gunakan penomoran footnote (1), (2) di dalam narasi kalimat diagnosa, dan cantumkan rincian kutipannya di sub-bagian 'Bukti Dokumen' tepat di akhir sesi diagnosa. Pastikan seluruh penjelasan, tabel solusi, dan fase implementasi ditulis lengkap sampai tuntas tanpa terpotong:"""
 
-        llm_reply = llm_provider.generate(user_prompt, system_prompt=system_prompt)
+        llm_reply = llm_provider.generate(user_prompt, system_prompt=system_prompt, temperature=0.2, max_tokens=8192)
         if not llm_reply or len(llm_reply.strip()) < 20:
             return None
 
         citations = []
-        for c in chunks[:3]:
+        for idx, c in enumerate(chunks[:5], 1):
+            p_display = c.get("page_display") or f"Hal. {c.get('printed_page', c.get('page_number'))}"
             citations.append({
-                "title": c.get("chapter_title"),
-                "doc_name": c.get("doc_name"),
+                "citation_index": idx,
+                "title": c.get("chapter_title", "Tata Kelola TI & Operasional"),
+                "doc_name": c.get("doc_name", f"AR_{code}.pdf"),
                 "page_number": c.get("printed_page", c.get("page_number")),
+                "page_display": p_display,
                 "quote": c.get("raw_paragraph"),
                 "context": c.get("raw_paragraph"),
+                "year": c.get("year", 2025),
             })
 
         return {
