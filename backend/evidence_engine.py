@@ -105,7 +105,12 @@ class EvidenceEngine:
             if not has_tech_kw:
                 continue
 
-            sentences = chunk.get("sentences", [])
+            sentences = chunk.get("sentences")
+            if not sentences:
+                sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+", raw_para) if len(s.strip()) > 15]
+                if not sentences:
+                    sentences = [raw_para]
+
             page_num = chunk.get("page_number", 1)
             doc_name = chunk.get("doc_name", "Annual_Report.pdf")
             chapter = chunk.get("chapter_title", "Tata Kelola TI & Operasional")
@@ -137,7 +142,7 @@ class EvidenceEngine:
                 for s in sentences:
                     s_clean = s.strip()
                     s_lower = s_clean.lower()
-                    if len(s_clean) < 35 or len(s_clean) > 350:
+                    if len(s_clean) < 30 or len(s_clean) > 350:
                         continue
                     if any(pw in s_lower for pw in PAIN_TRIGGER_WORDS) and any(kw in s_lower for kw in best_matched_kws):
                         best_sentence = s_clean
@@ -145,13 +150,13 @@ class EvidenceEngine:
                     elif not best_sentence and any(pw in s_lower for pw in PAIN_TRIGGER_WORDS):
                         best_sentence = s_clean
 
-                if not best_sentence and sentences:
-                    valid_sentences = [s.strip() for s in sentences if 40 < len(s.strip()) < 300]
-                    best_sentence = valid_sentences[0] if valid_sentences else raw_para[:220]
+                if not best_sentence:
+                    valid_sentences = [s.strip() for s in sentences if 35 < len(s.strip()) < 350]
+                    best_sentence = valid_sentences[0] if valid_sentences else raw_para[:250]
 
                 best_sentence = re.sub(r"^\d+\s+", "", best_sentence).strip()
-                if len(best_sentence) < 35:
-                    continue
+                if len(best_sentence) < 25:
+                    best_sentence = raw_para[:250].strip()
 
                 is_high = any(w in raw_lower for w in ["insiden", "siber", "pdp", "gangguan", "kegagalan", "kritis", "tinggi", "serangan", "kebocoran", "ransomware", "sanksi"])
                 confidence = 96 if is_high else 90
@@ -223,7 +228,7 @@ class EvidenceEngine:
                         "context_window": ev["context_window"],
                         "matched_keywords": ev["matched_keywords"],
                     })
-                if len(distinct_citations) >= 3:
+                if len(distinct_citations) >= 5:
                     break
 
             if not distinct_citations:
