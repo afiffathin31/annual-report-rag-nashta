@@ -43,6 +43,12 @@ data/gdrive_temp/
 data/rag_index/*.json
 !data/rag_index/.gitkeep
 
+# SQLite Databases & WAL Logs
+data/*.db
+data/*.db-wal
+data/*.db-shm
+*.db
+
 # IDE / Editor Files
 .vscode/
 .idea/

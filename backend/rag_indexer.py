@@ -74,14 +74,25 @@ class RAGIndexer:
                     json.dump(chunks_data, f, indent=2, ensure_ascii=False)
 
     def get_chunks_for_emiten(self, emiten_code: str) -> List[Dict[str, Any]]:
-        path = self.get_index_path(emiten_code)
+        c_code = emiten_code.upper().strip()
+        # 1. Prioritize indexed Database Repository
+        try:
+            from backend.repository import doc_repo
+            db_chunks = doc_repo.get_chunks_for_emiten(c_code)
+            if db_chunks:
+                return db_chunks
+        except Exception as e:
+            logger.debug(f"DB retrieval fallback to JSON for {c_code}: {e}")
+
+        # 2. Fallback to JSON file
+        path = self.get_index_path(c_code)
         if not path.exists():
             return []
         try:
             with open(path, "r", encoding="utf-8") as f:
                 return json.load(f)
         except Exception as e:
-            logger.error(f"Error loading index for {emiten_code}: {e}")
+            logger.error(f"Error loading index for {c_code}: {e}")
             return []
 
     def index_pdf_file(self, pdf_path: Path, emiten_code: str, year: int, doc_name: str) -> int:
@@ -131,11 +142,19 @@ class RAGIndexer:
             existing = self.get_chunks_for_emiten(emiten_code)
             # Remove duplicates by chunk_id
             combined = {c["chunk_id"]: c for c in existing}
-            for c in chunks:
-                combined[c["chunk_id"]] = c
+            # Save to Database Repository
+            try:
+                from backend.repository import doc_repo
+                doc_repo.bulk_insert_chunks(chunks)
+            except Exception as e:
+                logger.error(f"Failed to insert PDF chunks into database: {e}")
 
-            with open(self.get_index_path(emiten_code), "w", encoding="utf-8") as f:
-                json.dump(list(combined.values()), f, indent=2, ensure_ascii=False)
+            # Also maintain JSON backup
+            try:
+                with open(self.get_index_path(emiten_code), "w", encoding="utf-8") as f:
+                    json.dump(list(combined.values()), f, indent=2, ensure_ascii=False)
+            except Exception as e:
+                logger.warning(f"Failed to write JSON backup: {e}")
 
             return len(chunks)
         except Exception as e:

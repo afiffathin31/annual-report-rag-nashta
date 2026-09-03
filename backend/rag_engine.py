@@ -63,7 +63,7 @@ class AIAssistantRAGEngine:
 
         # Retrieve matching chunks from RAG index with strict noise gatekeeping
         chunks = rag_indexer.get_chunks_for_emiten(target_code)
-        retrieved_chunks = self._search_chunks(chunks, query)
+        retrieved_chunks = self._search_chunks(chunks, query, target_code=target_code)
 
         # 1. Intent: Proposal / Pitch Deck Generation
         if any(w in q_lower for w in ["proposal", "pitch", "penawaran", "buatkan proposal"]):
@@ -232,8 +232,17 @@ Tolong berikan jawaban konsultasi yang cerdas, komprehensif, dan solutif. Ingat 
                     return pillar_id
         return None
 
-    def _search_chunks(self, chunks: List[Dict[str, Any]], query: str, top_k: int = 5) -> List[Dict[str, Any]]:
-        """Performs noise-filtered semantic keyword search over indexed chunks."""
+    def _search_chunks(self, chunks: List[Dict[str, Any]], query: str, top_k: int = 5, target_code: str = "") -> List[Dict[str, Any]]:
+        """Performs noise-filtered semantic keyword search over indexed chunks using database FTS or fallback scan."""
+        if target_code:
+            try:
+                from backend.repository import doc_repo
+                db_results = doc_repo.search_chunks(target_code, query, top_k=top_k)
+                if db_results:
+                    return db_results
+            except Exception as e:
+                logger.debug(f"DB search fallback: {e}")
+
         if not chunks:
             return []
 
