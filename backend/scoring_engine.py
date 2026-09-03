@@ -156,19 +156,32 @@ class ScoringEngine:
             p_name = pillar["name"]
             p_category = pillar["category"]
 
-            base_score = issuer_baselines.get(p_id, 65)
-
             matching_weaknesses = [w for w in verified_weaknesses if w.get("pillar_id") == p_id]
-            
-            # Dynamic adjustment from verified RAG findings
-            finding_bonus = len(matching_weaknesses) * 3
-            if any(mw.get("severity") == "High" for mw in matching_weaknesses):
-                finding_bonus += 3
+            real_weaknesses = [w for w in matching_weaknesses if "100+" not in str(w.get("page_ref", ""))]
+            evidence_count = len(real_weaknesses)
 
-            kw_matches = sum(1 for kw in pillar.get("keywords", []) if kw in tech_stack or kw in summary)
-            kw_bonus = min(kw_matches * 2, 4)
+            # --- OPTION 1: PURE EVIDENCE-DRIVEN RAG SCORING ---
+            # 1. Base Score Standard: 50 poin (kondisi netral operasional normal)
+            base_score = 50
 
-            final_score = min(98, max(38, base_score + finding_bonus + kw_bonus))
+            # 2. Evidence Volume Bonus (+5 poin per bukti dokumen nyata, max +25 untuk 5 bukti)
+            evidence_bonus = min(evidence_count * 5, 25)
+
+            # 3. Topic Prominence / Mention Density (seberapa dominan topik ini dalam profil bisnis emiten)
+            is_mfg = sector_id in ["healthcare", "pharmaceutical", "manufacturing"]
+            if p_id == "iot_edge_computing":
+                density_bonus = 15 if is_mfg else 3
+            elif p_id in ["cyber_security", "data_ai", "it_hybrid_infrastructure", "business_application"]:
+                density_bonus = 15
+            else:
+                density_bonus = 10 if evidence_count >= 3 else 5
+
+            # 4. Severity Risk Bonus (+8 jika ada insiden / regulasi ketat / risiko High, +3 jika Medium)
+            is_high_severity = any(mw.get("severity") == "High" or mw.get("is_high", False) for mw in matching_weaknesses)
+            severity_bonus = 8 if is_high_severity else 3
+
+            # Final Score (Capped between 45 and 98)
+            final_score = min(98, max(45, base_score + evidence_bonus + density_bonus + severity_bonus))
 
             if final_score >= 85:
                 maturity = "Critical / Prime Opportunity"
