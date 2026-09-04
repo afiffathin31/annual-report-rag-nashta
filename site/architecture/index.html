@@ -53,6 +53,8 @@
       
     
     
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -942,37 +944,37 @@
 <hr />
 <h3 id="diagram-komponen-sistem">📊 Diagram Komponen Sistem</h3>
 <pre class="mermaid"><code>graph TD
-    subgraph Data Sources
-        PDF[Laporan Tahunan PDF&lt;br/&gt;500 - 1.000+ Hal]
-        GDrive[Google Drive&lt;br/&gt;Corporate Folder]
+    subgraph S1["1. Data Sources"]
+        PDF["Laporan Tahunan PDF (500 - 1.000+ Hal)"]
+        GDrive["Google Drive Corporate Folder"]
     end
 
-    subgraph Ingestion &amp; Processing
-        PyMuPDF[PDF Processor&lt;br/&gt;PyMuPDF fitz]
-        NoiseFilter[Semantic Noise Filter&lt;br/&gt;TOC, Disclaimer, Header/Footer]
-        Chunker[Document Chunker&lt;br/&gt;Paragraphs &amp; Chapter Titles]
+    subgraph S2["2. Ingestion &amp; Processing"]
+        PyMuPDF["PDF Processor (PyMuPDF fitz)"]
+        NoiseFilter["Semantic Noise Filter (TOC, Disclaimer)"]
+        Chunker["Document Chunker (Paragraphs &amp; Chapters)"]
     end
 
-    subgraph Data &amp; Storage Layer
-        DB[(SQLite Document Store&lt;br/&gt;document_chunks table)]
-        Vault[Document Vault&lt;br/&gt;data/documents/EMITEN/YEAR]
+    subgraph S3["3. Data &amp; Storage Layer"]
+        DB[("SQLite Document Store: document_chunks")]
+        Vault["Document Vault: data/documents/EMITEN/YEAR"]
     end
 
-    subgraph Analytical &amp; AI Engines
-        Scoring[Scoring Engine&lt;br/&gt;10-Pillars Opportunity Radar]
-        Evidence[Evidence Engine&lt;br/&gt;Match Confidence &amp; Quote Extractor]
-        RAGEngine[AIAssistantRAGEngine&lt;br/&gt;Temporal Filter &amp; Query Expander]
-        LLM[Multi-Provider LLM&lt;br/&gt;Mistral / Gemini / OpenAI / Groq / Ollama]
+    subgraph S4["4. Analytical &amp; AI Engines"]
+        Scoring["Scoring Engine (10-Pillars Opportunity Radar)"]
+        Evidence["Evidence Engine (Match Confidence &amp; Quotes)"]
+        RAGEngine["RAG Engine (Temporal Filter &amp; Query Expander)"]
+        LLM["Multi-Provider LLM (Mistral / Gemini / OpenAI)"]
     end
 
-    subgraph Presentation &amp; API Layer
-        API[FastAPI Application Server&lt;br/&gt;REST Endpoints]
-        Dashboard[Web Dashboard&lt;br/&gt;Radar Chart &amp; Opportunity Cards]
-        Copilot[AI Copilot Assistant&lt;br/&gt;Chat, Citations &amp; Pitch Proposal]
+    subgraph S5["5. Presentation &amp; API Layer"]
+        API["FastAPI Application Server (/api/chat, /api/issuers)"]
+        Dashboard["Web Dashboard (Radar Chart &amp; Cards)"]
+        Copilot["AI Copilot Assistant (Citations &amp; Pitch)"]
     end
 
     PDF --&gt; PyMuPDF
-    GDrive --&gt;|Direct Sync| PDF
+    GDrive --&gt;|Sync| PDF
     PyMuPDF --&gt; NoiseFilter
     NoiseFilter --&gt; Chunker
     Chunker --&gt; DB
@@ -1035,29 +1037,29 @@
 <p>Berikut urutan proses ketika pengguna mengajukan pertanyaan di AI Copilot:</p>
 <pre class="mermaid"><code>sequenceDiagram
     autonumber
-    actor User as Pengguna (Browser)
-    participant UI as AI Copilot UI (ai_assistant.js)
-    participant API as FastAPI Server (/api/chat)
-    participant RAG as AIAssistantRAGEngine
-    participant Repo as DocumentRepository (SQLite)
-    participant LLM as Mistral / Gemini API
+    actor User as "Pengguna (Browser)"
+    participant UI as "AI Copilot UI"
+    participant API as "FastAPI Server"
+    participant RAG as "AIAssistantRAGEngine"
+    participant Repo as "DocumentRepository (SQLite)"
+    participant LLM as "Mistral AI / Gemini API"
 
-    User-&gt;&gt;UI: Ketik pertanyaan (misal: "ancaman cyber 2024?")
+    User-&gt;&gt;UI: Input pertanyaan ("ancaman cyber 2024?")
     UI-&gt;&gt;API: POST /api/chat {query, emiten_code: "BRIS"}
     API-&gt;&gt;RAG: process_chat(query, "BRIS")
 
-    RAG-&gt;&gt;RAG: Ekstraksi target_year regex \b(20(?:1[89]|2[0-6]))\b -&gt; 2024
-    RAG-&gt;&gt;Repo: search_chunks("BRIS", query, target_year=2024)
-    Repo-&gt;&gt;Repo: Filter SQL: year == 2024 &amp; keyword matching
-    Repo--&gt;&gt;RAG: 5 Top Chunks (AR_2024_BRIS, Hal 283-284)
+    RAG-&gt;&gt;RAG: Ekstraksi tahun target: 2024
+    RAG-&gt;&gt;Repo: search_chunks(BRIS, query, target_year=2024)
+    Repo-&gt;&gt;Repo: Filter SQL: year == 2024
+    Repo--&gt;&gt;RAG: 5 Top Chunks Dokumen 2024
 
-    RAG-&gt;&gt;RAG: Bangun System &amp; User Prompt dengan aturan Footnote Citations
+    RAG-&gt;&gt;RAG: Susun Prompt dengan Bukti Dokumen Asli
     RAG-&gt;&gt;LLM: generate(prompt, system_prompt)
-    LLM--&gt;&gt;RAG: Jawaban terstruktur (Diagnosa, Bukti Dokumen, Solusi, Roadmap)
+    LLM--&gt;&gt;RAG: Jawaban terstruktur dengan sitasi footnote
 
-    RAG--&gt;&gt;API: JSON Response (reply, citations metadata)
-    API--&gt;&gt;UI: Return HTTP 200 OK
-    UI-&gt;&gt;User: Render format Markdown interaktif &amp; Kartu Sitasi</code></pre>
+    RAG--&gt;&gt;API: JSON Response (reply, citations)
+    API--&gt;&gt;UI: HTTP 200 OK
+    UI-&gt;&gt;User: Tampilkan Diagnosa, Bukti Dokumen, &amp; Solusi</code></pre>
 
 
 
@@ -1118,9 +1120,13 @@
     
       <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script src="../javascripts/mathjax.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../javascripts/mermaid.js"></script>
       
     
   </body>

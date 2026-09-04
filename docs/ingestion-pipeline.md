@@ -10,11 +10,11 @@ Laporan Tahunan emiten BEI umumnya berukuran besar (50 MB s/d 250 MB per dokumen
 
 ```mermaid
 graph LR
-    A[PDF Asli di Vault] --> B[PyMuPDF Text Extractor]
-    B --> C[Page & Chapter Mapper]
-    C --> D[Heuristic Noise Gatekeeper]
-    D --> E[Semantic Paragraph Chunker]
-    E --> F[SQLite Document Chunks DB]
+    A["PDF Asli di Vault"] --> B["PyMuPDF Text Extractor"]
+    B --> C["Page & Chapter Mapper"]
+    C --> D["Heuristic Noise Gatekeeper"]
+    D --> E["Semantic Paragraph Chunker"]
+    E --> F["SQLite Document Chunks DB"]
 ```
 
 ### 1. Ekstraksi Halaman dengan PyMuPDF (`fitz`)

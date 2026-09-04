@@ -22,37 +22,37 @@ Sistem dibangun menggunakan pendekatan modular berbasis **Python (FastAPI)** pad
 
 ```mermaid
 graph TD
-    subgraph Data Sources
-        PDF[Laporan Tahunan PDF<br/>500 - 1.000+ Hal]
-        GDrive[Google Drive<br/>Corporate Folder]
+    subgraph S1["1. Data Sources"]
+        PDF["Laporan Tahunan PDF (500 - 1.000+ Hal)"]
+        GDrive["Google Drive Corporate Folder"]
     end
 
-    subgraph Ingestion & Processing
-        PyMuPDF[PDF Processor<br/>PyMuPDF fitz]
-        NoiseFilter[Semantic Noise Filter<br/>TOC, Disclaimer, Header/Footer]
-        Chunker[Document Chunker<br/>Paragraphs & Chapter Titles]
+    subgraph S2["2. Ingestion & Processing"]
+        PyMuPDF["PDF Processor (PyMuPDF fitz)"]
+        NoiseFilter["Semantic Noise Filter (TOC, Disclaimer)"]
+        Chunker["Document Chunker (Paragraphs & Chapters)"]
     end
 
-    subgraph Data & Storage Layer
-        DB[(SQLite Document Store<br/>document_chunks table)]
-        Vault[Document Vault<br/>data/documents/EMITEN/YEAR]
+    subgraph S3["3. Data & Storage Layer"]
+        DB[("SQLite Document Store: document_chunks")]
+        Vault["Document Vault: data/documents/EMITEN/YEAR"]
     end
 
-    subgraph Analytical & AI Engines
-        Scoring[Scoring Engine<br/>10-Pillars Opportunity Radar]
-        Evidence[Evidence Engine<br/>Match Confidence & Quote Extractor]
-        RAGEngine[AIAssistantRAGEngine<br/>Temporal Filter & Query Expander]
-        LLM[Multi-Provider LLM<br/>Mistral / Gemini / OpenAI / Groq / Ollama]
+    subgraph S4["4. Analytical & AI Engines"]
+        Scoring["Scoring Engine (10-Pillars Opportunity Radar)"]
+        Evidence["Evidence Engine (Match Confidence & Quotes)"]
+        RAGEngine["RAG Engine (Temporal Filter & Query Expander)"]
+        LLM["Multi-Provider LLM (Mistral / Gemini / OpenAI)"]
     end
 
-    subgraph Presentation & API Layer
-        API[FastAPI Application Server<br/>REST Endpoints]
-        Dashboard[Web Dashboard<br/>Radar Chart & Opportunity Cards]
-        Copilot[AI Copilot Assistant<br/>Chat, Citations & Pitch Proposal]
+    subgraph S5["5. Presentation & API Layer"]
+        API["FastAPI Application Server (/api/chat, /api/issuers)"]
+        Dashboard["Web Dashboard (Radar Chart & Cards)"]
+        Copilot["AI Copilot Assistant (Citations & Pitch)"]
     end
 
     PDF --> PyMuPDF
-    GDrive -->|Direct Sync| PDF
+    GDrive -->|Sync| PDF
     PyMuPDF --> NoiseFilter
     NoiseFilter --> Chunker
     Chunker --> DB
@@ -118,27 +118,27 @@ Berikut urutan proses ketika pengguna mengajukan pertanyaan di AI Copilot:
 ```mermaid
 sequenceDiagram
     autonumber
-    actor User as Pengguna (Browser)
-    participant UI as AI Copilot UI (ai_assistant.js)
-    participant API as FastAPI Server (/api/chat)
-    participant RAG as AIAssistantRAGEngine
-    participant Repo as DocumentRepository (SQLite)
-    participant LLM as Mistral / Gemini API
+    actor User as "Pengguna (Browser)"
+    participant UI as "AI Copilot UI"
+    participant API as "FastAPI Server"
+    participant RAG as "AIAssistantRAGEngine"
+    participant Repo as "DocumentRepository (SQLite)"
+    participant LLM as "Mistral AI / Gemini API"
 
-    User->>UI: Ketik pertanyaan (misal: "ancaman cyber 2024?")
+    User->>UI: Input pertanyaan ("ancaman cyber 2024?")
     UI->>API: POST /api/chat {query, emiten_code: "BRIS"}
     API->>RAG: process_chat(query, "BRIS")
     
-    RAG->>RAG: Ekstraksi target_year regex \b(20(?:1[89]|2[0-6]))\b -> 2024
-    RAG->>Repo: search_chunks("BRIS", query, target_year=2024)
-    Repo->>Repo: Filter SQL: year == 2024 & keyword matching
-    Repo-->>RAG: 5 Top Chunks (AR_2024_BRIS, Hal 283-284)
+    RAG->>RAG: Ekstraksi tahun target: 2024
+    RAG->>Repo: search_chunks(BRIS, query, target_year=2024)
+    Repo->>Repo: Filter SQL: year == 2024
+    Repo-->>RAG: 5 Top Chunks Dokumen 2024
     
-    RAG->>RAG: Bangun System & User Prompt dengan aturan Footnote Citations
+    RAG->>RAG: Susun Prompt dengan Bukti Dokumen Asli
     RAG->>LLM: generate(prompt, system_prompt)
-    LLM-->>RAG: Jawaban terstruktur (Diagnosa, Bukti Dokumen, Solusi, Roadmap)
+    LLM-->>RAG: Jawaban terstruktur dengan sitasi footnote
     
-    RAG-->>API: JSON Response (reply, citations metadata)
-    API-->>UI: Return HTTP 200 OK
-    UI->>User: Render format Markdown interaktif & Kartu Sitasi
+    RAG-->>API: JSON Response (reply, citations)
+    API-->>UI: HTTP 200 OK
+    UI->>User: Tampilkan Diagnosa, Bukti Dokumen, & Solusi
 ```

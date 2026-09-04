@@ -28,19 +28,19 @@ Jika sistem hanya menggunakan pencarian semantik teks tanpa kesadaran temporal (
 
 ```mermaid
 graph TD
-    Query[Pertanyaan Pengguna<br/>'ancaman cyber th 2024?'] --> Regex[Ekstraksi Regex Tahun<br/>\b 2018-2026 \b]
-    Regex -->|Tahun Terdeteksi = 2024| Clean[Pembersihan Stop Words & Token Temporal]
+    Query["Pertanyaan Pengguna (Misal: 'ancaman cyber 2024?')"] --> Regex["Ekstraksi Regex Tahun (2018 - 2026)"]
+    Regex -->|Tahun Terdeteksi = 2024| Clean["Pembersihan Stop Words & Token Temporal"]
     
-    Clean -->|Hapus: 'tahun', 'thn', '2024'| SemanticKW[Kata Kunci Semantik Murni<br/>'cyber', 'siber', 'ancaman']
+    Clean -->|Eliminasi kata tahun, thn, 2024| SemanticKW["Kata Kunci Semantik Murni: cyber, siber, ancaman"]
     
-    SemanticKW --> DBQuery[Query SQLite Document Chunks]
-    DBQuery -->|Filter Ketat: ChunkModel.year == 2024| Candidates[Koleksi Chunk Dokumen 2024 Saja]
+    SemanticKW --> DBQuery["Query SQLite Document Chunks"]
+    DBQuery -->|Filter Ketat: year == 2024| Candidates["Koleksi Chunk Dokumen 2024 Saja"]
     
-    Candidates --> Scoring[Scoring Relevansi & Bab TI]
-    Scoring --> Top5[Top-5 Chunks Relevan 2024]
+    Candidates --> Scoring["Scoring Relevansi & Bab TI (+4 Poin Siber)"]
+    Scoring --> Top5["Top-5 Chunks Dokumen 2024 Paling Relevan"]
     
-    Top5 --> Prompt[Prompt Builder + Warning Fokus 2024]
-    Prompt --> LLM[Generative LLM Inference]
+    Top5 --> Prompt["Prompt Builder + Temporal Warning 2024"]
+    Prompt --> LLM["Generative LLM Inference (Mistral / Gemini)"]
 ```
 
 ### 1. Ekstraksi Regex Otomatis

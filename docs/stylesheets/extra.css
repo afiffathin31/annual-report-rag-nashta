@@ -1,0 +1,38 @@
+/* Image & Diagram Responsiveness */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin: 1rem 0;
+}
+
+/* Formula & Math Callout Boxes */
+.formula-box {
+  background: rgba(14, 165, 233, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  border-left: 4px solid #0284c7;
+  padding: 1rem 1.25rem;
+  border-radius: 6px;
+  margin: 1.25rem 0;
+  font-family: var(--md-code-font-family, monospace);
+  font-size: 0.95rem;
+  color: var(--md-typeset-color);
+  overflow-x: auto;
+}
+
+.formula-box strong {
+  color: #38bdf8;
+}
+
+/* Mermaid SVG Container */
+.mermaid {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+  background: rgba(15, 23, 42, 0.4);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow-x: auto;
+}

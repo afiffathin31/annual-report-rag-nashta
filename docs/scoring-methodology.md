@@ -1,6 +1,6 @@
 # Metodologi Skoring 10 Pilar & Formula Matematis
 
-Dokumen ini memuat dasar metodologi perhitungan formal untuk **Nashta Opportunity Index** dan **Skor 10 Pilar Solusi Teknologi**.
+Dokumen ini memuat dasar metodologi perhitungan formal untuk **Nashta Opportunity Index**, **Skor 10 Pilar Solusi Teknologi**, dan **Grafik Radar Pemetaan Emiten vs Benchmark Industri**.
 
 Sistem ini menganut prinsip **Pure Evidence-Driven**: setiap angka yang muncul pada antarmuka pengguna dapat ditelusuri secara transparan ke bukti kutipan kalimat asli, nama bab, serta nomor halaman laporan tahunan.
 
@@ -9,30 +9,39 @@ Sistem ini menganut prinsip **Pure Evidence-Driven**: setiap angka yang muncul p
 ## 📐 Formula Matematis Formal
 
 Perhitungan dibagi menjadi dua tingkatan utama:
-
-1. **Skor Tiap Pilar Solusi ($\text{SkorPilar}_i$)**
+1. **Skor Tiap Pilar Solusi (SkorPilar)**
 2. **Nashta Opportunity Index (Indeks Peluang Keseluruhan Emiten)**
+
+---
 
 ### 1. Rumus Skor per Pilar Solusi
 
-Untuk setiap pilar layanan $i \in \{1, 2, \dots, 10\}$:
+Untuk setiap pilar layanan **i ∈ {1, 2, ..., 10}**:
+
+<div class="formula-box">
+  <strong>SkorPilar<sub>i</sub></strong> = MIN( 98, MAX( 50, Base + (EvidenceCount × 8) + SeverityBonus ) )
+</div>
 
 $$\text{SkorPilar}_i = \min\Big(98, \; \max\big(50, \; \text{Base} + (\text{EvidenceCount} \times 8) + \text{SeverityBonus}\big)\Big)$$
 
-Di mana variabel penentu skor:
+#### Definisi Variabel Penentu Skor:
 
-- **$\text{Base} = 50$**: Titik acuan normal bagi emiten terbuka yang terdaftar di Bursa Efek Indonesia (BEI).
-- **$\text{EvidenceCount}$**: Jumlah klaster kutipan fakta dokumen nyata yang berhasil diverifikasi oleh mesin RAG ($0 \le \text{EvidenceCount} \le 5$). Setiap bukti memberikan kontribusi $+8$ poin.
-- **$\text{SeverityBonus}$**:
-  - $+8$ poin jika terdeteksi indikator kendala operasional, downtime, risiko kepatuhan regulasi, atau insiden keamanan (*High Severity*).
-  - $0$ poin jika dokumen hanya mencatat inisiatif rutin tanpa kendala eksplisit (*Medium Severity*).
-- **Batas Nilai**: Skor setiap pilar dibatasi secara aman pada interval $[50, 98]$ poin.
+| Variabel | Nilai / Rentang | Keterangan |
+| :--- | :---: | :--- |
+| **`Base`** | **50 Poin** | Titik acuan normal bagi emiten terbuka yang terdaftar di Bursa Efek Indonesia (BEI) dengan operasional dan tata kelola yang sehat. |
+| **`EvidenceCount`** | **0 s/d 5 Bukti** | Jumlah klaster kutipan fakta dokumen nyata yang berhasil diverifikasi oleh mesin RAG. Setiap bukti menyumbang **+8 Poin** (maksimal **+40 Poin**). |
+| **`SeverityBonus`** | **+8 atau 0 Poin** | **+8 Poin** jika dokumen mencatat kendala operasional, downtime, risiko kepatuhan, atau insiden keamanan (*High Severity*).<br/>**0 Poin** jika dokumen hanya mencatat inisiatif rutin (*Medium Severity*). |
+| **Batas Nilai** | **50 s/d 98 Poin** | Nilai pilar dikunci (*clamped*) pada batas aman antara 50 hingga 98 poin. |
 
 ---
 
 ### 2. Rumus Nashta Opportunity Index (Agregat Emiten)
 
 Indeks peluang keseluruhan emiten merupakan rata-rata aritmatika dari seluruh 10 pilar solusi Nashta:
+
+<div class="formula-box">
+  <strong>Nashta Opportunity Index</strong> = ( SkorPilar<sub>1</sub> + SkorPilar<sub>2</sub> + ... + SkorPilar<sub>10</sub> ) / 10
+</div>
 
 $$\text{Nashta Opportunity Index} = \frac{\sum_{i=1}^{10} \text{SkorPilar}_i}{10}$$
 
@@ -60,19 +69,75 @@ $$\text{Nashta Opportunity Index} = \frac{\sum_{i=1}^{10} \text{SkorPilar}_i}{10
   2. Memiliki tata kelola perusahaan yang berfungsi (Dewan Komisaris, Direksi, dan Komite Audit).
   3. Memiliki anggaran belanja modal (*capex*) atau operasional (*opex*) tahunan untuk pemeliharaan teknologi informasi.
 
-### Komponen 2: Evidence Count Bonus ($0$ s/d $+40$ Poin)
+### Komponen 2: Evidence Count Bonus (0 s/d +40 Poin)
 - **Definisi**: Kenaikan skor berdasarkan volume bukti riil yang ditemukan di dalam bab-bab strategis laporan tahunan.
-- **Skala Perhitungan**:
-  - $1 \text{ Bukti} = +8\text{ Poin}$
-  - $2 \text{ Bukti} = +16\text{ Poin}$
-  - $3 \text{ Bukti} = +24\text{ Poin}$
-  - $4 \text{ Bukti} = +32\text{ Poin}$
-  - $5 \text{ Bukti} = +40\text{ Poin}$ (Batas maksimal kejenuhan bukti)
+- **Tabel Poin Bukti**:
+  - **1 Bukti Dokumen**: 50 + 8 = **58 Poin**
+  - **2 Bukti Dokumen**: 50 + 16 = **66 Poin**
+  - **3 Bukti Dokumen**: 50 + 24 = **74 Poin**
+  - **4 Bukti Dokumen**: 50 + 32 = **82 Poin**
+  - **5 Bukti Dokumen**: 50 + 40 = **90 Poin** *(Batas maksimal kejenuhan bukti)*
 
-### Komponen 3: Severity Bonus ($0$ atau $+8$ Poin)
+### Komponen 3: Severity Bonus (0 atau +8 Poin)
 - **Definisi**: Insentif skor ketika sistem mendeteksi adanya risiko kritis atau kelemahan sistem yang memerlukan mitigasi segera.
-- **Pemicu Deteksi (Trigger Keywords)**:
+- **Kata Kunci Pemicu (*Trigger Keywords*)**:
   - `"insiden"`, `"gangguan"`, `"downtime"`, `"serangan"`, `"vulnerability"`, `"temuan auditor"`, `"keterbatasan"`, `"kebocoran data"`, `"sanksi regulasi"`.
+- Jika terdeteksi indikator risiko tinggi ini, skor mendapat tambahan **+8 Poin** (contoh: 90 + 8 = **98 Poin**).
+
+---
+
+## 🎯 Metodologi Perhitungan Radar Pemetaan 10 Pilar & Benchmark Industri
+
+Grafik **Radar Pemetaan 10 Pilar Nashta** memvisualisasikan posisi kesiapan dan kebutuhan teknologi emiten terhadap rata-rata industri BEI secara simultan.
+
+```
+                          1. Managed Service (98)
+                                    ▲
+      10. Bootcamp (90) ────────────┼──────────── 2. IT Hybrid Infra (92)
+                                    │
+    9. Cloud Services (90) ─────────┼───────── 3. Business App (86)
+               ... ──── [ RATA-RATA INDUSTRI BEI ] ──── ...
+                                    │
+       8. Consulting (90) ──────────┼────────── 4. Cyber Security (98)
+                                    │
+        7. IoT & Edge (82) ─────────┼───────── 5. Data & AI (92)
+                                    ▼
+                          6. Digital Platform (94)
+```
+
+### Dua Lapisan Garis pada Radar:
+
+#### 1. 🔷 Garis Solid Cyan (Skor Peluang Emiten)
+- Menunjukkan skor emiten terpilih (misal: **BRIS**) pada masing-masing 10 pilar.
+- Setiap sudut dihitung langsung dari formula:
+  $$\text{SkorPilar}_i = \min(98, \; 50 + \text{EvidenceBonus}_i + \text{SeverityBonus}_i)$$
+
+#### 2. ⚪ Garis Putus-Putus Abu-abu (Rata-rata Industri BEI)
+- Menunjukkan nilai acuan (*benchmark*) rata-rata industri di sektor terkait.
+- Dihitung sebagai rata-rata aritmatika dari seluruh emiten terindeks di sektor tersebut:
+  $$\text{IndustryAvg}_i = \frac{1}{N} \sum_{k=1}^N \text{SkorPilar}_{i, k}$$
+- Di backend (`backend/scoring_engine.py`), nilai ini diagregasikan secara otomatis melalui fungsi `get_sector_benchmark()`.
+
+---
+
+### Tabel Perbandingan Skor Radar (Contoh Kasus: BRIS vs Industri)
+
+| No | Nama Pilar Nashta | Skor Emiten BRIS (Garis Cyan) | Rata-rata Industri BEI (Garis Abu-abu) | Opportunity Gap (Selisih) | Status Penetrasi Nashta |
+| :---: | :--- | :---: | :---: | :---: | :--- |
+| **1** | **Managed Service** | **98** | 60 | **+38 Poin** | 🔥 **Prime Target** (Kebutuhan SLA 24/7) |
+| **2** | **IT Hybrid Infra** | **92** | 65 | **+27 Poin** | ⚡ High Demand (Konsolidasi Server) |
+| **3** | **Business App** | **86** | 70 | **+16 Poin** | ⚡ Active Demand (Integrasi Core) |
+| **4** | **Cyber Security** | **98** | 75 | **+23 Poin** | 🔥 **Prime Target** (Zero Trust & SOC) |
+| **5** | **Data & AI** | **92** | 68 | **+24 Poin** | ⚡ High Demand (AI BCP & Prediktif) |
+| **6** | **Digital Platform** | **94** | 62 | **+32 Poin** | 🔥 **Prime Target** (Mobile & Open API) |
+| **7** | **IoT & Edge** | **82** | 55 | **+27 Poin** | 💡 Modernization (Smart Branch) |
+| **8** | **Consulting** | **90** | 60 | **+30 Poin** | ⚡ High Demand (IT Master Plan) |
+| **9** | **Cloud Services** | **90** | 68 | **+22 Poin** | ⚡ High Demand (Hybrid Multi-Cloud) |
+| **10**| **Bootcamp** | **90** | 58 | **+32 Poin** | ⚡ High Demand (Upskilling Tim IT) |
+
+> **Cara Membaca Radar untuk Tim Sales Nashta**:
+> - Sudut di mana garis solid cyan melambung jauh ke luar melebihi garis abu-abu menandakan **Opportunity Gap Tertinggi** (kebutuhan sangat mendesak dibandingkan standar pasar).
+> - Pilar dengan skor **98 Poin** (*Cyber Security* & *Managed Service*) adalah **titik masuk penawaran terbaik (*lead solution*)** untuk penyusunan draf proposal kepada jajaran C-Level.
 
 ---
 
@@ -102,16 +167,20 @@ Berdasarkan total skor yang diperoleh, setiap pilar dipetakan ke dalam 4 tingkat
 
 ## 📋 Contoh Kasus Perhitungan Nyata (PT Bank Syariah Indonesia - BRIS)
 
-### Pilar 1: Cyber Security
-- **Base Score**: $50$
-- **Bukti Terverifikasi**: $5$ klaster bukti dokumen (Hal. 283, 284, 164, dll) $\implies 5 \times 8 = +40$
-- **Severity**: *High* (Mencatat kebutuhan independensi pengawasan siber & pemulihan insiden TI) $\implies +8$
+### Contoh 1: Pilar Cyber Security
+- **Base Score**: **50 Poin** (Emiten aktif dan sehat di BEI)
+- **Bukti Terverifikasi**: **5 Klaster Bukti Dokumen** (Hal. 283, 284, 164, 244) $\implies 5 \times 8 = \mathbf{+40\text{ Poin}}$
+- **Severity Risk**: **High Severity** (Mencatat kebutuhan independensi pengawasan siber & pemulihan insiden TI) $\implies \mathbf{+8\text{ Poin}}$
 - **Perhitungan**:
-  $$\text{Skor} = \min(98, \; 50 + 40 + 8) = \mathbf{98} \quad \text{(Prime Opportunity)}$$
+  <div class="formula-box">
+    Skor = MIN( 98, 50 + 40 + 8 ) = <strong>98 Poin (PRIME OPPORTUNITY)</strong>
+  </div>
 
-### Pilar 6: Managed Service
-- **Base Score**: $50$
-- **Bukti Terverifikasi**: $4$ klaster bukti dokumen $\implies 4 \times 8 = +32$
-- **Severity**: *High* (Kebutuhan SLA operasional cabang 24/7) $\implies +8$
+### Contoh 2: Pilar Managed Service
+- **Base Score**: **50 Poin** (Emiten aktif dan sehat di BEI)
+- **Bukti Terverifikasi**: **4 Klaster Bukti Dokumen** $\implies 4 \times 8 = \mathbf{+32\text{ Poin}}$
+- **Severity Risk**: **High Severity** (Kebutuhan SLA operasional cabang 24/7) $\implies \mathbf{+8\text{ Poin}}$
 - **Perhitungan**:
-  $$\text{Skor} = \min(98, \; 50 + 32 + 8) = \mathbf{90} \quad \text{(Prime Opportunity)}$$
+  <div class="formula-box">
+    Skor = MIN( 98, 50 + 32 + 8 ) = <strong>90 Poin (PRIME OPPORTUNITY)</strong>
+  </div>

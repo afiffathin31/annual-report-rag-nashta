@@ -53,6 +53,8 @@
       
     
     
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -915,19 +917,19 @@
 <p>Jika sistem hanya menggunakan pencarian semantik teks tanpa kesadaran temporal (<em>temporal blindness</em>), laporan tahun 2025 yang memuat tabel komparatif catatan keuangan bertuliskan <em>"tahun 2024"</em> dapat keliru terambil.</p>
 <h3 id="alur-kerja-temporal-filter">Alur Kerja Temporal Filter</h3>
 <pre class="mermaid"><code>graph TD
-    Query[Pertanyaan Pengguna&lt;br/&gt;'ancaman cyber th 2024?'] --&gt; Regex[Ekstraksi Regex Tahun&lt;br/&gt;\b 2018-2026 \b]
-    Regex --&gt;|Tahun Terdeteksi = 2024| Clean[Pembersihan Stop Words &amp; Token Temporal]
+    Query["Pertanyaan Pengguna (Misal: 'ancaman cyber 2024?')"] --&gt; Regex["Ekstraksi Regex Tahun (2018 - 2026)"]
+    Regex --&gt;|Tahun Terdeteksi = 2024| Clean["Pembersihan Stop Words &amp; Token Temporal"]
 
-    Clean --&gt;|Hapus: 'tahun', 'thn', '2024'| SemanticKW[Kata Kunci Semantik Murni&lt;br/&gt;'cyber', 'siber', 'ancaman']
+    Clean --&gt;|Eliminasi kata tahun, thn, 2024| SemanticKW["Kata Kunci Semantik Murni: cyber, siber, ancaman"]
 
-    SemanticKW --&gt; DBQuery[Query SQLite Document Chunks]
-    DBQuery --&gt;|Filter Ketat: ChunkModel.year == 2024| Candidates[Koleksi Chunk Dokumen 2024 Saja]
+    SemanticKW --&gt; DBQuery["Query SQLite Document Chunks"]
+    DBQuery --&gt;|Filter Ketat: year == 2024| Candidates["Koleksi Chunk Dokumen 2024 Saja"]
 
-    Candidates --&gt; Scoring[Scoring Relevansi &amp; Bab TI]
-    Scoring --&gt; Top5[Top-5 Chunks Relevan 2024]
+    Candidates --&gt; Scoring["Scoring Relevansi &amp; Bab TI (+4 Poin Siber)"]
+    Scoring --&gt; Top5["Top-5 Chunks Dokumen 2024 Paling Relevan"]
 
-    Top5 --&gt; Prompt[Prompt Builder + Warning Fokus 2024]
-    Prompt --&gt; LLM[Generative LLM Inference]</code></pre>
+    Top5 --&gt; Prompt["Prompt Builder + Temporal Warning 2024"]
+    Prompt --&gt; LLM["Generative LLM Inference (Mistral / Gemini)"]</code></pre>
 <h3 id="1-ekstraksi-regex-otomatis">1. Ekstraksi Regex Otomatis</h3>
 <p>Sistem mendeteksi keberadaan tahun menggunakan pola regex:
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">year_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\b(20(?:1[89]|2[0-6]))\b&quot;</span><span class="p">,</span> <span class="n">query_text</span><span class="p">)</span>
@@ -1042,9 +1044,13 @@
     
       <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script src="../javascripts/mathjax.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../javascripts/mermaid.js"></script>
       
     
   </body>
