@@ -500,22 +500,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#gambaran-umum-arsitektur" class="md-nav__link">
+  <a href="#gambaran-umum-arsitektur-sistem-rag-terintegrasi-model-indexing-hibrida" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📐 Gambaran Umum Arsitektur
+        📐 Gambaran Umum: Arsitektur Sistem RAG Terintegrasi &amp; Model Indexing Hibrida
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="📐 Gambaran Umum Arsitektur">
+    <nav class="md-nav" aria-label="📐 Gambaran Umum: Arsitektur Sistem RAG Terintegrasi &amp; Model Indexing Hibrida">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#system-context-diagram" class="md-nav__link">
+  <a href="#diagram-konteks-sistem-system-context-diagram" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🌐 System Context Diagram
+        🌐 Diagram Konteks Sistem (System Context Diagram)
       
     </span>
   </a>
@@ -528,10 +528,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#arsitektur-sistem-rag-terintegrasi" class="md-nav__link">
+  <a href="#detail-alur-data-sistem-rag-terintegrasi" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📐 Arsitektur Sistem RAG Terintegrasi
+        🏗️ Detail Alur Data Sistem RAG Terintegrasi
       
     </span>
   </a>
@@ -830,22 +830,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#gambaran-umum-arsitektur" class="md-nav__link">
+  <a href="#gambaran-umum-arsitektur-sistem-rag-terintegrasi-model-indexing-hibrida" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📐 Gambaran Umum Arsitektur
+        📐 Gambaran Umum: Arsitektur Sistem RAG Terintegrasi &amp; Model Indexing Hibrida
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="📐 Gambaran Umum Arsitektur">
+    <nav class="md-nav" aria-label="📐 Gambaran Umum: Arsitektur Sistem RAG Terintegrasi &amp; Model Indexing Hibrida">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#system-context-diagram" class="md-nav__link">
+  <a href="#diagram-konteks-sistem-system-context-diagram" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🌐 System Context Diagram
+        🌐 Diagram Konteks Sistem (System Context Diagram)
       
     </span>
   </a>
@@ -858,10 +858,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#arsitektur-sistem-rag-terintegrasi" class="md-nav__link">
+  <a href="#detail-alur-data-sistem-rag-terintegrasi" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📐 Arsitektur Sistem RAG Terintegrasi
+        🏗️ Detail Alur Data Sistem RAG Terintegrasi
       
     </span>
   </a>
@@ -1013,15 +1013,96 @@
 <h1 id="arsitektur-sistem">Arsitektur Sistem</h1>
 <p>Dokumen ini menjelaskan arsitektur perangkat lunak, komponen inti, dan alur data <em>end-to-end</em> dari sistem <strong>Nashta Annual Report RAG &amp; AI Copilot</strong>.</p>
 <hr />
-<h2 id="gambaran-umum-arsitektur">📐 Gambaran Umum Arsitektur</h2>
+<h2 id="gambaran-umum-arsitektur-sistem-rag-terintegrasi-model-indexing-hibrida">📐 Gambaran Umum: Arsitektur Sistem RAG Terintegrasi &amp; Model Indexing Hibrida</h2>
 <p>Sistem dibangun menggunakan pendekatan modular berbasis <strong>Python (FastAPI)</strong> pada backend dan antarmuka web responsif berbasis <strong>Vanilla JavaScript &amp; Tailwind CSS</strong> pada frontend, tanpa dependensi framework frontend yang berat.</p>
-<p><img alt="Arsitektur Nashta Hybrid RAG" src="../nashta_hybrid_rag_architecture_hd_dark.png" /></p>
+<p>Berikut adalah representasi diagram arsitektur interaktif yang mencakup alur kerja ingesti, penyimpanan indeks ganda, mesin RAG inti, serta layanan pendukung:</p>
+<pre class="mermaid"><code>flowchart TB
+    %% Styling Classes
+    classDef ingestNode fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#ffffff;
+    classDef routeNode fill:#312e81,stroke:#6366f1,stroke-width:2px,color:#ffffff;
+    classDef storeNode fill:#1e293b,stroke:#38bdf8,stroke-width:2px,color:#ffffff;
+    classDef ragNode fill:#1e3a8a,stroke:#60a5fa,stroke-width:2px,color:#ffffff;
+    classDef supportNode fill:#7c2d12,stroke:#fb923c,stroke-width:2px,color:#ffffff;
+    classDef clientNode fill:#14532d,stroke:#4ade80,stroke-width:2px,color:#ffffff;
+
+    subgraph SEC_LEFT ["PIPELINE INGESTION &amp; STORAGE"]
+        direction TB
+
+        subgraph G_INGEST ["1. PIPELINE INGESTI &amp; PARSING HIBRIDA (3-WAY HYBRID INGESTION)"]
+            PDF_SRC["📄 Berkas PDF Laporan Tahunan Resmi (2021–2025)&lt;br/&gt;&lt;i&gt;(KLBF, SIDO, BANK, HEAL, CARE, PGAS, dll.)&lt;/i&gt;"]:::ingestNode
+            ROUTER["🔀 Page Profiler &amp; Hybrid Router&lt;br/&gt;&lt;code&gt;src.ingestion.hybrid_router&lt;/code&gt;&lt;br/&gt;&lt;i&gt;(Analisis Kerapatan &amp; Tata Letak Dokumen)&lt;/i&gt;"]:::ingestNode
+
+            subgraph G_ROUTES ["Tiga Jalur Pemrosesan (3-Way Routing)"]
+                R_VISION["🖼️ Route 3: Vision (Qwen-VL)&lt;br/&gt;&lt;i&gt;Bagan Struktur Organisasi &amp; Alur Visual&lt;/i&gt;"]:::routeNode
+                R_DOCLING["📊 Route 2: Docling CUDA&lt;br/&gt;&lt;i&gt;Tabel Finansial Multi-Kolom &amp; Markdown Murni&lt;/i&gt;"]:::routeNode
+                R_PYMUPDF["⚡ Route 1: PyMuPDF Fast&lt;br/&gt;&lt;i&gt;Halaman Teks Naratif &amp; Profil Bisnis Terurut&lt;/i&gt;"]:::routeNode
+            end
+
+            CHUNKER["🧩 Table-Aware Chunker (src.rag.chunker)&lt;br/&gt;&lt;i&gt;Preservasi Header Kolom Tabel &amp; Penanda Halaman Fisik &amp;lt;!-- PAGE_BREAK X --&amp;gt;&lt;/i&gt;"]:::ingestNode
+        end
+
+        subgraph G_INDEX ["2. ARSITEKTUR INDEXING GANDA (DUAL-INDEX STORAGE)"]
+            VEC_STORE[("🧠 ChromaDB Vector Store (Dense Semantic Index)&lt;br/&gt;&lt;i&gt;28.702 Vektor 1024-dimensi | Mistral Embeddings | HNSW Index Persisten&lt;br/&gt;Pencarian Kontekstual &amp; Kemiripan Makna Multi-Tahun&lt;/i&gt;")]:::storeNode
+            BM25_STORE[("🔍 Okapi BM25 Lexical Index (Exact Keyword Search)&lt;br/&gt;&lt;i&gt;Indeks Kata Kunci In-Memory per Emiten&lt;br/&gt;Pencocokan Istilah Finansial &amp; Regulasi Eksak&lt;/i&gt;")]:::storeNode
+        end
+    end
+
+    subgraph SEC_RIGHT ["RAG REASONING &amp; CLIENT INTERFACE"]
+        direction TB
+
+        subgraph G_RAG ["3. NASHTA CORE RAG ENGINE &amp; STRATEGIC ADVISORY"]
+            RAG_CORE["🎯 Nashta Hybrid RAG Engine (src.rag.engine)&lt;br/&gt;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━&lt;br/&gt;• &lt;b&gt;Reciprocal Rank Fusion (RRF)&lt;/b&gt; dengan Table Boost (+35%) &amp; Docling Boost (+20%)&lt;br/&gt;• &lt;b&gt;2025 Recency-First Priority Strategy&lt;/b&gt; dengan Waterfall Fallback Terjadwal&lt;br/&gt;• &lt;b&gt;Automated Citation Grounding Resolver&lt;/b&gt; (Verifikasi Halaman PDF Fisik Asli)&lt;br/&gt;• &lt;b&gt;Safe 3-Part Message Chunker&lt;/b&gt; (Batas Maksimal 3.500 Karakter / Part Telegram)&lt;br/&gt;• &lt;b&gt;Centralized Prompt Template Engine&lt;/b&gt; dengan Aturan Satuan Finansial Eksak"]:::ragNode
+        end
+
+        subgraph G_SUPPORT ["4. ANTARMUKA PENGGUNA &amp; LAYANAN PENDUKUNG"]
+            CLIENT["💻 Pengguna Akhir: Web Dashboard &amp; Telegram Bot (@NashBei_bot)&lt;br/&gt;&lt;i&gt;Solution Architect, Tim Enterprise Sales, &amp; Analis Bisnis&lt;br/&gt;Mode Riset Bebas Keuangan/ESG • Diagnosis 10 Pilar • Executive Brief Tren 5 Tahun&lt;/i&gt;"]:::clientNode
+            SQLITE[("🗄️ SQLite3 Relational DB&lt;br/&gt;&lt;i&gt;Katalog 10 Pilar Nashta • Profil Emiten BEI&lt;br/&gt;Persistent Caching (WAL Mode Thread-Safe)&lt;/i&gt;")]:::supportNode
+            LLM_API["☁️ Mistral AI Cloud API&lt;br/&gt;&lt;i&gt;Mistral Large (Chat) • Mistral Embeddings&lt;br/&gt;Structured JSON Mode (HTTPS TLS 1.3 REST)&lt;/i&gt;"]:::supportNode
+        end
+    end
+
+    %% Relasi Ingesti
+    PDF_SRC --&gt; ROUTER
+    ROUTER --&gt;|Diagram / Visual| R_VISION
+    ROUTER --&gt;|Tabel Finansial Padat| R_DOCLING
+    ROUTER --&gt;|Kerapatan Standar| R_PYMUPDF
+
+    R_VISION --&gt; CHUNKER
+    R_DOCLING --&gt; CHUNKER
+    R_PYMUPDF --&gt; CHUNKER
+
+    %% Relasi Storage
+    CHUNKER --&gt;|Potongan Dokumen Terstruktur + Metadata| VEC_STORE
+    CHUNKER --&gt;|Token Kata Kunci &amp; Metadata| BM25_STORE
+
+    %% Relasi Penelusuran Hibrida ke Core RAG
+    VEC_STORE --&gt;|Penelusuran Hibrida: Vektor| RAG_CORE
+    BM25_STORE --&gt;|Penelusuran Hibrida: BM25 RRF| RAG_CORE
+
+    %% Relasi Layanan Pendukung
+    SQLITE &lt;--&gt;|Validasi Cache &amp; Master Katalog 10 Pilar| RAG_CORE
+    RAG_CORE &lt;--&gt;|Prompt Terstruktur / Respon JSON Valid| LLM_API
+
+    %% Relasi Interaksi Pengguna
+    CLIENT &lt;--&gt;|Kueri Pengguna &amp; Callback / Respon HTML Sitasi Resmi| RAG_CORE</code></pre>
 <hr />
-<h3 id="system-context-diagram">🌐 System Context Diagram</h3>
-<p><img alt="System Context Diagram" src="../system_context_diagram.png" /></p>
+<h3 id="diagram-konteks-sistem-system-context-diagram">🌐 Diagram Konteks Sistem (System Context Diagram)</h3>
+<pre class="mermaid"><code>flowchart LR
+    classDef actorClass fill:#1e40af,stroke:#1d4ed8,stroke-width:2px,color:#ffffff;
+    classDef systemClass fill:#0284c7,stroke:#0369a1,stroke-width:3px,color:#ffffff;
+    classDef extClass fill:#334155,stroke:#475569,stroke-width:2px,color:#ffffff;
+
+    USER["👤 Tim Nashta&lt;br/&gt;&lt;i&gt;(Solution Architect, Sales, Analis)&lt;/i&gt;"]:::actorClass
+    SYSTEM["🏢 Nashta Annual Report RAG &amp; AI Copilot&lt;br/&gt;&lt;i&gt;(FastAPI Backend, True RAG, 10-Pillars Engine)&lt;/i&gt;"]:::systemClass
+    GDRIVE["☁️ Google Drive &amp; Dokumen Vault&lt;br/&gt;&lt;i&gt;(PDF Laporan Tahunan 500-1200 Hal)&lt;/i&gt;"]:::extClass
+    LLM_EXT["🤖 Multi-Provider LLM Gateway&lt;br/&gt;&lt;i&gt;(Mistral AI, Google Gemini, OpenAI)&lt;/i&gt;"]:::extClass
+
+    USER &lt;--&gt;|Kueri Analisis, Dialog Copilot &amp; Radar| SYSTEM
+    GDRIVE --&gt;|Sinkronisasi Otomatis Berkas PDF| SYSTEM
+    SYSTEM &lt;--&gt;|Prompt Terstruktur &amp; Sitasi Footnote| LLM_EXT</code></pre>
 <hr />
-<h2 id="arsitektur-sistem-rag-terintegrasi">📐 Arsitektur Sistem RAG Terintegrasi</h2>
-<p>Sistem mengadopsi arsitektur <strong>True RAG Terintegrasi (Enterprise Hybrid RAG)</strong> yang menghubungkan berkas Laporan Tahunan berukuran besar (500–1.200+ halaman) dengan antarmuka visualisasi eksekutif serta asisten AI interaktif.</p>
+<h2 id="detail-alur-data-sistem-rag-terintegrasi">🏗️ Detail Alur Data Sistem RAG Terintegrasi</h2>
+<p>Sistem menghubungkan berkas Laporan Tahunan berukuran besar (500–1.200+ halaman) dengan antarmuka visualisasi eksekutif serta asisten AI interaktif secara terkoordinasi:</p>
 <pre class="mermaid"><code>flowchart TD
     %% Definisi Gaya Warna Elemen
     classDef sourceClass fill:#0284c7,stroke:#0369a1,stroke-width:2px,color:#ffffff;
