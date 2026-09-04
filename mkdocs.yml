@@ -1,0 +1,70 @@
+site_name: Nashta Annual Report RAG & AI Copilot
+site_description: Dokumentasi Teknis Sistem Analisis Peluang Bisnis 10 Pilar Nashta berbasis Laporan Tahunan Emiten BEI
+site_author: PT Nashta Global Nusantara
+repo_url: https://github.com/afiffathin31/annual-report-rag-nashta
+repo_name: afiffathin31/annual-report-rag-nashta
+
+theme:
+  name: material
+  language: id
+  palette:
+    - scheme: slate
+      primary: indigo
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Ganti ke Mode Terang
+    - scheme: default
+      primary: indigo
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Ganti ke Mode Gelap
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.tracking
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.arithmatex:
+      generic: true
+  - tables
+  - attr_list
+  - md_in_html
+
+extra_javascript:
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - Overview: index.md
+  - Arsitektur Sistem: architecture.md
+  - Metodologi Skoring 10 Pilar: scoring-methodology.md
+  - RAG Engine & Temporal Filter: rag-engine.md
+  - Pipeline Ingestion & GDrive: ingestion-pipeline.md
+  - Panduan AI Copilot: copilot-guide.md
+  - REST API Reference: api-reference.md

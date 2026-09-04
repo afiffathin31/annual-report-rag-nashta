@@ -43,6 +43,7 @@ app.add_middleware(
 )
 
 FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
+DOCS_SITE_DIR = Path(__file__).resolve().parent.parent / "site"
 UPLOADS_DIR = Path(__file__).resolve().parent.parent / "data" / "uploads"
 UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -258,6 +259,9 @@ def list_local_documents(code: str) -> Dict[str, Any]:
             })
     return {"code": c_code, "count": len(items), "documents": items}
 
+
+if DOCS_SITE_DIR.exists():
+    app.mount("/docs/system", StaticFiles(directory=str(DOCS_SITE_DIR), html=True), name="docs_system")
 
 if FRONTEND_DIR.exists():
     app.mount("/static", StaticFiles(directory=str(FRONTEND_DIR)), name="static")
