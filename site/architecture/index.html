@@ -500,18 +500,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#gambaran-umum-arsitektur-sistem-rag-terintegrasi-model-indexing-hibrida" class="md-nav__link">
+  <a href="#arsitektur-sistem-rag-terintegrasi-4-tier-enterprise-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📐 Gambaran Umum: Arsitektur Sistem RAG Terintegrasi &amp; Model Indexing Hibrida
+        📐 Arsitektur Sistem RAG Terintegrasi (4-Tier Enterprise Architecture)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="📐 Gambaran Umum: Arsitektur Sistem RAG Terintegrasi &amp; Model Indexing Hibrida">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#diagram-konteks-sistem-system-context-diagram" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -521,33 +520,17 @@
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
-  
-</li>
       
         <li class="md-nav__item">
-  <a href="#detail-alur-data-sistem-rag-terintegrasi" class="md-nav__link">
+  <a href="#model-indexing-hibrida-pipeline-penelusuran-hybrid-indexing-pipeline" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🏗️ Detail Alur Data Sistem RAG Terintegrasi
+        ⚡ Model Indexing Hibrida &amp; Pipeline Penelusuran (Hybrid Indexing Pipeline)
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#model-indexing-hibrida-hybrid-indexing-pipeline" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ⚡ Model Indexing Hibrida (Hybrid Indexing Pipeline)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="⚡ Model Indexing Hibrida (Hybrid Indexing Pipeline)">
+    <nav class="md-nav" aria-label="⚡ Model Indexing Hibrida &amp; Pipeline Penelusuran (Hybrid Indexing Pipeline)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -830,18 +813,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#gambaran-umum-arsitektur-sistem-rag-terintegrasi-model-indexing-hibrida" class="md-nav__link">
+  <a href="#arsitektur-sistem-rag-terintegrasi-4-tier-enterprise-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📐 Gambaran Umum: Arsitektur Sistem RAG Terintegrasi &amp; Model Indexing Hibrida
+        📐 Arsitektur Sistem RAG Terintegrasi (4-Tier Enterprise Architecture)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="📐 Gambaran Umum: Arsitektur Sistem RAG Terintegrasi &amp; Model Indexing Hibrida">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#diagram-konteks-sistem-system-context-diagram" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -851,33 +833,17 @@
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
-  
-</li>
       
         <li class="md-nav__item">
-  <a href="#detail-alur-data-sistem-rag-terintegrasi" class="md-nav__link">
+  <a href="#model-indexing-hibrida-pipeline-penelusuran-hybrid-indexing-pipeline" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🏗️ Detail Alur Data Sistem RAG Terintegrasi
+        ⚡ Model Indexing Hibrida &amp; Pipeline Penelusuran (Hybrid Indexing Pipeline)
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#model-indexing-hibrida-hybrid-indexing-pipeline" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ⚡ Model Indexing Hibrida (Hybrid Indexing Pipeline)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="⚡ Model Indexing Hibrida (Hybrid Indexing Pipeline)">
+    <nav class="md-nav" aria-label="⚡ Model Indexing Hibrida &amp; Pipeline Penelusuran (Hybrid Indexing Pipeline)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1013,78 +979,82 @@
 <h1 id="arsitektur-sistem">Arsitektur Sistem</h1>
 <p>Dokumen ini menjelaskan arsitektur perangkat lunak, komponen inti, dan alur data <em>end-to-end</em> dari sistem <strong>Nashta Annual Report RAG &amp; AI Copilot</strong>.</p>
 <hr />
-<h2 id="gambaran-umum-arsitektur-sistem-rag-terintegrasi-model-indexing-hibrida">📐 Gambaran Umum: Arsitektur Sistem RAG Terintegrasi &amp; Model Indexing Hibrida</h2>
-<p>Sistem dibangun menggunakan pendekatan modular berbasis <strong>Python (FastAPI)</strong> pada backend dan antarmuka web responsif berbasis <strong>Vanilla JavaScript &amp; Tailwind CSS</strong> pada frontend, tanpa dependensi framework frontend yang berat.</p>
-<p>Berikut adalah representasi diagram arsitektur interaktif yang mencakup alur kerja ingesti, penyimpanan indeks ganda, mesin RAG inti, serta layanan pendukung:</p>
-<pre class="mermaid"><code>flowchart TB
-    %% Styling Classes
-    classDef ingestNode fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#ffffff;
-    classDef routeNode fill:#312e81,stroke:#6366f1,stroke-width:2px,color:#ffffff;
-    classDef storeNode fill:#1e293b,stroke:#38bdf8,stroke-width:2px,color:#ffffff;
-    classDef ragNode fill:#1e3a8a,stroke:#60a5fa,stroke-width:2px,color:#ffffff;
-    classDef supportNode fill:#7c2d12,stroke:#fb923c,stroke-width:2px,color:#ffffff;
-    classDef clientNode fill:#14532d,stroke:#4ade80,stroke-width:2px,color:#ffffff;
+<h3 id="arsitektur-sistem-rag-terintegrasi-4-tier-enterprise-architecture">📐 Arsitektur Sistem RAG Terintegrasi (4-Tier Enterprise Architecture)</h3>
+<p>Sistem dibangun menggunakan arsitektur modular berlapis (<em>4-tier layered architecture</em>) berbasis backend <strong>Python (FastAPI)</strong> dan antarmuka web responsif berbasis <strong>Vanilla JavaScript &amp; Tailwind CSS</strong> tanpa beban framework monolitik yang berat.</p>
+<p>Diagram interaktif berikut merepresentasikan aliran pemrosesan hibrida secara terstruktur dari dokumen mentah hingga konsumsi oleh pengguna akhir:</p>
+<pre class="mermaid"><code>flowchart TD
+    %% Global Theme &amp; Colors
+    classDef inputStyle fill:#0284c7,stroke:#38bdf8,stroke-width:2px,color:#ffffff;
+    classDef ingestStyle fill:#065f46,stroke:#34d399,stroke-width:2px,color:#ffffff;
+    classDef routeStyle fill:#1e1b4b,stroke:#818cf8,stroke-width:2px,color:#ffffff;
+    classDef storeStyle fill:#1e293b,stroke:#38bdf8,stroke-width:2px,color:#ffffff;
+    classDef ragStyle fill:#1e3a8a,stroke:#60a5fa,stroke-width:2px,color:#ffffff;
+    classDef llmStyle fill:#7c2d12,stroke:#fb923c,stroke-width:2px,color:#ffffff;
+    classDef clientStyle fill:#14532d,stroke:#4ade80,stroke-width:2px,color:#ffffff;
 
-    subgraph SEC_LEFT ["PIPELINE INGESTION &amp; STORAGE"]
+    subgraph TIER1 ["TIER 1: PIPELINE INGESTI &amp; PARSING HIBRIDA (3-WAY HYBRID INGESTION)"]
         direction TB
+        PDF["📄 Berkas PDF Laporan Tahunan Resmi (2021–2025)&lt;br/&gt;&lt;i&gt;(KLBF, SIDO, BANK, HEAL, CARE, PGAS, dll.)&lt;/i&gt;"]:::inputStyle
+        ROUTER["🔀 Page Profiler &amp; Hybrid Router&lt;br/&gt;&lt;code&gt;src.ingestion.hybrid_router&lt;/code&gt;"]:::ingestStyle
 
-        subgraph G_INGEST ["1. PIPELINE INGESTI &amp; PARSING HIBRIDA (3-WAY HYBRID INGESTION)"]
-            PDF_SRC["📄 Berkas PDF Laporan Tahunan Resmi (2021–2025)&lt;br/&gt;&lt;i&gt;(KLBF, SIDO, BANK, HEAL, CARE, PGAS, dll.)&lt;/i&gt;"]:::ingestNode
-            ROUTER["🔀 Page Profiler &amp; Hybrid Router&lt;br/&gt;&lt;code&gt;src.ingestion.hybrid_router&lt;/code&gt;&lt;br/&gt;&lt;i&gt;(Analisis Kerapatan &amp; Tata Letak Dokumen)&lt;/i&gt;"]:::ingestNode
-
-            subgraph G_ROUTES ["Tiga Jalur Pemrosesan (3-Way Routing)"]
-                R_VISION["🖼️ Route 3: Vision (Qwen-VL)&lt;br/&gt;&lt;i&gt;Bagan Struktur Organisasi &amp; Alur Visual&lt;/i&gt;"]:::routeNode
-                R_DOCLING["📊 Route 2: Docling CUDA&lt;br/&gt;&lt;i&gt;Tabel Finansial Multi-Kolom &amp; Markdown Murni&lt;/i&gt;"]:::routeNode
-                R_PYMUPDF["⚡ Route 1: PyMuPDF Fast&lt;br/&gt;&lt;i&gt;Halaman Teks Naratif &amp; Profil Bisnis Terurut&lt;/i&gt;"]:::routeNode
-            end
-
-            CHUNKER["🧩 Table-Aware Chunker (src.rag.chunker)&lt;br/&gt;&lt;i&gt;Preservasi Header Kolom Tabel &amp; Penanda Halaman Fisik &amp;lt;!-- PAGE_BREAK X --&amp;gt;&lt;/i&gt;"]:::ingestNode
+        subgraph ROUTES ["Tiga Jalur Pemrosesan Dokumen (3-Way Routing)"]
+            direction LR
+            R_PYMUPDF["⚡ Route 1: PyMuPDF Fast&lt;br/&gt;&lt;i&gt;Teks Naratif &amp; Profil Bisnis Terurut&lt;/i&gt;"]:::routeStyle
+            R_DOCLING["📊 Route 2: Docling CUDA&lt;br/&gt;&lt;i&gt;Tabel Finansial Multi-Kolom &amp; Markdown&lt;/i&gt;"]:::routeStyle
+            R_VISION["🖼️ Route 3: Vision (Qwen-VL)&lt;br/&gt;&lt;i&gt;Bagan Visual &amp; Struktur Organisasi&lt;/i&gt;"]:::routeStyle
         end
 
-        subgraph G_INDEX ["2. ARSITEKTUR INDEXING GANDA (DUAL-INDEX STORAGE)"]
-            VEC_STORE[("🧠 ChromaDB Vector Store (Dense Semantic Index)&lt;br/&gt;&lt;i&gt;28.702 Vektor 1024-dimensi | Mistral Embeddings | HNSW Index Persisten&lt;br/&gt;Pencarian Kontekstual &amp; Kemiripan Makna Multi-Tahun&lt;/i&gt;")]:::storeNode
-            BM25_STORE[("🔍 Okapi BM25 Lexical Index (Exact Keyword Search)&lt;br/&gt;&lt;i&gt;Indeks Kata Kunci In-Memory per Emiten&lt;br/&gt;Pencocokan Istilah Finansial &amp; Regulasi Eksak&lt;/i&gt;")]:::storeNode
-        end
+        CHUNKER["🧩 Table-Aware Chunker (src.rag.chunker)&lt;br/&gt;&lt;i&gt;Preservasi Kolom Tabel &amp; Tag Halaman Fisik &amp;lt;!-- PAGE_BREAK X --&amp;gt;&lt;/i&gt;"]:::ingestStyle
     end
 
-    subgraph SEC_RIGHT ["RAG REASONING &amp; CLIENT INTERFACE"]
-        direction TB
-
-        subgraph G_RAG ["3. NASHTA CORE RAG ENGINE &amp; STRATEGIC ADVISORY"]
-            RAG_CORE["🎯 Nashta Hybrid RAG Engine (src.rag.engine)&lt;br/&gt;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━&lt;br/&gt;• &lt;b&gt;Reciprocal Rank Fusion (RRF)&lt;/b&gt; dengan Table Boost (+35%) &amp; Docling Boost (+20%)&lt;br/&gt;• &lt;b&gt;2025 Recency-First Priority Strategy&lt;/b&gt; dengan Waterfall Fallback Terjadwal&lt;br/&gt;• &lt;b&gt;Automated Citation Grounding Resolver&lt;/b&gt; (Verifikasi Halaman PDF Fisik Asli)&lt;br/&gt;• &lt;b&gt;Safe 3-Part Message Chunker&lt;/b&gt; (Batas Maksimal 3.500 Karakter / Part Telegram)&lt;br/&gt;• &lt;b&gt;Centralized Prompt Template Engine&lt;/b&gt; dengan Aturan Satuan Finansial Eksak"]:::ragNode
-        end
-
-        subgraph G_SUPPORT ["4. ANTARMUKA PENGGUNA &amp; LAYANAN PENDUKUNG"]
-            CLIENT["💻 Pengguna Akhir: Web Dashboard &amp; Telegram Bot (@NashBei_bot)&lt;br/&gt;&lt;i&gt;Solution Architect, Tim Enterprise Sales, &amp; Analis Bisnis&lt;br/&gt;Mode Riset Bebas Keuangan/ESG • Diagnosis 10 Pilar • Executive Brief Tren 5 Tahun&lt;/i&gt;"]:::clientNode
-            SQLITE[("🗄️ SQLite3 Relational DB&lt;br/&gt;&lt;i&gt;Katalog 10 Pilar Nashta • Profil Emiten BEI&lt;br/&gt;Persistent Caching (WAL Mode Thread-Safe)&lt;/i&gt;")]:::supportNode
-            LLM_API["☁️ Mistral AI Cloud API&lt;br/&gt;&lt;i&gt;Mistral Large (Chat) • Mistral Embeddings&lt;br/&gt;Structured JSON Mode (HTTPS TLS 1.3 REST)&lt;/i&gt;"]:::supportNode
-        end
+    subgraph TIER2 ["TIER 2: ARSITEKTUR PENYIMPANAN INDEKS GANDA (DUAL-INDEX STORAGE)"]
+        direction LR
+        VEC_STORE[("🧠 ChromaDB Vector Store&lt;br/&gt;&lt;i&gt;28.702 Vektor 1024-dim | Mistral Embeddings&lt;br/&gt;Dense Semantic Search Multi-Tahun&lt;/i&gt;")]:::storeStyle
+        BM25_STORE[("🔍 Okapi BM25 Lexical Index&lt;br/&gt;&lt;i&gt;Inverted Index In-Memory per Emiten&lt;br/&gt;Pencocokan Istilah Finansial &amp; Regulasi Eksak&lt;/i&gt;")]:::storeStyle
+        SQLITE_STORE[("🗄️ SQLite3 Relational DB&lt;br/&gt;&lt;i&gt;Metadata Halaman Fisik/Cetak, Bab, &amp; Noise Filter&lt;br/&gt;Master Katalog 10 Pilar Nashta&lt;/i&gt;")]:::storeStyle
     end
 
-    %% Relasi Ingesti
-    PDF_SRC --&gt; ROUTER
-    ROUTER --&gt;|Diagram / Visual| R_VISION
-    ROUTER --&gt;|Tabel Finansial Padat| R_DOCLING
-    ROUTER --&gt;|Kerapatan Standar| R_PYMUPDF
+    subgraph TIER3 ["TIER 3: NASHTA CORE RAG ENGINE &amp; STRATEGIC ADVISORY"]
+        direction TB
+        FUSION["🎯 Reciprocal Rank Fusion (RRF)&lt;br/&gt;&lt;i&gt;Table Boost (+35%) • Docling Boost (+20%) • Recency-First 2025 Strategy&lt;/i&gt;"]:::ragStyle
+        GROUNDING["🛡️ Automated Citation Grounding Resolver&lt;br/&gt;&lt;i&gt;Verifikasi Bab &amp; Halaman PDF Fisik Asli • Protokol Anti-Halusinasi&lt;/i&gt;"]:::ragStyle
+        LLM_GW["☁️ Multi-Provider LLM Gateway&lt;br/&gt;&lt;i&gt;Mistral Large (Chat) • Gemini • Deterministic Fallback&lt;/i&gt;"]:::llmStyle
+    end
 
-    R_VISION --&gt; CHUNKER
-    R_DOCLING --&gt; CHUNKER
+    subgraph TIER4 ["TIER 4: ANTARMUKA PENGGUNA &amp; KANAL PENGIRIMAN (CLIENT DELIVERY)"]
+        direction LR
+        DASHBOARD["💻 Web Dashboard Interaktif&lt;br/&gt;&lt;i&gt;Executive Opportunity Radar • Diagnosis 10 Pilar • Estimasi Proyek&lt;/i&gt;"]:::clientStyle
+        COPILOT["🤖 AI Business Copilot&lt;br/&gt;&lt;i&gt;Mode Riset Bebas • Analisis Temporal • Pitch Proposal Generator&lt;/i&gt;"]:::clientStyle
+        TELEGRAM["📱 Telegram Bot (@NashBei_bot)&lt;br/&gt;&lt;i&gt;Mobile Advisory • Safe 3-Part Message Delivery (&amp;lt;3.500 kar/part)&lt;/i&gt;"]:::clientStyle
+    end
+
+    %% Relasi Ingestion
+    PDF --&gt; ROUTER
+    ROUTER --&gt; R_PYMUPDF
+    ROUTER --&gt; R_DOCLING
+    ROUTER --&gt; R_VISION
     R_PYMUPDF --&gt; CHUNKER
+    R_DOCLING --&gt; CHUNKER
+    R_VISION --&gt; CHUNKER
 
-    %% Relasi Storage
-    CHUNKER --&gt;|Potongan Dokumen Terstruktur + Metadata| VEC_STORE
-    CHUNKER --&gt;|Token Kata Kunci &amp; Metadata| BM25_STORE
+    %% Relasi Storage Distribution
+    CHUNKER --&gt;|Vektor Dense Embeddings| VEC_STORE
+    CHUNKER --&gt;|Token Sparse Keywords| BM25_STORE
+    CHUNKER --&gt;|Metadata Halaman &amp; Bab| SQLITE_STORE
 
-    %% Relasi Penelusuran Hibrida ke Core RAG
-    VEC_STORE --&gt;|Penelusuran Hibrida: Vektor| RAG_CORE
-    BM25_STORE --&gt;|Penelusuran Hibrida: BM25 RRF| RAG_CORE
+    %% Relasi Storage ke RAG
+    VEC_STORE --&gt;|Top Semantic Chunks| FUSION
+    BM25_STORE --&gt;|Top Lexical Chunks| FUSION
+    SQLITE_STORE --&gt;|Metadata Partisi &amp; Validasi| FUSION
 
-    %% Relasi Layanan Pendukung
-    SQLITE &lt;--&gt;|Validasi Cache &amp; Master Katalog 10 Pilar| RAG_CORE
-    RAG_CORE &lt;--&gt;|Prompt Terstruktur / Respon JSON Valid| LLM_API
+    %% Relasi RAG Reasoning
+    FUSION --&gt; GROUNDING
+    GROUNDING &lt;--&gt;|Prompt Terstruktur &amp; Sitasi Fakta| LLM_GW
 
-    %% Relasi Interaksi Pengguna
-    CLIENT &lt;--&gt;|Kueri Pengguna &amp; Callback / Respon HTML Sitasi Resmi| RAG_CORE</code></pre>
+    %% Relasi Client Delivery
+    GROUNDING --&gt;|Visualisasi Skor Radar &amp; Bukti| DASHBOARD
+    GROUNDING --&gt;|Jawaban Terstruktur &amp; Footnote Sitasi| COPILOT
+    GROUNDING --&gt;|Executive Briefing Mobile| TELEGRAM</code></pre>
 <hr />
 <h3 id="diagram-konteks-sistem-system-context-diagram">🌐 Diagram Konteks Sistem (System Context Diagram)</h3>
 <pre class="mermaid"><code>flowchart LR
@@ -1101,163 +1071,91 @@
     GDRIVE --&gt;|Sinkronisasi Otomatis Berkas PDF| SYSTEM
     SYSTEM &lt;--&gt;|Prompt Terstruktur &amp; Sitasi Footnote| LLM_EXT</code></pre>
 <hr />
-<h2 id="detail-alur-data-sistem-rag-terintegrasi">🏗️ Detail Alur Data Sistem RAG Terintegrasi</h2>
-<p>Sistem menghubungkan berkas Laporan Tahunan berukuran besar (500–1.200+ halaman) dengan antarmuka visualisasi eksekutif serta asisten AI interaktif secara terkoordinasi:</p>
+<h2 id="model-indexing-hibrida-pipeline-penelusuran-hybrid-indexing-pipeline">⚡ Model Indexing Hibrida &amp; Pipeline Penelusuran (Hybrid Indexing Pipeline)</h2>
+<p>Dokumen Laporan Tahunan memiliki karakteristik data yang heterogen: perpaduan antara <strong>terminologi regulasi formal</strong>, <strong>akronim teknis industri spesifik</strong> (seperti <em>SOC</em>, <em>VAPT</em>, <em>SIEM</em>, <em>DRP</em>, <em>ISO 27001</em>, <em>BI-FAST</em>), tabel finansial padat, serta narasi umum rencana kerja transformasi digital.</p>
+<p>Model Indexing Hibrida Nashta membagi proses ke dalam dua fase terpadu: <strong>Fase 1: Triple-Track Indexing</strong> saat ingesti dokumen, dan <strong>Fase 2: Hybrid Retrieval &amp; Fusion Engine</strong> saat mengeksekusi kueri pengguna.</p>
 <pre class="mermaid"><code>flowchart TD
-    %% Definisi Gaya Warna Elemen
-    classDef sourceClass fill:#0284c7,stroke:#0369a1,stroke-width:2px,color:#ffffff;
-    classDef processClass fill:#0f766e,stroke:#115e59,stroke-width:2px,color:#ffffff;
-    classDef storeClass fill:#1e293b,stroke:#475569,stroke-width:2px,color:#ffffff;
-    classDef engineClass fill:#6d28d9,stroke:#5b21b6,stroke-width:2px,color:#ffffff;
-    classDef llmClass fill:#b45309,stroke:#92400e,stroke-width:2px,color:#ffffff;
-    classDef uiClass fill:#1d4ed8,stroke:#1e40af,stroke-width:2px,color:#ffffff;
+    %% Styling Classes
+    classDef rawDoc fill:#0369a1,stroke:#38bdf8,stroke-width:2px,color:#ffffff;
+    classDef trackA fill:#065f46,stroke:#34d399,stroke-width:2px,color:#ffffff;
+    classDef trackB fill:#78350f,stroke:#fbbf24,stroke-width:2px,color:#ffffff;
+    classDef trackC fill:#312e81,stroke:#818cf8,stroke-width:2px,color:#ffffff;
+    classDef storeClass fill:#1e293b,stroke:#38bdf8,stroke-width:2px,color:#ffffff;
+    classDef gateClass fill:#4c1d95,stroke:#a78bfa,stroke-width:2px,color:#ffffff;
+    classDef fuseClass fill:#831843,stroke:#f472b6,stroke-width:2px,color:#ffffff;
+    classDef outClass fill:#14532d,stroke:#4ade80,stroke-width:2px,color:#ffffff;
 
-    subgraph SEC_SOURCE ["1. LAPISAN SUMBER DATA &amp; INGESTION"]
-        SRC_GDRIVE["Google Drive Corporate Folder&lt;br/&gt;(Auto Sync &amp; Deduplication)"]:::sourceClass
-        SRC_PDF["Document Vault&lt;br/&gt;(PDF Laporan Tahunan 500-1200 Hal)"]:::sourceClass
-        ING_EXTRACT["PDF Extractor (PyMuPDF fitz)&lt;br/&gt;Physical &amp; Printed Page Extraction"]:::processClass
-        ING_FILTER["Noise Gatekeeper Filter&lt;br/&gt;(Eliminasi TOC, Disclaimer, Rekap ATM)"]:::processClass
-        ING_CHUNK["Context-Aware Chunker&lt;br/&gt;(Chapter &amp; Paragraph Units)"]:::processClass
-    end
+    subgraph PHASE1 ["FASE 1: PROSES TRIPLE-TRACK INDEXING (INGESTION TIME)"]
+        direction TB
+        RAW["📄 Potongan Paragraf Terverifikasi&lt;br/&gt;&lt;i&gt;(Hasil Ekstraksi PyMuPDF &amp; Docling)&lt;/i&gt;"]:::rawDoc
 
-    subgraph SEC_STORAGE ["2. MODEL INDEXING HIBRIDA &amp; PENYIMPANAN"]
-        IDX_META["Metadata Partition Index&lt;br/&gt;(Emiten, Tahun, Bab, Nomor Halaman)"]:::storeClass
-        IDX_LEX["Lexical Inverted Index (BM25)&lt;br/&gt;(Akronim Regulasi, SOC, VAPT, BCP)"]:::storeClass
-        IDX_SEM["Semantic &amp; Category Index&lt;br/&gt;(Konteks Bab TI &amp; 10 Pilar Solusi)"]:::storeClass
-        DB_SQLITE[("SQLite High-Performance Store&lt;br/&gt;Tabel: document_chunks")]:::storeClass
-    end
+        subgraph TRACKS ["3 Jalur Indexing Hibrida (Triple-Track Indexing)"]
+            direction LR
+            subgraph TR_A ["Jalur A: Structured Metadata"]
+                A1["Partisi Emiten &amp; Tahun&lt;br/&gt;(2021-2025)"]:::trackA
+                A2["Dual-Page Indexing&lt;br/&gt;(Physical &amp; Printed)"]:::trackA
+                A3["Hierarki Bab Laporan&lt;br/&gt;(TI, GCG, Direksi)"]:::trackA
+            end
 
-    subgraph SEC_REASONING ["3. ANALYTICAL REASONING &amp; EVIDENCE ENGINES"]
-        ENG_RADAR["10-Pillars Opportunity Radar&lt;br/&gt;(Deterministic Scoring Engine)"]:::engineClass
-        ENG_EVIDENCE["Evidence Verifier &amp; Clustering&lt;br/&gt;(Match Confidence 96% vs 91%)"]:::engineClass
-        ENG_METRIC["Nashta Opportunity Index&lt;br/&gt;(Formula Matematis 0 - 100)"]:::engineClass
-    end
+            subgraph TR_B ["Jalur B: Lexical &amp; Exact Acronym"]
+                B1["Domain Tokenizer&lt;br/&gt;&amp; Normalizer"]:::trackB
+                B2["Kamus Akronim Teknis&lt;br/&gt;(SOC, VAPT, SIEM, DRP)"]:::trackB
+                B3["Okapi BM25 Index&lt;br/&gt;(Scoring Relevansi Eksak)"]:::trackB
+            end
 
-    subgraph SEC_RAG ["4. RAG QUERY &amp; TEMPORAL ROUTING ENGINE"]
-        RAG_QUERY["Query Receiver &amp; Tokenizer"]:::engineClass
-        RAG_TEMP{"Temporal Router&lt;br/&gt;(Deteksi Target Tahun)"}:::engineClass
-        RAG_FUSE["Hybrid Retrieval Fusion&lt;br/&gt;(Hard Filter + Lexical + Semantic + Bonus)"]:::engineClass
-        RAG_PROMPT["Context &amp; Footnote Prompt Builder&lt;br/&gt;(Citations Protocol Injection)"]:::engineClass
-    end
-
-    subgraph SEC_GATEWAY ["5. MULTI-PROVIDER LLM GATEWAY"]
-        LLM_ROUTER["Multi-Provider Gateway Router"]:::llmClass
-        LLM_MODELS["Mistral AI / Gemini / OpenAI / Ollama"]:::llmClass
-        LLM_FALLBACK["Deterministic Rule-based Fallback&lt;br/&gt;(Offline Resilient Engine)"]:::llmClass
-        LLM_SYNTH["Footnote Citation Synthesizer&lt;br/&gt;(Kutipan Dokumen Asli Terverifikasi)"]:::llmClass
-    end
-
-    subgraph SEC_UI ["6. PRESENTATION &amp; COPILOT DASHBOARD"]
-        API_SERVER["FastAPI Server (/api/chat, /api/issuers, /api/documents)"]:::uiClass
-        UI_RADAR["Executive Opportunity Dashboard&lt;br/&gt;(Visualisasi Radar 10 Pilar, Skor, &amp; Evidence)"]:::uiClass
-        UI_COPILOT["AI Copilot Interactive Assistant&lt;br/&gt;(Tanya-Jawab Temporal &amp; Proposal Generator)"]:::uiClass
-    end
-
-    %% Relasi Antar Komponen
-    SRC_GDRIVE --&gt;|Sinkronisasi Otomatis| SRC_PDF
-    SRC_PDF --&gt; ING_EXTRACT
-    ING_EXTRACT --&gt; ING_FILTER
-    ING_FILTER --&gt; ING_CHUNK
-
-    ING_CHUNK --&gt; IDX_META
-    ING_CHUNK --&gt; IDX_LEX
-    ING_CHUNK --&gt; IDX_SEM
-
-    IDX_META --&gt; DB_SQLITE
-    IDX_LEX --&gt; DB_SQLITE
-    IDX_SEM --&gt; DB_SQLITE
-
-    DB_SQLITE --&gt; ENG_RADAR
-    DB_SQLITE --&gt; ENG_EVIDENCE
-    ENG_RADAR --&gt; ENG_METRIC
-    ENG_EVIDENCE --&gt; ENG_METRIC
-
-    RAG_QUERY --&gt; RAG_TEMP
-    RAG_TEMP --&gt;|Filter Tahun Aktif| RAG_FUSE
-    DB_SQLITE --&gt;|Koleksi Partisi Chunk| RAG_FUSE
-    RAG_FUSE --&gt;|Top-K Bukti Relevan| RAG_PROMPT
-
-    RAG_PROMPT --&gt; LLM_ROUTER
-    LLM_ROUTER --&gt;|Online| LLM_MODELS
-    LLM_ROUTER --&gt;|Offline / Timeout| LLM_FALLBACK
-    LLM_MODELS --&gt; LLM_SYNTH
-    LLM_FALLBACK --&gt; LLM_SYNTH
-
-    ENG_METRIC --&gt; API_SERVER
-    LLM_SYNTH --&gt; API_SERVER
-
-    API_SERVER --&gt; UI_RADAR
-    API_SERVER --&gt; UI_COPILOT</code></pre>
-<hr />
-<h2 id="model-indexing-hibrida-hybrid-indexing-pipeline">⚡ Model Indexing Hibrida (Hybrid Indexing Pipeline)</h2>
-<p>Dokumen Laporan Tahunan memiliki karakteristik data yang heterogen: perpaduan antara <strong>terminologi regulasi formal</strong>, <strong>akronim teknis industri spesifik</strong> (seperti <em>SOC</em>, <em>VAPT</em>, <em>SIEM</em>, <em>DRP</em>, <em>ISO 27001</em>, <em>BI-FAST</em>), serta narasi umum rencana kerja transformasi digital.</p>
-<p>Model Indexing Hibrida Nashta membagi proses ke dalam arsitektur tiga jalur (<em>Triple-Track Indexing</em>) dengan mesin pencarian fusi (<em>Hybrid Retrieval Fusion</em>):</p>
-<pre class="mermaid"><code>flowchart TD
-    %% Definisi Gaya Elemen
-    classDef inputClass fill:#0284c7,stroke:#0369a1,stroke-width:2px,color:#ffffff;
-    classDef track1Class fill:#0f766e,stroke:#115e59,stroke-width:2px,color:#ffffff;
-    classDef track2Class fill:#b45309,stroke:#92400e,stroke-width:2px,color:#ffffff;
-    classDef track3Class fill:#4338ca,stroke:#3730a3,stroke-width:2px,color:#ffffff;
-    classDef fusionClass fill:#6d28d9,stroke:#5b21b6,stroke-width:2px,color:#ffffff;
-    classDef outputClass fill:#15803d,stroke:#166534,stroke-width:2px,color:#ffffff;
-
-    RAW_CHUNK["Input: Document Chunks Terverifikasi&lt;br/&gt;(Teks Paragraf Asli Hasil PyMuPDF)"]:::inputClass
-
-    subgraph TRIPLE_TRACK ["PROSES INDEXING HIBRIDA 3 JALUR (TRIPLE-TRACK INDEXING)"]
-
-        subgraph TRACK_A ["Jalur A: Structured Metadata Indexing"]
-            META_EMITEN["Emiten Partition Index&lt;br/&gt;(Kode Saham: BRIS, BBCA, BMRI)"]:::track1Class
-            META_YEAR["Temporal Partition Index&lt;br/&gt;(Tahun Laporan: 2021 s/d 2025)"]:::track1Class
-            META_PAGE["Dual-Page Indexing&lt;br/&gt;(physical_page &amp; printed_page)"]:::track1Class
-            META_CHAP["Chapter Hierarchy Index&lt;br/&gt;(Deteksi Bab TI, GCG, Direksi, Operasional)"]:::track1Class
+            subgraph TR_C ["Jalur C: Semantic &amp; Relevance"]
+                C1["Bilingual Expansion&lt;br/&gt;(cyber ↔ siber)"]:::trackC
+                C2["Contextual Booster&lt;br/&gt;(+3 Bab TI, +4 Cyber)"]:::trackC
+                C3["Dense Vector Embeddings&lt;br/&gt;(1024-dim Mistral)"]:::trackC
+            end
         end
 
-        subgraph TRACK_B ["Jalur B: Lexical &amp; Exact Acronym Indexing"]
-            LEX_TOKEN["Domain Tokenizer &amp; Normalizer&lt;br/&gt;(Stemming Kata Kunci Khusus Perbankan)"]:::track2Class
-            LEX_ACRONYM["Technical Acronym Dictionary&lt;br/&gt;(SOC, VAPT, SIEM, DRP, ISO 27001, API, Microservices)"]:::track2Class
-            LEX_BM25["Lexical Inverted Index (BM25 Scoring)&lt;br/&gt;(Presisi Tinggi Istilah Regulasi &amp; Standar Industri)"]:::track2Class
+        RAW --&gt; TR_A
+        RAW --&gt; TR_B
+        RAW --&gt; TR_C
+
+        STORE_UNIFIED[("🗄️ Penyimpanan Indeks Terpadu&lt;br/&gt;&lt;i&gt;(SQLite Metadata DB + Okapi BM25 Lexical + ChromaDB Vectors)&lt;/i&gt;")]:::storeClass
+
+        TR_A --&gt; STORE_UNIFIED
+        TR_B --&gt; STORE_UNIFIED
+        TR_C --&gt; STORE_UNIFIED
+    end
+
+    subgraph PHASE2 ["FASE 2: HYBRID RETRIEVAL &amp; FUSION ENGINE (QUERY TIME)"]
+        direction TB
+        QUERY["🔍 Pertanyaan Pengguna&lt;br/&gt;&lt;i&gt;(Contoh: 'Apa ancaman cyber BRIS pada tahun 2024?')&lt;/i&gt;"]:::rawDoc
+
+        subgraph ROUTING ["Temporal Query Routing"]
+            direction LR
+            T_GATE{"🔀 Deteksi Target Tahun?"}:::gateClass
+            T_STRICT["🎯 Strict Temporal Filter&lt;br/&gt;&lt;code&gt;WHERE year = target_year&lt;/code&gt;"]:::gateClass
+            T_DEFAULT["📅 Default Recency Filter&lt;br/&gt;&lt;code&gt;WHERE year = max(year)&lt;/code&gt;"]:::gateClass
         end
 
-        subgraph TRACK_C ["Jalur C: Semantic &amp; Category Relevance Indexing"]
-            SEM_BILINGUAL["Bilingual Term Expander&lt;br/&gt;(cyber ↔ siber, security ↔ keamanan)"]:::track3Class
-            SEM_BOOST["Contextual Domain Booster&lt;br/&gt;(+4 Poin Kata Kunci Siber, +3 Poin Bab TI)"]:::track3Class
-            SEM_CLUSTER["Evidence Cluster Grouping&lt;br/&gt;(Klasterisasi Bukti Masalah untuk 10 Pilar)"]:::track3Class
+        QUERY --&gt; T_GATE
+        T_GATE --&gt;|Tahun Disebutkan| T_STRICT
+        T_GATE --&gt;|Tanpa Tahun| T_DEFAULT
+
+        subgraph EXECUTION ["Penelusuran Hibrida &amp; Skoring Fusi"]
+            direction TB
+            SEARCH_MULTI["⚡ Multi-Track Search Execution&lt;br/&gt;&lt;i&gt;Pencarian Simultan: BM25 Lexical + ChromaDB Semantic pada Partisi Terpilih&lt;/i&gt;"]:::fuseClass
+
+            FUSION_CALC["📐 Reciprocal Rank Fusion &amp; Composite Scoring&lt;br/&gt;&lt;b&gt;S_hybrid = S_lexical + S_semantic + Δ_chapter(+3) + Δ_cyber(+4)&lt;/b&gt;"]:::fuseClass
+
+            TOP_EVIDENCE["📋 Top-K Relevant Chunks Terverifikasi&lt;br/&gt;&lt;i&gt;(Kutipan Kalimat Asli + Bab + Nomor Halaman Fisik/Cetak)&lt;/i&gt;"]:::outClass
         end
-    end
 
-    RAW_CHUNK --&gt; TRACK_A
-    RAW_CHUNK --&gt; TRACK_B
-    RAW_CHUNK --&gt; TRACK_C
+        T_STRICT --&gt; SEARCH_MULTI
+        T_DEFAULT --&gt; SEARCH_MULTI
+        STORE_UNIFIED -.-&gt;|Akses Data Indeks Terpartisi| SEARCH_MULTI
 
-    subgraph STORAGE_LAYER ["PENYIMPANAN TERINTEGRASI"]
-        DB_INDEX[("SQLite Optimized Store&lt;br/&gt;Tabel: document_chunks&lt;br/&gt;Indeks Komposit: (emiten_code, year, is_noise)")]:::inputClass
-    end
+        SEARCH_MULTI --&gt; FUSION_CALC
+        FUSION_CALC --&gt; TOP_EVIDENCE
 
-    TRACK_A --&gt; DB_INDEX
-    TRACK_B --&gt; DB_INDEX
-    TRACK_C --&gt; DB_INDEX
+        LLM_OUTPUT["🤖 Context Window True RAG (LLM Gateway)&lt;br/&gt;&lt;i&gt;Diagnosa Eksekutif, Rekomendasi Solusi, &amp; Sitasi Footnote Terverifikasi&lt;/i&gt;"]:::outClass
 
-    subgraph RETRIEVAL_FUSION ["HYBRID RETRIEVAL &amp; FUSION ENGINE"]
-        USER_QUERY["Query Pengguna&lt;br/&gt;(Contoh: 'ancaman cyber 2024')"]:::inputClass
-        TEMP_GATE{"Temporal Hard Filter&lt;br/&gt;Tahun Ditanyakan?"}:::fusionClass
-
-        APPLY_YEAR["Strict Filter: WHERE year = target_year&lt;br/&gt;(Isolasi Dokumen 2024 Saja)"]:::fusionClass
-        FALLBACK_YEAR["Default Filter: Dokumen Laporan Terbaru&lt;br/&gt;(Tahun Maksimum Tersedia)"]:::fusionClass
-
-        RANK_FUSION["Reciprocal Rank Fusion &amp; Composite Scorer&lt;br/&gt;Score = Score(BM25) + Score(Semantic) + Boost(Bab TI) + Boost(Cyber)"]:::fusionClass
-        TOP_K["Top-K Relevant Chunks&lt;br/&gt;(Potongan Paragraf Terbaik + Nomor Halaman + Bab)"]:::outputClass
-    end
-
-    USER_QUERY --&gt; TEMP_GATE
-    TEMP_GATE --&gt;|Ya (Misal: 2024)| APPLY_YEAR
-    TEMP_GATE --&gt;|Tidak Ada Tahun| FALLBACK_YEAR
-
-    APPLY_YEAR --&gt; DB_INDEX
-    FALLBACK_YEAR --&gt; DB_INDEX
-
-    DB_INDEX --&gt; RANK_FUSION
-    RANK_FUSION --&gt; TOP_K
-    TOP_K --&gt;|Disuntikkan ke Prompt LLM| FINAL_CTX["Context Window True RAG&lt;br/&gt;(Sitasi Fakta Valid &amp; Bebas Halusinasi)"]:::outputClass</code></pre>
+        TOP_EVIDENCE --&gt; LLM_OUTPUT
+    end</code></pre>
 <h3 id="rincian-tiga-jalur-indexing">🔬 Rincian Tiga Jalur Indexing:</h3>
 <ol>
 <li><strong>Jalur A — Structured Metadata Partitioning</strong>:</li>

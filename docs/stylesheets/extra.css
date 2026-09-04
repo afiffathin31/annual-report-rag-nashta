@@ -25,14 +25,35 @@ img {
   color: #38bdf8;
 }
 
-/* Mermaid SVG Container */
+/* Mermaid SVG Container & Diagram Responsiveness */
 .mermaid {
   display: flex;
   justify-content: center;
-  margin: 1.5rem 0;
-  background: rgba(15, 23, 42, 0.4);
-  padding: 1rem;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  align-items: center;
+  margin: 2rem 0;
+  background: rgba(15, 23, 42, 0.75);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   overflow-x: auto;
 }
+
+[data-md-color-scheme="default"] .mermaid {
+  background: rgba(248, 250, 252, 0.95);
+  border: 1px solid rgba(203, 213, 225, 0.8);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.mermaid svg {
+  max-width: 100% !important;
+  height: auto !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Ensure Back-to-top floating button doesn't obscure content */
+.md-top {
+  right: 1.5rem;
+  bottom: 2rem;
+}
+
