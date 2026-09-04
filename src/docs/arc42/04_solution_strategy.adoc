@@ -11,3 +11,12 @@ Untuk mengatasi kelemahan LLM standar (halusinasi dan kurangnya data internal te
 3. **Temporal Constraint Ingestion & Querying**: Setiap potongan dokumen mempertahankan metadata tahun terbitan (`year`). Query pencarian pengguna dipindai untuk menemukan pola tahun target, mengisolasi pool dokumen secara ketat.
 4. **Footnote Numbering Standard**: Seluruh klaim narasi diagnosa LLM diwajibkan menyertakan penomoran footnote `(1)`, `(2)` dengan rincian kutipan di sub-bagian `### 📑 Bukti Dokumen`.
 5. **Zero-Lock-in Multi-Provider Architecture**: Lapisan LLM diabstraksikan melalui adapter seragam, memungkinkan peralihan instan antara Mistral, Google Gemini, OpenAI, Groq, atau model lokal Ollama.
+
+=== Model Indexing Hibrida (Triple-Track Indexing)
+
+Sistem memadukan tiga jalur indexing terkoordinasi untuk memastikan presisi tinggi:
+
+* **Jalur A (Structured Metadata Partitioning)**: Partisi dokumen secara deterministik berdasarkan `emiten_code`, `year`, nomor halaman ganda (`physical_page` dan `printed_page`), serta judul bab (`chapter_title`).
+* **Jalur B (Lexical & Technical Acronym BM25)**: Pencocokan eksak istilah teknis dan regulasi perbankan tanpa deviasi makna (*SOC, VAPT, SIEM, DRP, BI-FAST, ISO 27001*).
+* **Jalur C (Semantic & Category Relevance)**: Ekspansi sinonim dwibahasa (*cyber* <-> *siber*) dan pembobotan kontekstual (+4 poin terminologi ancaman kritis, +3 poin bab tata kelola TI).
+
