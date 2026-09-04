@@ -61,9 +61,13 @@ class AIAssistantRAGEngine:
         if q_lower in GREETING_TRIGGERS or any(q_lower == gt or q_lower.startswith(gt + " ") or q_lower.startswith(gt + ",") for gt in GREETING_TRIGGERS):
             return self._answer_greeting(target_code, issuer_info)
 
-        # Retrieve matching chunks from RAG index with strict noise gatekeeping
+        # Extract specific year from query if mentioned (e.g. 2024, 2023, 2025)
+        year_match = re.search(r"\b(20(?:1[89]|2[0-6]))\b", query)
+        target_year = int(year_match.group(1)) if year_match else None
+
+        # Retrieve matching chunks from RAG index with strict noise gatekeeping and exact year targeting
         chunks = rag_indexer.get_chunks_for_emiten(target_code)
-        retrieved_chunks = self._search_chunks(chunks, query, target_code=target_code)
+        retrieved_chunks = self._search_chunks(chunks, query, target_code=target_code, target_year=target_year)
 
         # 1. Intent: Proposal / Pitch Deck Generation
         if any(w in q_lower for w in ["proposal", "pitch", "penawaran", "buatkan proposal"]):
@@ -71,7 +75,7 @@ class AIAssistantRAGEngine:
 
         # If a live Generative LLM is configured (Gemini / OpenAI / Groq / Ollama), use it!
         if llm_provider.is_llm_available():
-            llm_res = self._generate_llm_rag_answer(query, target_code, issuer_info, retrieved_chunks, strategic_recs, analysis)
+            llm_res = self._generate_llm_rag_answer(query, target_code, issuer_info, retrieved_chunks, strategic_recs, analysis, target_year=target_year)
             if llm_res:
                 return llm_res
 
@@ -130,7 +134,8 @@ Ada yang bisa saya bantu analisis hari ini? 😊"""
         issuer: Dict[str, Any],
         chunks: List[Dict[str, Any]],
         recs: List[Dict[str, Any]],
-        analysis: Dict[str, Any]
+        analysis: Dict[str, Any],
+        target_year: Optional[int] = None,
     ) -> Optional[Dict[str, Any]]:
         """Synthesizes rich generative answer from active LLM with footnote citations and complete output."""
         provider_info = llm_provider.get_active_provider_info()
@@ -143,7 +148,10 @@ Ada yang bisa saya bantu analisis hari ini? 😊"""
         for idx, c in enumerate(chunks[:5], 1):
             p_display = c.get("page_display") or f"Hal. {c.get('printed_page', c.get('page_number'))}"
             doc_name = c.get("doc_name", f"AR_{code}.pdf")
-            year = c.get("year", 2025)
+            year = c.get("year")
+            if not year:
+                ym = re.findall(r"(20(?:1[89]|2[0-6]))", str(doc_name))
+                year = int(ym[-1]) if ym else (target_year or 2024)
             chapter = c.get("chapter_title", "Tata Kelola TI & Operasional")
             context_parts.append(
                 f"[Sumber ({idx})]\n"
@@ -168,6 +176,8 @@ Ada yang bisa saya bantu analisis hari ini? 😊"""
             "Tugas Anda adalah menganalisis Laporan Tahunan resmi emiten BEI dan merumuskan paket solusi transformasi digital "
             "berdasarkan 10 Pilar Layanan Nashta (Managed Service, IT Hybrid Infra, Business App, Cyber Security, Data & AI, "
             "Digital Business Platform, IoT, Consulting, Cloud Services, Bootcamp).\n\n"
+            "PANDUAN KONSISTENSI TAHUN (SANGAT PENTING):\n"
+            "- Jika pengguna secara spesifik menanyakan tahun tertentu (misal: tahun 2024), seluruh diagnosa dan sitasi bukti Anda WAJIB merujuk pada dokumen Laporan Tahunan tahun tersebut (Annual Report 2024), bukan tahun lainnya.\n\n"
             "STRUKTUR JAWABAN YANG WAJIB DIIKUTI:\n"
             "1. 🔍 Diagnosa Utama dari Laporan Tahunan {code}\n"
             "   - Jabarkan indikator kunci masalah/risiko dengan footnote berurutan seperti (1), (2), (3) tepat setelah klaim temuan dokumen.\n"
@@ -185,6 +195,15 @@ Ada yang bisa saya bantu analisis hari ini? 😊"""
             "KELENGKAPAN OUTPUT (PENTING): Tulis respon secara LENGKAP, MENYELURUH, dan TUNTAS. JANGAN PERNAH menghentikan respon atau membiarkan tabel/fase implementasi terpotong di tengah kalimat."
         )
 
+        temporal_hint = ""
+        if target_year:
+            temporal_hint = (
+                f"\n[PERINGATAN KHUSUS - FOKUS TAHUN {target_year}]:\n"
+                f"Pengguna menanyakan secara spesifik mengenai kejadian/isu pada TAHUN {target_year}.\n"
+                f"Seluruh diagnosa dan bukti kutipan dokumen WAJIB berfokus pada data Laporan Tahunan {target_year} ({code} Annual Report {target_year}) yang tercantum di [DATA REFERENSI RESMI BUKTI LAPORAN TAHUNAN].\n"
+                f"DILARANG mengutip atau mencampuradukkan dengan laporan tahun lain jika data {target_year} tersedia.\n"
+            )
+
         user_prompt = f"""Target Klien: {name} ({code}) | Sektor: {subsector} | Skor Peluang Nashta: {overall}/100
 
 [DATA REFERENSI RESMI BUKTI LAPORAN TAHUNAN]:
@@ -192,28 +211,33 @@ Ada yang bisa saya bantu analisis hari ini? 😊"""
 
 [DIAGNOSA & REKOMENDASI 10 PILAR NASHTA]:
 {recs_text}
-
+{temporal_hint}
 [PERTANYAAN PENGGUNA]:
 {query}
 
 Tolong berikan jawaban konsultasi yang cerdas, komprehensif, dan solutif. Ingat aturan sitasi: gunakan penomoran footnote (1), (2) di dalam narasi kalimat diagnosa, dan cantumkan rincian kutipannya di sub-bagian 'Bukti Dokumen' tepat di akhir sesi diagnosa. Pastikan seluruh penjelasan, tabel solusi, dan fase implementasi ditulis lengkap sampai tuntas tanpa terpotong:"""
 
-        llm_reply = llm_provider.generate(user_prompt, system_prompt=system_prompt, temperature=0.2, max_tokens=8192)
+        llm_reply = llm_provider.generate(user_prompt, system_prompt=system_prompt, temperature=0.2, max_tokens=4096)
         if not llm_reply or len(llm_reply.strip()) < 20:
             return None
 
         citations = []
         for idx, c in enumerate(chunks[:5], 1):
             p_display = c.get("page_display") or f"Hal. {c.get('printed_page', c.get('page_number'))}"
+            doc_name = c.get("doc_name", f"AR_{code}.pdf")
+            year = c.get("year")
+            if not year:
+                ym = re.findall(r"(20(?:1[89]|2[0-6]))", str(doc_name))
+                year = int(ym[-1]) if ym else (target_year or 2024)
             citations.append({
                 "citation_index": idx,
                 "title": c.get("chapter_title", "Tata Kelola TI & Operasional"),
-                "doc_name": c.get("doc_name", f"AR_{code}.pdf"),
+                "doc_name": doc_name,
                 "page_number": c.get("printed_page", c.get("page_number")),
                 "page_display": p_display,
                 "quote": c.get("raw_paragraph"),
                 "context": c.get("raw_paragraph"),
-                "year": c.get("year", 2025),
+                "year": year,
             })
 
         return {
@@ -232,12 +256,24 @@ Tolong berikan jawaban konsultasi yang cerdas, komprehensif, dan solutif. Ingat 
                     return pillar_id
         return None
 
-    def _search_chunks(self, chunks: List[Dict[str, Any]], query: str, top_k: int = 5, target_code: str = "") -> List[Dict[str, Any]]:
-        """Performs noise-filtered semantic keyword search over indexed chunks using database FTS or fallback scan."""
+    def _search_chunks(
+        self,
+        chunks: List[Dict[str, Any]],
+        query: str,
+        top_k: int = 5,
+        target_code: str = "",
+        target_year: Optional[int] = None
+    ) -> List[Dict[str, Any]]:
+        """Performs noise-filtered semantic keyword search over indexed chunks with exact year-targeting."""
+        if not target_year:
+            year_match = re.search(r"\b(20(?:1[89]|2[0-6]))\b", query)
+            if year_match:
+                target_year = int(year_match.group(1))
+
         if target_code:
             try:
                 from backend.repository import doc_repo
-                db_results = doc_repo.search_chunks(target_code, query, top_k=top_k)
+                db_results = doc_repo.search_chunks(target_code, query, top_k=top_k, target_year=target_year)
                 if db_results:
                     return db_results
             except Exception as e:
@@ -245,6 +281,11 @@ Tolong berikan jawaban konsultasi yang cerdas, komprehensif, dan solutif. Ingat 
 
         if not chunks:
             return []
+
+        if target_year:
+            year_chunks = [c for c in chunks if c.get("year") == target_year]
+            if year_chunks:
+                chunks = year_chunks
 
         # Tokenize query keywords (exclude short stop words)
         stop_words = {"apa", "siapa", "dimana", "kapan", "bagaimana", "mengapa", "yang", "dan", "dari", "untuk", "pada", "dengan", "ini", "itu", "saya", "anda", "kami", "mereka"}
@@ -522,17 +563,25 @@ Tolong berikan jawaban konsultasi yang cerdas, komprehensif, dan solutif. Ingat 
         if chunks:
             reply_lines.append("#### 📑 Temuan Fakta & Kutipan dari Laporan Tahunan:")
             for idx, c in enumerate(chunks[:3], 1):
-                page_str = f"Hal. {c.get('printed_page', c.get('page_number'))}"
+                page_str = c.get("page_display") or f"Hal. {c.get('printed_page', c.get('page_number'))}"
+                doc_name = c.get("doc_name", f"AR_{code}.pdf")
+                year = c.get("year")
+                if not year:
+                    ym = re.findall(r"(20(?:1[89]|2[0-6]))", str(doc_name))
+                    year = int(ym[-1]) if ym else 2024
                 reply_lines.append(
-                    f"**{idx}. {page_str} — {c.get('chapter_title')}** (`{c.get('doc_name')}`)\n"
+                    f"**{idx}. {page_str} ({year}) — {c.get('chapter_title')}** (`{doc_name}`)\n"
                     f"> *\"{c.get('raw_paragraph')}\"*\n"
                 )
                 citations.append({
+                    "citation_index": idx,
                     "title": c.get("chapter_title"),
-                    "doc_name": c.get("doc_name"),
+                    "doc_name": doc_name,
                     "page_number": c.get("printed_page", c.get("page_number")),
+                    "page_display": page_str,
                     "quote": c.get("raw_paragraph"),
                     "context": c.get("raw_paragraph"),
+                    "year": year,
                 })
 
         top_pillars = analysis.get("top_priority_pillars", [])

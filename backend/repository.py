@@ -56,75 +56,80 @@ class DocumentRepository:
         query_text: str,
         top_k: int = 5,
         year_from: Optional[int] = None,
+        target_year: Optional[int] = None,
     ) -> List[Dict[str, Any]]:
-        """High-performance indexed full-text search with BM25 / tokenized ranking."""
+        """High-performance indexed search with exact year-targeting, keyword expansion & BM25-style ranking."""
+        from sqlalchemy import or_
         c_code = emiten_code.upper().strip()
         if not query_text or not query_text.strip():
             return self.get_chunks_for_emiten(c_code, limit=top_k)
 
-        # 1. Try SQLite FTS5 Match if running on SQLite
-        if DATABASE_URL.startswith("sqlite"):
-            # Clean search terms for FTS syntax
-            clean_terms = [re.sub(r"[^\w\s]", "", w).strip() for w in query_text.lower().split()]
-            stop_words = {"apa", "siapa", "dimana", "kapan", "bagaimana", "mengapa", "yang", "dan", "dari", "untuk", "pada", "dengan", "ini", "itu", "saya", "anda", "kami", "mereka"}
-            valid_terms = [w for w in clean_terms if len(w) > 2 and w not in stop_words]
+        # 1. Automatic Year Extraction from query if not explicitly provided
+        if not target_year:
+            year_match = re.search(r"\b(20(?:1[89]|2[0-6]))\b", query_text)
+            if year_match:
+                target_year = int(year_match.group(1))
 
-            if valid_terms:
-                fts_query_str = " OR ".join(f'"{t}"' for t in valid_terms[:8])
-                sql = text("""
-                    SELECT c.*
-                    FROM chunk_fts f
-                    JOIN document_chunks c ON c.chunk_id = f.chunk_id
-                    WHERE f.emiten_code = :emiten_code
-                      AND c.is_noise = 0
-                      AND chunk_fts MATCH :match_query
-                    ORDER BY rank
-                    LIMIT :top_k;
-                """)
-                try:
-                    with SessionLocal() as db:
-                        result = db.execute(sql, {
-                            "emiten_code": c_code,
-                            "match_query": fts_query_str,
-                            "top_k": top_k * 2
-                        }).mappings().all()
+        # 2. Extract semantic keywords and remove stop words & temporal tokens
+        stop_words = {
+            "apa", "siapa", "dimana", "kapan", "bagaimana", "mengapa", "yang", "dan", "dari",
+            "untuk", "pada", "dengan", "ini", "itu", "saya", "anda", "kami", "mereka", "yan",
+            "adalah", "terjadi", "saat", "ketika", "tahun", "thn", "th", "annual", "report", "laporan",
+            "apakah", "tentang", "mengenai", "dalam", "atas", "bisa", "dapat", "ada", "secara"
+        }
+        clean_terms = [re.sub(r"[^\w\s]", "", w).strip() for w in query_text.lower().split()]
+        valid_keywords = [
+            w for w in clean_terms 
+            if len(w) > 2 and w not in stop_words and not (w.isdigit() and len(w) == 4)
+        ]
 
-                        if result:
-                            # Prioritize chunks with IT relevance
-                            scored = []
-                            for r in result:
-                                item = dict(r)
-                                text_content = (item.get("raw_paragraph", "") + " " + item.get("chapter_title", "")).lower()
-                                bonus = 2 if any(it_kw in text_content for it_kw in ["teknologi", "sistem", "digital", "siber", "cloud", "data"]) else 0
-                                scored.append((bonus, item))
-                            scored.sort(key=lambda x: x[0], reverse=True)
-                            return [item[1] for item in scored[:top_k]]
-                except Exception as e:
-                    logger.debug(f"FTS search fallback triggered: {e}")
+        # Synonym expansion
+        if "cyber" in valid_keywords and "siber" not in valid_keywords:
+            valid_keywords.append("siber")
+        elif "siber" in valid_keywords and "cyber" not in valid_keywords:
+            valid_keywords.append("cyber")
 
-        # 2. Fallback: SQL Indexed Keyword Scan
+        if not valid_keywords:
+            valid_keywords = ["teknologi", "sistem", "digital"]
+
+        # 3. SQL Indexed Query with Exact Year-Targeting
         with SessionLocal() as db:
             base_q = db.query(ChunkModel).filter(
                 ChunkModel.emiten_code == c_code,
                 ChunkModel.is_noise == False
             )
-            if year_from:
+
+            # Strict Year Filtering
+            if target_year:
+                base_q = base_q.filter(ChunkModel.year == target_year)
+            elif year_from:
                 base_q = base_q.filter(ChunkModel.year >= year_from)
 
-            # Extract keywords
-            clean_terms = [re.sub(r"[^\w\s]", "", w).strip() for w in query_text.lower().split() if len(w.strip()) > 2]
-            if not clean_terms:
-                return [r.to_dict() for r in base_q.order_by(ChunkModel.year.desc()).limit(top_k).all()]
+            # SQL Keyword Matching
+            conditions = [ChunkModel.raw_paragraph.ilike(f"%{kw}%") for kw in valid_keywords[:6]]
+            keyword_q = base_q.filter(or_(*conditions))
+            candidates = keyword_q.limit(200).all()
 
-            # Fetch relevant candidate pool
-            candidates = base_q.order_by(ChunkModel.year.desc()).limit(500).all()
+            if not candidates:
+                candidates = base_q.order_by(ChunkModel.year.desc()).limit(100).all()
+
             scored_chunks = []
             for c in candidates:
                 text_content = (c.raw_paragraph + " " + (c.chapter_title or "")).lower()
-                matches = sum(1 for kw in clean_terms if kw in text_content)
-                if matches > 0:
-                    bonus = 2 if any(it_kw in text_content for it_kw in ["teknologi", "sistem", "digital", "siber", "cloud", "data"]) else 0
-                    scored_chunks.append((matches + bonus, c.to_dict()))
+                matches = sum(1 for kw in valid_keywords if kw in text_content)
+
+                # Prioritize high-value IT, cybersecurity, and governance chapters
+                bonus = 0
+                if any(it_kw in text_content for it_kw in ["keamanan siber", "cyber security", "insiden", "mitigasi", "serangan", "perlindungan data", "soc", "vapt"]):
+                    bonus += 4
+                elif any(it_kw in text_content for it_kw in ["teknologi", "sistem", "digital", "cloud", "data"]):
+                    bonus += 2
+
+                ch_lower = (c.chapter_title or "").lower()
+                if any(ch in ch_lower for ch in ["teknologi", "ti", "it", "tata kelola", "operasional", "risiko"]):
+                    bonus += 3
+
+                scored_chunks.append((matches + bonus, c.to_dict()))
 
             if scored_chunks:
                 scored_chunks.sort(key=lambda x: x[0], reverse=True)

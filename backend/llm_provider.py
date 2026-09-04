@@ -104,11 +104,11 @@ class LLMProvider:
             "model": model,
             "messages": messages,
             "temperature": temperature,
-            "max_tokens": max_tokens,
+            "max_tokens": min(max_tokens, 4096),
         }
 
         try:
-            resp = requests.post(url, headers=headers, json=payload, timeout=60)
+            resp = requests.post(url, headers=headers, json=payload, timeout=90)
             if resp.status_code == 200:
                 data = resp.json()
                 choices = data.get("choices", [])
