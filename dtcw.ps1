@@ -435,6 +435,8 @@ function assert_java_version_supported() {
         $selectedJavaDir = $javaDirs | Select-Object -First 1
         # Construct the complete Java path
         $javaHome = Join-Path -Path $DTC_JAVA_HOME -ChildPath $selectedJavaDir.Name
+        $env:JAVA_HOME = $javaHome
+        $env:PATH = "$javaHome\bin;$env:PATH"
 
         $JAVA_CMD = Get-Command "$javaHome\bin\java" -ErrorAction SilentlyContinue
         $dtc_opts = "$dtc_opts '-Dorg.gradle.java.home=$javaHome' "

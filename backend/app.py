@@ -44,6 +44,7 @@ app.add_middleware(
 
 FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
 DOCS_SITE_DIR = Path(__file__).resolve().parent.parent / "site"
+ARC42_BUILD_DIR = Path(__file__).resolve().parent.parent / "build" / "docs" / "html5"
 UPLOADS_DIR = Path(__file__).resolve().parent.parent / "data" / "uploads"
 UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -262,6 +263,9 @@ def list_local_documents(code: str) -> Dict[str, Any]:
 
 if DOCS_SITE_DIR.exists():
     app.mount("/docs/system", StaticFiles(directory=str(DOCS_SITE_DIR), html=True), name="docs_system")
+
+if ARC42_BUILD_DIR.exists():
+    app.mount("/docs/arc42", StaticFiles(directory=str(ARC42_BUILD_DIR), html=True), name="docs_arc42")
 
 if FRONTEND_DIR.exists():
     app.mount("/static", StaticFiles(directory=str(FRONTEND_DIR)), name="static")
