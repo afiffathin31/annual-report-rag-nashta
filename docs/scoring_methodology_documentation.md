@@ -128,3 +128,11 @@ Setiap bukti yang memperkuat skor pilar wajib menyertakan atribut metadata lengk
 3. **Halaman Fisik PDF & Halaman Cetak**: Contoh: `Hal. 283 (PDF Hal. 285)`.
 4. **Nama Bab Dokumen**: Contoh: `'Tata Kelola Teknologi Informasi & GCG'`.
 5. **Nama File Laporan**: Contoh: `AR_2024_BRIS_Annual_Report.pdf`.
+
+---
+
+## 7. Status Verifikasi Fakta Dokumen (Label UI)
+
+Untuk menjamin kejelasan dan integritas data tanpa memicu kebingungan atas persentase estimasi yang arbitrer, sistem menyematkan label status verifikasi:
+- **`✅ TERVERIFIKASI DOKUMEN`**: Diberikan jika temuan pilar didukung oleh kutipan kalimat fakta langsung dari file PDF resmi Laporan Tahunan emiten.
+- **`📑 INISIATIF STRATEGIS`**: Diberikan jika temuan pilar berfokus pada rencana peremajaan rutin dan kepatuhan regulasi jangka panjang.

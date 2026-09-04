@@ -500,9 +500,15 @@ document.addEventListener('DOMContentLoaded', () => {
             <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;margin-bottom:0.75rem;">
               <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
                 <span class="severity-pill ${severityClass}">${rec.severity} Priority</span>
-                <span style="font-size:0.75rem;background:rgba(16,185,129,0.12);color:#34d399;border:1px solid rgba(16,185,129,0.25);padding:3px 10px;border-radius:12px;font-weight:600;">
-                  ⚡ ${rec.confidence}% Match Confidence
-                </span>
+                ${rec.verification_status === 'INISIATIF STRATEGIS' ? `
+                  <span style="font-size:0.75rem;background:rgba(56,189,248,0.15);color:#38bdf8;border:1px solid rgba(56,189,248,0.3);padding:3px 10px;border-radius:12px;font-weight:700;">
+                    📑 Inisiatif Strategis
+                  </span>
+                ` : `
+                  <span style="font-size:0.75rem;background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:3px 10px;border-radius:12px;font-weight:700;">
+                    ✅ Terverifikasi Dokumen
+                  </span>
+                `}
                 <span style="font-size:0.75rem;background:rgba(56,189,248,0.12);color:#38bdf8;border:1px solid rgba(56,189,248,0.25);padding:3px 10px;border-radius:12px;font-weight:600;">
                   🏛️ ${rec.pillar_name}
                 </span>
@@ -597,8 +603,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="weakness-header">
             <div class="weakness-title-group">
               <span class="severity-pill ${severityClass}">${w.severity} Severity</span>
-              <span style="font-size:0.75rem;background:rgba(16,185,129,0.1);color:#34d399;border:1px solid rgba(16,185,129,0.25);padding:2px 8px;border-radius:12px;font-weight:600;">
-                ⚡ ${confidence}% Match Confidence
+              <span style="font-size:0.75rem;background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);padding:2px 8px;border-radius:12px;font-weight:700;">
+                ✅ Terverifikasi Dokumen
               </span>
               <span class="weakness-title">${w.title}</span>
             </div>

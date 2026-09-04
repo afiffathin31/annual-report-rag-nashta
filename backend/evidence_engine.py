@@ -227,6 +227,9 @@ class EvidenceEngine:
             else:
                 overall_confidence = 90
 
+            has_real_evidence = any("100+" not in str(c.get("page_ref", "")) for c in distinct_citations)
+            verification_status = "TERVERIFIKASI DOKUMEN" if has_real_evidence else "INISIATIF STRATEGIS"
+
             problem_synthesis = self._synthesize_problem(c_code, issuer_name, p_id, distinct_citations)
             nashta_solution = self._synthesize_solution(p_id, pillar_def, distinct_citations)
             rec_title = self._synthesize_rec_title(p_id, distinct_citations)
@@ -239,6 +242,7 @@ class EvidenceEngine:
                 "title": f"Pilar {p_num}: {p_name} — {rec_title}",
                 "severity": severity,
                 "confidence": overall_confidence,
+                "verification_status": verification_status,
                 "problem_synthesis": problem_synthesis,
                 "nashta_opportunity": nashta_solution["headline"],
                 "value_proposition": nashta_solution["details"],
