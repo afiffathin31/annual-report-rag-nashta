@@ -144,6 +144,13 @@ class EvidenceEngine:
                 if not best_sentence:
                     best_sentence = raw_para[:250].strip()
 
+                # Dynamic 4-Factor Match Confidence Formula
+                # Base (70%) + Keyword Density (max 16%) + Pain Context (6%) + Sentence Clarity (4%)
+                k_bonus = min(len(matched_kws) * 4, 16)
+                p_bonus = 6 if has_pain else 0
+                s_bonus = 4 if 50 <= len(best_sentence) <= 320 else 2
+                cit_confidence = min(98, max(72, 70 + k_bonus + p_bonus + s_bonus))
+
                 valid_evidence_by_pillar[pillar_id].append({
                     "score": score,
                     "pillar_id": pillar_id,
@@ -159,7 +166,7 @@ class EvidenceEngine:
                     "context_window": raw_para,
                     "matched_keywords": matched_kws,
                     "is_high": is_high,
-                    "confidence": 96 if is_high else 91,
+                    "confidence": cit_confidence,
                 })
 
         # 2. Synthesize Strategic Recommendation Clusters across ALL 10 PILLARS (Pilar 1 to 10)
@@ -201,6 +208,7 @@ class EvidenceEngine:
                         "evidence_quote": ev["evidence_quote"],
                         "context_window": ev["context_window"],
                         "matched_keywords": ev["matched_keywords"],
+                        "confidence": ev.get("confidence", 92),
                     })
                 if len(distinct_citations) >= 5:
                     break
@@ -212,7 +220,12 @@ class EvidenceEngine:
 
             has_high = any(e.get("is_high", False) for e in evidence_list)
             severity = "High" if (has_high or p_num in [1, 2, 4, 5]) else "Medium"
-            overall_confidence = 96 if has_high else 91
+            
+            # Dynamic Pillar Match Confidence derived from verified evidence citations
+            if distinct_citations:
+                overall_confidence = round(sum(c.get("confidence", 90) for c in distinct_citations) / len(distinct_citations))
+            else:
+                overall_confidence = 90
 
             problem_synthesis = self._synthesize_problem(c_code, issuer_name, p_id, distinct_citations)
             nashta_solution = self._synthesize_solution(p_id, pillar_def, distinct_citations)
