@@ -264,5 +264,12 @@ if FRONTEND_DIR.exists():
 
     @app.get("/")
     def serve_frontend_index() -> FileResponse:
-        return FileResponse(str(FRONTEND_DIR / "index.html"))
+        return FileResponse(
+            str(FRONTEND_DIR / "index.html"),
+            headers={
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Pragma": "no-cache",
+                "Expires": "0",
+            },
+        )
 
