@@ -1,0 +1,28 @@
+== Building Block View
+
+=== Whitebox Overall System (Level 1)
+
+Sistem terbagi menjadi lima komponen modular utama:
+
+[cols="1,2,3", options="header"]
+|===
+| Komponen | Berkas Sumber | Tanggung Jawab Utama
+| **Document Ingestion & Vault** | `backend/pdf_processor.py`, `backend/gdrive_sync.py` | Ekstraksi teks PDF multi-halaman via PyMuPDF, filtering noise, dan sinkronisasi Google Drive.
+| **Repository & SQLite Storage** | `backend/repository.py`, `backend/database.py` | Menyimpan potongan dokumen (`document_chunks`), metadata halaman, serta indexing pencarian teks.
+| **Scoring & Evidence Engine** | `backend/scoring_engine.py`, `backend/evidence_engine.py` | Menghitung Nashta Opportunity Index, skor 10 pilar, dan klasterisasi bukti konkret.
+| **RAG Assistant Engine** | `backend/rag_engine.py` | Router niat pengguna, ekstraksi query temporal, perakitan prompt, dan footnote synthesis.
+| **Multi-Provider LLM Gateway** | `backend/llm_provider.py` | Abstraksi komunikasi API ke Mistral AI, Gemini, OpenAI, Groq, dan Ollama.
+|===
+
+=== Level 2: Detail Komponen Inti
+
+==== Scoring Engine (`backend/scoring_engine.py`)
+Mengeksekusi formula perhitungan:
+[source,text]
+----
+SkorPilar_i = min(98, max(50, Base (50) + EvidenceBonus (+8/bukti, max +40) + SeverityBonus (+8 jika High)))
+----
+Menghasilkan matriks kesiapan (*readiness*) dan estimasi nilai transaksi (*deal size*).
+
+==== Evidence Engine (`backend/evidence_engine.py`)
+Melakukan penelusuran semantik terarah untuk mendeteksi kelemahan operasional, inisiatif TI, dan menghitung **Match Confidence** (96% vs 91%).

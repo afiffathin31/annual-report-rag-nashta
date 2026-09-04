@@ -1,0 +1,27 @@
+== Deployment View
+
+=== Lingkungan Deployment Standar
+
+Sistem dapat dijalankan secara lokal pada mesin workstation maupun di lingkungan server container:
+
+[cols="1,2,2", options="header"]
+|===
+| Lapisan / Node | Komponen Perangkat Lunak | Port / Endpoint
+| Workstation / VM | Python 3.11/3.12, Uvicorn Server | `http://localhost:8000`
+| Static Assets | HTML5 SPA, CSS, Vanilla JS, MkDocs Docs | `/static`, `/docs/system`
+| Local Storage | SQLite (`data/nashta_rag.db`), Document Vault (`data/documents/`) | Filesystem lokal
+| External Cloud | Mistral API / Google AI Studio / OpenAI Cloud | HTTPS (Port 443)
+|===
+
+=== Cara Menjalankan Layanan
+
+[source,bash]
+----
+# 1. Jalankan server backend utama
+python run_server.py
+
+# 2. Akses aplikasi di browser
+# Dashboard: http://localhost:8000/
+# Dokumentasi Sistem (MkDocs): http://localhost:8000/docs/system/
+# Swagger UI: http://localhost:8000/docs
+----

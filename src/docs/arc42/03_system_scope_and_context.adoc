@@ -1,0 +1,26 @@
+== System Scope and Context
+
+=== Business Context
+
+image::system_context_diagram.png[title="System Context Diagram: Nashta RAG Ecosystem", width=800]
+
+Sistem berinteraksi dengan aktor dan entitas eksternal berikut:
+
+* **Pengguna (Konsultan / Sales / Manajemen Nashta)**:
+  - Mengakses Web Dashboard untuk melihat radar peluang dan matriks kelemahan emiten.
+  - Berinteraksi dengan AI Copilot untuk eksplorasi kebutuhan spesifik dan pembuatan proposal.
+* **Bursa Efek Indonesia (BEI) / Google Drive**:
+  - Sumber dokumen Laporan Tahunan resmi (PDF 500-1000+ halaman).
+* **Provider LLM Eksternal (Mistral / Gemini / OpenAI)**:
+  - Menerima prompt terstruktur dan konteks kutipan dokumen asli untuk menghasilkan sintesis diagnosa konsultatif.
+
+=== Technical Context
+
+[cols="1,2,2", options="header"]
+|===
+| Antarmuka | Protokol / Format | Deskripsi
+| Frontend Web UI | HTTP / JSON / HTML5 | Dashboard SPA responsif berbasis Tailwind CSS dan Vanilla JS.
+| REST API | HTTP POST / GET | Endpoint backend FastAPI untuk analitik, chat, sinkronisasi dokumen, dan vault PDF.
+| LLM Gateway | HTTPS / REST | Panggilan inferensi terenkripsi ke endpoint provider model bahasa besar.
+| Google Drive API | HTTPS / OAuth 2.0 / Direct URL | Download dan sinkronisasi berkas dokumen laporan tahunan.
+|===

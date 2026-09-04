@@ -1,0 +1,31 @@
+== Introduction and Goals
+
+=== Requirements Overview
+
+Sistem **Nashta 10-Pillars Opportunity Radar & AI Assistant (True RAG)** dirancang untuk memecahkan tantangan analisis informasi strategis dari Laporan Tahunan emiten Bursa Efek Indonesia (BEI):
+
+* **Pure Evidence-Driven**: Menghilangkan asumsi subjektif dalam penilaian kesiapan teknologi emiten dengan mengaitkan setiap indikator langsung ke nomor halaman, nama bab, dan kutipan kalimat konkret laporan tahunan resmi.
+* **10-Pillars Opportunity Radar**: Menghitung secara otomatis indeks peluang (*Nashta Opportunity Index*, 0-100) dan skor kesiapan 10 pilar solusi Nashta.
+* **AI Copilot Presisi Tinggi**: Memberikan asisten interaktif yang mampu menjawab pertanyaan kompleks, mengenali batasan tahun (*temporal awareness*), dan menghasilkan draf proposal penawaran terstruktur.
+* **Integrasi Google Drive**: Menyediakan sinkronisasi langsung berkas PDF laporan tahunan dari Google Drive korporat ke dalam Document Vault lokal.
+
+=== Quality Goals
+
+[cols="1,2,4", options="header"]
+|===
+| Prioritas | Sasaran Kualitas | Motivasi & Kriteria Keberhasilan
+| 1 | Explainability & Transparansi | Setiap poin skor harus dapat diaudit dan memiliki referensi sitasi nomor halaman dokumen fisik asli.
+| 2 | Akurasi Temporal | Pertanyaan seputar tahun tertentu (misal: 2024) hanya boleh dijawab menggunakan fakta dokumen tahun tersebut, tanpa tercampur data tahun lain.
+| 3 | Kecepatan & Responsivitas | Dashboard memuat data dalam waktu < 1 detik; inferensi AI Copilot menghasilkan respon lengkap dalam < 45 detik.
+| 4 | Ketahanan Offline | Jika koneksi API LLM eksternal terganggu, sistem secara otomatis beralih ke *Deterministic Rule-based RAG Fallback*.
+|===
+
+=== Stakeholders
+
+[cols="1,2,3", options="header"]
+|===
+| Peran | Kontak / Entitas | Ekspektasi Utama
+| C-Level & Direksi | Jajaran Direksi PT Nashta | Memperoleh ringkasan eksekutif peluang bisnis dan potensi pasar per emiten.
+| Sales Architect & BD | Tim Business Development | Memperoleh draf penawaran formal dan pemetaan celah teknologi emiten (*sweet spot*).
+| Auditor & Klien | Emiten BEI (misal: BRIS) | Memastikan transparansi sumber data bahwa analisis tidak didasarkan pada halusinasi generatif.
+|===

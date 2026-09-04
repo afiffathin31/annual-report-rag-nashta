@@ -1,0 +1,15 @@
+== Runtime View
+
+=== Alur Eksekusi Konsultasi AI Copilot (RAG Sequence)
+
+[cols="1,2,3", options="header"]
+|===
+| Langkah | Pelaku / Komponen | Aksi
+| 1 | Pengguna | Mengirimkan pertanyaan pada kolom chat (contoh: "ancaman cyber 2024?")
+| 2 | FastAPI (`backend/app.py`) | Menerima request HTTP POST `/api/chat` dan meneruskan ke `rag_engine.process_chat()`.
+| 3 | Temporal Router | Mendeteksi token tahun `2024` via regex `\b(20(?:1[89]|2[0-6]))\b` dan mengisolasi pencarian dokumen ke tahun tersebut.
+| 4 | DocumentRepository | Mengeksekusi filter SQL: `emiten_code == BRIS AND year == 2024 AND is_noise == 0`, mengambil 5 chunk paling relevan.
+| 5 | Prompt Synthesizer | Merakit context block dengan penomoran sumber `[Sumber (1)]` s/d `[Sumber (5)]`.
+| 6 | LLM Provider | Memanggil Mistral API (`ministral-8b-latest`) dengan temperature 0.2 dan batas token 4096.
+| 7 | Frontend UI | Menerima JSON respon, merender markdown, dan menyajikan kartu bukti sitasi terverifikasi.
+|===

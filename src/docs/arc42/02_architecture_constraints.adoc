@@ -1,0 +1,18 @@
+== Architecture Constraints
+
+=== Technical Constraints
+
+[cols="1,3", options="header"]
+|===
+| Batasan | Penjelasan & Implikasi
+| Bahasa Pemrograman | Backend dibangun menggunakan **Python 3.11/3.12+**.
+| Framework Web | Menggunakan **FastAPI** dengan ASGI server **Uvicorn** untuk performa tinggi dan dukungan konkurensi asynchronous.
+| Database | **SQLite 3** dengan format file lokal (`data/nashta_rag.db`) untuk kemudahan portabilitas, zero-configuration setup, dan kemudahan backup.
+| Parsing PDF | **PyMuPDF (`fitz`)** untuk ekstraksi teks berkecepatan tinggi dengan pemetaan koordinat dan halaman fisik vs tercetak.
+| LLM API | Integrasi multi-provider dengan fallback fleksibel (Mistral `ministral-8b-latest`, Google Gemini, OpenAI, Groq, Ollama).
+|===
+
+=== Organizational & Regulatory Constraints
+
+* **Kepatuhan Privasi Data**: Berkas PDF laporan tahunan yang diproses adalah dokumen publik yang telah dipublikasikan di Bursa Efek Indonesia (BEI) atau situs resmi emiten.
+* **Audit-Ready Documentation**: Sistem harus mendukung dokumentasi berbasis *Docs-as-Code* (arc42 dan MkDocs) yang dapat di-version control bersama kode sumber di Git.

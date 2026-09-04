@@ -1,0 +1,11 @@
+== Technical Risks
+
+=== Matriks Risiko & Strategi Mitigasi
+
+[cols="1,2,3", options="header"]
+|===
+| Risiko Teknis | Dampak Potensial | Strategi Mitigasi
+| **Variasi Format PDF** | Kegagalan ekstraksi teks atau nomor halaman salah karena layout multi-kolom. | Menggunakan PyMuPDF dengan boundary block sorting dan fallback nomor halaman fisik jika penomoran tercetak tidak terdeteksi.
+| **LLM Timeout / Rate Limit** | Respon copilot terputus di tengah jalan. | Memperluas timeout ke 90 detik, membatasi token maksimal ke 4096, serta menyediakan offline deterministic fallback.
+| **Data Polusi Laporan Komparatif** | Dokumen tahun berjalan menyajikan angka komparatif tahun lalu. | Penerapan filter temporal ketat berbasis SQL (`ChunkModel.year == target_year`) dan pembersihan stop words temporal.
+|===

@@ -1,0 +1,16 @@
+== Architecture Decisions (ADR)
+
+=== ADR 01: Pemilihan FastAPI untuk Backend Services
+* **Konteks**: Sistem membutuhkan backend yang cepat, mendukung operasi asynchronous (streaming AI dan background tasks), dan memiliki dokumentasi OpenAPI otomatis.
+* **Keputusan**: Menggunakan FastAPI (Python).
+* **Konsekuensi Positif**: Kecepatan tinggi, integrasi native dengan library analitik Python (PyMuPDF, SQLAlchemy), dan kode yang sangat ringkas.
+
+=== ADR 02: Pure Evidence-Driven Scoring (Menolak Black-box Scoring)
+* **Konteks**: Model bahasa besar sering menghasilkan angka skoring yang tidak konsisten jika diminta mengira-ngira skor tanpa aturan matematis.
+* **Keputusan**: Skoring 10 pilar dihitung menggunakan formula deterministik murni berbasis data bukti riil (Base + Evidence + Severity), sedangkan LLM difokuskan pada analisis naratif dan rekomendasi solusi.
+* **Konsekuensi Positif**: 100% transparan, dapat diaudit, dan tidak pernah berhalusinasi nilai.
+
+=== ADR 03: Temporal Awareness Filter pada RAG Search
+* **Konteks**: Dokumen laporan tahunan tahun baru memuat tabel komparatif dengan tahun sebelumnya (misal: Laporan 2025 memuat data tahun 2024), menyebabkan polusi data saat pengguna bertanya tentang tahun tertentu.
+* **Keputusan**: Menambahkan regex target year extractor dan query isolation `ChunkModel.year == target_year`.
+* **Konsekuensi Positif**: Akurasi pencocokan dokumen tahun target mencapai 100%.

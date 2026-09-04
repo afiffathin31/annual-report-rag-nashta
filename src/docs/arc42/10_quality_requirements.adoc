@@ -1,0 +1,12 @@
+== Quality Requirements
+
+=== Quality Tree
+
+[cols="1,2,3", options="header"]
+|===
+| Karakteristik Kualitas | Skenario Uji | Pengukuran & Target
+| **Ketepatan Temporal** | Pengguna menanyakan ancaman cyber tahun 2024. | 100% kutipan dan diagnosa berasal dari Laporan Tahunan 2024 (Hal. 284 dsb).
+| **Ketepatan Sitasi** | Setiap diagnosa masalah memiliki tautan ke dokumen asli. | Nomor halaman fisik dan judul bab tertera jelas di bawah respons AI.
+| **Kecepatan Inferensi** | Panggilan API chat ke server. | Respon komprehensif selesai dalam waktu < 45 detik.
+| **Robustness / Ketersediaan** | API key LLM habis atau koneksi internet terputus. | Sistem tetap menyajikan respon via *Deterministic Fallback* tanpa crash (HTTP 200).
+|===

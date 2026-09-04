@@ -1,0 +1,12 @@
+== Glossary
+
+[cols="1,3", options="header"]
+|===
+| Istilah | Definisi dalam Sistem
+| **RAG (Retrieval-Augmented Generation)** | Metode penggabungan penelusuran dokumen fakta dengan model generatif AI agar menghasilkan respon tanpa halusinasi.
+| **Nashta Opportunity Index** | Skor komposit agregat (0 s/d 100) yang merepresentasikan peluang bisnis komersial di seluruh 10 Pilar Layanan Nashta.
+| **Match Confidence** | Tingkat kepastian pencocokan AI (misal: 96% untuk High Confidence, 91% untuk Standard Confidence) bahwa temuan teks relevan dengan solusi pilar.
+| **Temporal Query Filtering** | Algoritma penyaringan dokumen berbasis tahun yang diminta pengguna untuk mencegah percampuran data antar tahun laporan.
+| **Document Vault** | Repositori penyimpanan berkas fisik PDF laporan tahunan resmi yang terorganisir per kode emiten dan tahun publikasi.
+| **arc42** | Standar template internasional untuk dokumentasi arsitektur perangkat lunak yang berfokus pada kejelasan, komunikasi, dan modularitas.
+|===

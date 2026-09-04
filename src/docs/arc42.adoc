@@ -1,0 +1,41 @@
+= Nashta Annual Report RAG & AI Assistant: Software Architecture Document
+PT Nashta Global Nusantara
+v2.2.0, 2026-09-04
+:doctype: book
+:toc: left
+:toclevels: 3
+:sectnums:
+:icons: font
+:source-highlighter: highlightjs
+:imagesdir: images
+
+[preface]
+== Ringkasan Eksekutif
+
+Dokumen ini memuat dokumentasi arsitektur perangkat lunak komprehensif untuk **Nashta Annual Report RAG & AI Copilot** berdasarkan standar internasional **arc42** (Architecture Communication by Example).
+
+Sistem ini mentransformasikan dokumen Laporan Tahunan (Annual Report) tebal dari emiten Bursa Efek Indonesia (BEI) menjadi wawasan bisnis prediktif, pemetaan kesiapan 10 Pilar Solusi Nashta, serta asisten konsultasi cerdas berbasis True RAG.
+
+include::arc42/01_introduction_and_goals.adoc[]
+
+include::arc42/02_architecture_constraints.adoc[]
+
+include::arc42/03_system_scope_and_context.adoc[]
+
+include::arc42/04_solution_strategy.adoc[]
+
+include::arc42/05_building_block_view.adoc[]
+
+include::arc42/06_runtime_view.adoc[]
+
+include::arc42/07_deployment_view.adoc[]
+
+include::arc42/08_concepts.adoc[]
+
+include::arc42/09_architecture_decisions.adoc[]
+
+include::arc42/10_quality_requirements.adoc[]
+
+include::arc42/11_technical_risks.adoc[]
+
+include::arc42/12_glossary.adoc[]

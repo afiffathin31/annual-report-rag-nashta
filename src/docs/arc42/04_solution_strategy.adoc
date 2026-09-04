@@ -1,0 +1,13 @@
+== Solution Strategy
+
+=== Arsitektur Inti: True Evidence-Driven RAG
+
+image::nashta_hybrid_rag_architecture_hd_dark.png[title="Nashta Hybrid RAG End-to-End Architecture", width=900]
+
+Untuk mengatasi kelemahan LLM standar (halusinasi dan kurangnya data internal terkini), strategi arsitektur yang diadopsi adalah:
+
+1. **Deterministic Pre-Scoring**: Skor 10 pilar dihitung menggunakan algoritma deterministik berbasis bukti nyata dokumen di database, bukan diserahkan ke probabilitas LLM.
+2. **Strict Noise Gatekeeping**: Halaman dokumen yang tidak memiliki nilai bisnis (daftar isi, opini auditor standar, daftar cabang fisik) diabaikan secara otomatis selama proses ingest.
+3. **Temporal Constraint Ingestion & Querying**: Setiap potongan dokumen mempertahankan metadata tahun terbitan (`year`). Query pencarian pengguna dipindai untuk menemukan pola tahun target, mengisolasi pool dokumen secara ketat.
+4. **Footnote Numbering Standard**: Seluruh klaim narasi diagnosa LLM diwajibkan menyertakan penomoran footnote `(1)`, `(2)` dengan rincian kutipan di sub-bagian `### 📑 Bukti Dokumen`.
+5. **Zero-Lock-in Multi-Provider Architecture**: Lapisan LLM diabstraksikan melalui adapter seragam, memungkinkan peralihan instan antara Mistral, Google Gemini, OpenAI, Groq, atau model lokal Ollama.

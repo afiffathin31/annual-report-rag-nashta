@@ -1,0 +1,35 @@
+== Concepts
+
+=== 1. Metodologi Skoring 10 Pilar Nashta
+
+==== Formula Skor Tiap Pilar Solusi
+[source,text]
+----
+SkorPilar_i = min(98, max(50, Base (50) + (EvidenceCount * 8) + SeverityBonus (0 atau 8)))
+----
+
+* **Base Score (50 Poin)**: Titik acuan kelayakan operasional emiten BEI.
+* **Evidence Count Bonus**: Tambahan +8 poin per klaster bukti fakta dokumen (maksimal +40 poin untuk 5 bukti).
+* **Severity Bonus**: Tambahan +8 poin jika terdeteksi insiden kritis, risiko downtime, atau kelemahan sistem mendesak (*High Severity*).
+* **Batas Aman Nilai**: Dipertahankan pada rentang 50 s/d 98 poin.
+
+==== Formula Nashta Opportunity Index
+Rata-rata aritmatika dari 10 pilar solusi Nashta:
+[source,text]
+----
+Nashta Opportunity Index = (SkorPilar_1 + SkorPilar_2 + ... + SkorPilar_10) / 10
+----
+
+=== 2. Konsep Radar Pemetaan 10 Pilar & Benchmark Industri
+
+Grafik radar membandingkan dua dimensi:
+* **Garis Solid Cyan (Skor Peluang Emiten)**: Dihitung per emiten berdasarkan bukti konkret laporan tahunan.
+* **Garis Putus-Putus Abu-abu (Rata-rata Industri BEI)**: Dihitung sebagai rata-rata aritmatika dari seluruh emiten di sektor perbankan dan industri kesehatan yang terindeks:
+[source,text]
+----
+IndustryBenchmark_i = (1 / N) * SUM(SkorPilar_(i, k))
+----
+
+=== 3. Match Confidence (Tingkat Akurasi AI)
+* **96% (High Confidence)**: Paragraf dokumen memuat kata kunci spesifik solusi DAN memuat kata pemicu masalah (*pain trigger*: insiden, downtime, mitigasi).
+* **91% (Standard Confidence)**: Paragraf dokumen memuat inisiatif solusi tanpa menyebutkan kendala operasional secara eksplisit.
